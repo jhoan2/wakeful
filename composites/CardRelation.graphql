@@ -1,0 +1,14 @@
+type Card @loadModel(id: "kjzl6hvfrbw6c7gwv8y8xacf3a97qh5n2nkkzcvbzfzgl3tlgqh1uusfq88rk0j") {
+  id: ID!
+}
+
+type Resource @loadModel(id: "kjzl6hvfrbw6c6p7drip5g29u30bxvipxylttwjxo1urkq8q0185yaxm6aqhd2b"){
+  id: ID!
+}
+
+type CardRelation @createModel(accountRelation: LIST, description: "Relate a card to it's resource") {
+  cardID: StreamID! @documentReference(model: "Card")
+  card: Card! @relationDocument(property: "cardID")
+  resourceID: StreamID! @documentReference(model: "Resource")
+  resource: Resource! @relationDocument(property: "resourceID")
+}

@@ -1,0 +1,8 @@
+type Settings @createModel(accountRelation: SINGLE, description: "Settings for profile") {
+    themeModes: String @string(minLength: 1, maxLength: 300) 
+    fontFamily: String @string(minLength: 1, maxLength: 300)
+    fontSize: Int
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    account: DID! @documentAccount
+}

@@ -8,6 +8,7 @@ const server = await serveEncodedDefinition({
   graphiql: true,
   path: "./src/__generated__/definition.json",
   port: 5001,
+  url: "http://localhost:5001/graphql"
 });
 
 console.log(`Server started on ${server.url}`);

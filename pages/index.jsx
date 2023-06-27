@@ -1,25 +1,20 @@
-import type { NextPage } from 'next'
 import { useEffect, useState } from 'react';
-
 import { useCeramicContext } from '../context';
-import { PostProps } from '../types';
 
 import Head from 'next/head'
 
-import Post from "../components/post.component"
-import styles from "../styles/Home.module.scss"
 import AuthPrompt from "./did-select-popup";
 import React from "react";
-import {authenticateCeramic} from "../utils";
+import { authenticateCeramic } from "../utils";
 
-const Home: NextPage = () => {  
+const Home = () => {
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
-  const [ newPost, setNewPost ] = useState('')
-  const [ posts, setPosts ] = useState<PostProps[] | []>([])
+  const [newPost, setNewPost] = useState('')
+  const [posts, setPosts] = useState([])
 
   const createPost = async () => {
-    if(ceramic.did !== undefined) {
+    if (ceramic.did !== undefined) {
       const profile = await composeClient.executeQuery(`
         query {
           viewer {
@@ -30,7 +25,7 @@ const Home: NextPage = () => {
           }
         }
       `)
-      if(profile && profile.data?.viewer.basicProfile?.name) {
+      if (profile && profile.data?.viewer.basicProfile?.name) {
         const post = await composeClient.executeQuery(`
         mutation {
           createPosts(input: {
@@ -121,29 +116,29 @@ const Home: NextPage = () => {
     `)
 
     // TODO: Sort based off of "created date"
-    const posts:PostProps[] = []
-    
-    if(following.data !== undefined) {
+    const posts = []
+
+    if (following.data !== undefined) {
       following.data?.node?.followingList.edges.map(profile => {
-        if(profile.node !== null){
-        profile.node.profile.posts.edges.map(post => {
-          if(post.node !== null){
-          posts.push({
-            author: {
-              id: profile.node.profile.id,
-              name: profile.node.profile.name,
-              username: profile.node.profile.username,
-              emoji: profile.node.profile.emoji
-            },
-            post: {
-              id: post.node.id,
-              body: post.node.body,
-              created: post.node.created
+        if (profile.node !== null) {
+          profile.node.profile.posts.edges.map(post => {
+            if (post.node !== null) {
+              posts.push({
+                author: {
+                  id: profile.node.profile.id,
+                  name: profile.node.profile.name,
+                  username: profile.node.profile.username,
+                  emoji: profile.node.profile.emoji
+                },
+                post: {
+                  id: post.node.id,
+                  body: post.node.body,
+                  created: post.node.created
+                }
+              })
             }
           })
         }
-        })
-      }
       })
     } else {
       explore.data?.postsIndex?.edges.map(post => {
@@ -160,9 +155,9 @@ const Home: NextPage = () => {
             created: post.node.created
           }
         })
-      }) 
+      })
     }
-    posts.sort((a,b)=> (new Date(b.created) - new Date(a.created)))
+    posts.sort((a, b) => (new Date(b.created) - new Date(a.created)))
     console.log(posts)
     setPosts((posts?.reverse())) // reverse to get most recent msgs
   }
@@ -178,25 +173,24 @@ const Home: NextPage = () => {
         {/* TODO: UPDATE FAVICON */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className = "content">
-        <div className = {styles.share}>
-          <textarea 
+      <div className="content">
+        <div>
+          <textarea
             value={newPost}
             maxLength={100}
             placeholder="What are you thinking about?"
-            className = {styles.postInput}
             onChange={(e) => {
               setNewPost(e.target.value)
             }}
           />
-          <button onClick = {() => {createPost()}}>
+          <button onClick={() => { createPost() }}>
             Share
           </button>
         </div>
-        <div className = {styles.postContainer}>
-            {(posts).map(post => (
-              <Post author = {post.author} post = {post.post} key = {post.post.id} />
-            ))}
+        <div>
+          {(posts).map(post => (
+            <Post author={post.author} post={post.post} key={post.post.id} />
+          ))}
         </div>
       </div>
     </>

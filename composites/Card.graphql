@@ -1,0 +1,8 @@
+type Card @createModel(accountRelation: LIST, description: "Blocks of text") {
+    quote: String @string(minLength: 1, maxLength: 3000)
+    prefix: String @string(minLength: 1, maxLength: 3000)
+    suffix: String @string(minLength: 1, maxLength: 3000)
+    annotation: String @string(minLength: 1, maxLength: 3000)
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}

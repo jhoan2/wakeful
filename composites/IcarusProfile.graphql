@@ -1,0 +1,7 @@
+type IcarusProfile @createModel(accountRelation: SINGLE, description: "Profile model for icarus.") {
+  displayName: String! @string(minLength: 3, maxLength: 50)
+  bio: String! @string(minLength: 1, maxLength: 140)
+  pictureUrl: String @string(minLength: 1, maxLength: 300)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
