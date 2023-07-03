@@ -1,14 +1,14 @@
 import type { CeramicApi } from "@ceramicnetwork/common"
 import type { ComposeClient } from "@composedb/client";
-import {Ed25519Provider} from "key-did-provider-ed25519";
+import { Ed25519Provider } from "key-did-provider-ed25519";
 import { getResolver } from 'key-did-resolver'
-import {DID} from "dids";
-import {DIDSession} from "did-session";
-import {EthereumWebAuth, getAccountId} from "@didtools/pkh-ethereum";
-import {SolanaWebAuth, getAccountIdByNetwork } from '@didtools/pkh-solana'
-import {StreamID} from "@ceramicnetwork/streamid";
-import {ModelInstanceDocument} from "@composedb/types";
-import {makeCeramicDaemon} from "@ceramicnetwork/cli/lib/__tests__/make-ceramic-daemon";
+import { DID } from "dids";
+import { DIDSession } from "did-session";
+import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
+import { SolanaWebAuth, getAccountIdByNetwork } from '@didtools/pkh-solana'
+import { StreamID } from "@ceramicnetwork/streamid";
+import { ModelInstanceDocument } from "@composedb/types";
+import { makeCeramicDaemon } from "@ceramicnetwork/cli/lib/__tests__/make-ceramic-daemon";
 
 const DID_SEED_KEY = 'ceramic:did_seed'
 
@@ -26,11 +26,11 @@ declare global {
  */
 export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeClient) => {
   let logged_in = localStorage.getItem('logged_in')
-  const popup = document.querySelector('.popup')
+  const popup = document.getElementById('popup')
   console.log(logged_in)
-  if (logged_in == "true"){
+  if (logged_in == "true") {
     if (popup) {
-      popup.style.display = 'none';
+      popup.classList.add('hidden');
     }
   }
   let auth_type = localStorage.getItem("ceramic:auth_type")
@@ -45,7 +45,7 @@ export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeC
 
 const authenticateKeyDID = async (ceramic: CeramicApi, compose: ComposeClient) => {
   let seed_array: Uint8Array
-  if (localStorage.getItem(DID_SEED_KEY) === null){ // for production you will want a better place than localStorage for your sessions.
+  if (localStorage.getItem(DID_SEED_KEY) === null) { // for production you will want a better place than localStorage for your sessions.
     console.log("Generating seed...")
     let seed = crypto.getRandomValues(new Uint8Array(32))
     let seed_json = JSON.stringify(seed, (key, value) => {
@@ -75,11 +75,11 @@ const authenticateEthPKH = async (ceramic: CeramicApi, compose: ComposeClient) =
   const sessionStr = localStorage.getItem('ceramic:eth_did') // for production you will want a better place than localStorage for your sessions.
   let session
 
-  if(sessionStr) {
+  if (sessionStr) {
     session = await DIDSession.fromSession(sessionStr)
   }
 
-  if(!session || (session.hasSession && session.isExpired)) {
+  if (!session || (session.hasSession && session.isExpired)) {
     if (window.ethereum === null || window.ethereum === undefined) {
       throw new Error("No injected Ethereum provider found.");
     }

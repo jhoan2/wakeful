@@ -20,6 +20,7 @@ const MyApp = ({ Component, pageProps }) => {
   }
 
   const getProfile = async () => {
+    console.log(ceramic.did)
     if (ceramic.did !== undefined) {
       const profile = await composeClient.executeQuery(`
         query {

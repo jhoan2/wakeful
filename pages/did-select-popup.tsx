@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { authenticateCeramic } from '../utils'
-import {useCeramicContext} from "../context";
+import { useCeramicContext } from "../context";
 
 const AuthPrompt = () => {
     const [isVisible, setIsVisible] = useState(true);
@@ -11,7 +11,7 @@ const AuthPrompt = () => {
     };
 
     const handleOpen = () => {
-        if(localStorage.getItem("logged_in")){
+        if (localStorage.getItem("logged_in")) {
             setIsVisible(true);
         } else {
             setIsVisible(false);
@@ -34,14 +34,14 @@ const AuthPrompt = () => {
         <div>
             {
                 isVisible && (
-                <div className="popup">
-                    <div className="popup-content">
-                        <h2>Authenticate</h2>
-                        <span><button onClick={handleKeyDid}>Key DID</button></span>
-                        <span><button onClick={handleEthPkh}>Ethereum DID PKH</button></span>
+                    <div id='popup' className="flex">
+                        <div className="popup-content">
+                            <h2>Authenticate</h2>
+                            <span><button onClick={handleKeyDid}>Key DID</button></span>
+                            <span><button onClick={handleEthPkh}>Ethereum DID PKH</button></span>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
         </div>
     );
 };
