@@ -27,13 +27,13 @@ declare global {
 export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeClient) => {
   let logged_in = localStorage.getItem('logged_in')
   const popup = document.getElementById('popup')
-  console.log(logged_in)
   if (logged_in == "true") {
     if (popup) {
       popup.classList.add('hidden');
     }
   }
   let auth_type = localStorage.getItem("ceramic:auth_type")
+  console.log(auth_type)
   if (auth_type == "key") {
     authenticateKeyDID(ceramic, compose)
   }

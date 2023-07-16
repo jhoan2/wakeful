@@ -16,7 +16,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   const handleLogin = async () => {
     await authenticateCeramic(ceramic, composeClient)
-    await getProfile()
+    // await getProfile()
   }
 
   const getProfile = async () => {
@@ -39,11 +39,12 @@ const MyApp = ({ Component, pageProps }) => {
       setProfile(profile?.data?.viewer?.basicProfile)
     }
   }
+
   // Update to include refresh on auth
   useEffect(() => {
     if (localStorage.getItem('logged_in')) {
       handleLogin()
-      getProfile()
+      // getProfile()
     }
   }, [])
 

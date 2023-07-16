@@ -162,9 +162,9 @@ const Home = () => {
     setPosts((posts?.reverse())) // reverse to get most recent msgs
   }
 
-  useEffect(() => {
-    getPosts()
-  }, [])
+  // useEffect(() => {
+  //   getPosts()
+  // }, [])
 
   return (
     <>
