@@ -27,6 +27,7 @@
     "did-session": "^1.0.0",
     "dids": "^3.2.0",
     "graphql": "^16.6.0",
+    "key-did-provider-secp256k1-with-lit": "^0.1.2",
     "next": "^12.0.4",
     "ora": "^6.1.2",
     "react": "^18.0.0",
