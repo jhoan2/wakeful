@@ -1,0 +1,23 @@
+{
+  "name": "@omnivore/content-fetch",
+  "version": "1.0.0",
+  "description": "Service that fetches page content from a URL",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "@google-cloud/functions-framework": "^3.0.0",
+    "@sentry/serverless": "^6.13.3",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "start_gcf": "npx functions-framework --port=9090 --target=puppeteer",
+    "start_preview": "npx functions-framework --target=preview",
+    "test": "mocha test/*.js"
+  }
+}
