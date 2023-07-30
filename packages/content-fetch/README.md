@@ -10,6 +10,9 @@ Run `yarn start` to start the Google Cloud Function locally (Works without hot r
 
 After this, you should be able to access the functon on [http://localhost:8080/puppeteer](http://localhost:8080/puppeteer)
 
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+export CHROMIUM_PATH=`which chromium`
+
 ## Deployment
 
 To deploy the function use the following command:
@@ -22,3 +25,4 @@ where:
 `<backend-address>` - address of the backend server (e.g "http://localhost:4000")
 
 `<jwt-secret>` - JWT secret that the backend server is using (e.g "some_secret")
+

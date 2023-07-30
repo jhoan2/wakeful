@@ -12,20 +12,20 @@ if (!process.env.VERIFICATION_TOKEN) {
 }
 
 app.get('/', async (req, res) => {
-  if (req.query.token !== process.env.VERIFICATION_TOKEN) {
-    console.log('query does not include valid token')
-    res.sendStatus(403)
-    return
-  }
+  // if (req.query.token !== process.env.VERIFICATION_TOKEN) {
+  //   console.log('query does not include valid token')
+  //   res.sendStatus(403)
+  //   return
+  // }
   await fetchContent(req, res)
 });
 
 app.post('/', async (req, res) => {
-  if (req.query.token !== process.env.VERIFICATION_TOKEN) {
-    console.log('query does not include valid token')
-    res.sendStatus(403)
-    return
-  }
+  // if (req.query.token !== process.env.VERIFICATION_TOKEN) {
+  //   console.log('query does not include valid token')
+  //   res.sendStatus(403)
+  //   return
+  // }
   await fetchContent(req, res)
 });
 
