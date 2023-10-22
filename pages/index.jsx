@@ -3,7 +3,7 @@ import { useCeramicContext } from '../context';
 
 import Head from 'next/head'
 
-import AuthPrompt from "./did-select-popup";
+import AuthPrompt from "../components/did-select-popup";
 import React from "react";
 import { authenticateCeramic } from "../utils";
 
@@ -162,6 +162,78 @@ const Home = () => {
     setPosts((posts?.reverse())) // reverse to get most recent msgs
   }
 
+  const createProfile = async () => {
+    if (ceramic.did !== undefined) {
+      const profile = await composeClient.executeQuery(`
+            query {
+              viewer {
+                id
+              }
+            }
+          `)
+      if (profile && profile.data?.viewer.id) {
+        const post = await composeClient.executeQuery(`
+            mutation {
+              createIcarusProfile(input: {
+                content: {
+                  bio: "something"
+                  createdAt: "${new Date().toISOString()}"
+                  updatedAt: "${new Date().toISOString()}"
+                  displayName: "jhoang2"
+                }
+              })
+              {
+                document {
+                  id
+                  displayName
+                }
+              }
+            }
+          `)
+        console.log(post)
+      } else {
+        console.log("Failed to fetch profile for authenticated user. Please register a profile.");
+      }
+    } else {
+      console.log("user is not authenticated")
+    }
+  }
+
+  const createSettings = async () => {
+    if (ceramic.did !== undefined) {
+      const profile = await composeClient.executeQuery(`
+            query {
+              viewer {
+                id
+              }
+            }
+          `)
+      if (profile && profile.data?.viewer.id) {
+        const post = await composeClient.executeQuery(`
+            mutation CreateNewSettings {
+              createSettings(input: {
+                content: {
+                  createdAt: "${new Date().toISOString()}", 
+                  updatedAt: "${new Date().toISOString()}"},
+                  clientMutationId: "k2t6wzhkhabz194pty7mrk7s3r4gxuhn9y9xukegmjlxjditr7kbbrmdgalrql"
+              }) {
+                document {
+                  createdAt
+                }
+              }
+            }
+          `)
+        console.log(post)
+      } else {
+        console.log("Failed to fetch profile for authenticated user. Please register a profile.");
+      }
+    } else {
+      console.log("user is not authenticated")
+    }
+  }
+
+
+
   // useEffect(() => {
   //   getPosts()
   // }, [])
@@ -178,7 +250,7 @@ const Home = () => {
           <textarea
             value={newPost}
             maxLength={100}
-            placeholder="What are you thinking about?"
+            placeholder="What are we thinking about?"
             onChange={(e) => {
               setNewPost(e.target.value)
             }}
@@ -186,11 +258,8 @@ const Home = () => {
           <button onClick={() => { createPost() }}>
             Share
           </button>
-        </div>
-        <div>
-          {(posts).map(post => (
-            <Post author={post.author} post={post.post} key={post.post.id} />
-          ))}
+          <button onClick={() => { createProfile() }}>Create Profile</button>
+
         </div>
       </div>
     </>

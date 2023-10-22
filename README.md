@@ -13,6 +13,8 @@ First, run the development server:
 npm run dev
 ```
 
+composedb graphql:server --ceramic-url=http://localhost:7007 --graphiql src/__generated__/definition.json --did-private-key=z6MkfuigJH7DXP6PiYpMVLvsX1Ak2CYKmMEX488zCub9tvwP --port=5005
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Learn More

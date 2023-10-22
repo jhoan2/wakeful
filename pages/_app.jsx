@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react"
 
 import { useCeramicContext } from '../context';
 import { authenticateCeramic } from '../utils';
-import AuthPrompt from "./did-select-popup";
+import AuthPrompt from "../components/did-select-popup";
 
 
 const MyApp = ({ Component, pageProps }) => {
@@ -15,12 +15,12 @@ const MyApp = ({ Component, pageProps }) => {
   const [profile, setProfile] = useState()
 
   const handleLogin = async () => {
-    await authenticateCeramic(ceramic, composeClient)
+    //this part is in the utils and is forcing the user to load in. 
+    // await authenticateCeramic(ceramic, composeClient)
     // await getProfile()
   }
 
   const getProfile = async () => {
-    console.log(ceramic.did)
     if (ceramic.did !== undefined) {
       const profile = await composeClient.executeQuery(`
         query {
@@ -42,6 +42,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   // Update to include refresh on auth
   useEffect(() => {
+    console.log(localStorage.getItem('logged_in'))
     if (localStorage.getItem('logged_in')) {
       handleLogin()
       // getProfile()
