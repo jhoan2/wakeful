@@ -1,7 +1,0 @@
-type CardRelation @loadModel(id: "kjzl6hvfrbw6ca7ypxfnmbwf4y5zrto47zbam15gij3wu1xqodb45r7dnz2hcmj") {
-  id: ID!
-}
-
-type Resource @loadModel(id: "kjzl6hvfrbw6c6p7drip5g29u30bxvipxylttwjxo1urkq8q0185yaxm6aqhd2b") {
-  cards: [CardRelation] @relationFrom(model: "CardRelation", property: "ResourceID")
-}

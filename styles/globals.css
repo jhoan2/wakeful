@@ -17,15 +17,7 @@ a {
   text-decoration: none;
 }
 
-button {
-  border: none;
-  border-radius: 5px;
-  margin-top: 15px;
-  padding: 10px 15px;
-  color: #f5f5f5;
-  background: #eb4a27;
-  cursor: pointer;
-}
+
 
 input {
   background: #f5f5f5;

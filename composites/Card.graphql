@@ -1,8 +1,19 @@
-type Card @createModel(accountRelation: LIST, description: "Blocks of text") {
+type IcarusResource @loadModel(id: "kjzl6hvfrbw6c9iyhtj3nx23eujqrgbx18hc3hn5j3qmnt065ejt9632av0u2id") {
+    id: ID!
+}
+
+type Card 
+    @createModel(accountRelation: LIST, description: "Blocks of text") 
+    @createIndex(fields: [{ path: ["deleted"]} ]) {
     quote: String @string(minLength: 1, maxLength: 3000)
     prefix: String @string(minLength: 1, maxLength: 3000)
     suffix: String @string(minLength: 1, maxLength: 3000)
     annotation: String @string(minLength: 1, maxLength: 3000)
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: DateTime
+    updatedAt: DateTime
+    resourceId: StreamID @documentReference(model: "IcarusResource")
+    resource: IcarusResource @relationDocument(property: "resourceId")
+    pageYOffset: Float
+    srcUrl: String @string(minLength: 1, maxLength: 3000)
+    deleted: Boolean
 }
