@@ -1,4 +1,4 @@
-type Card @loadModel(id: "kjzl6hvfrbw6c6qnt2db83jjx6d61znmz3lzqaccs7ivm9att1933lutlg9w2ab") {
+type Card @loadModel(id: "kjzl6hvfrbw6c8vf3q7bawvusqqif6puktre58vtn7y5fh5lmxznibn9w47clai") {
   id: ID!
 }
 

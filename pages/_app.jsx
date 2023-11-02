@@ -7,57 +7,64 @@ import React, { useState, useEffect } from "react"
 import { useCeramicContext } from '../context';
 import { authenticateCeramic } from '../utils';
 import AuthPrompt from "../components/did-select-popup";
+import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client'
 
 
 const MyApp = ({ Component, pageProps }) => {
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
-  const [profile, setProfile] = useState()
+  const [loggedIn, setLoggedIn] = useState(false)
+  const link = new ApolloLink((operation) => {
+    return new Observable((observer) => {
+      composeClient.execute(operation.query, operation.variables).then(
+        (result) => {
+          observer.next(result)
+          observer.complete()
+        },
+        (error) => {
+          observer.error(error)
+        }
+      )
+    })
+  })
+
+  const apolloClient = new ApolloClient({ cache: new InMemoryCache(), link })
 
   const handleLogin = async () => {
-    //this part is in the utils and is forcing the user to load in. 
-    // await authenticateCeramic(ceramic, composeClient)
-    // await getProfile()
-  }
-
-  const getProfile = async () => {
-    if (ceramic.did !== undefined) {
-      const profile = await composeClient.executeQuery(`
-        query {
-          viewer {
-            id
-            basicProfile {
-              id
-              name
-              username
-            }
-          }
-        }
-      `);
-      localStorage.setItem("viewer", profile?.data?.viewer?.id)
-
-      setProfile(profile?.data?.viewer?.basicProfile)
-    }
+    await authenticateCeramic(ceramic, composeClient)
   }
 
   // Update to include refresh on auth
   useEffect(() => {
-    console.log(localStorage.getItem('logged_in'))
-    if (localStorage.getItem('logged_in')) {
+    if (localStorage.getItem('logged_in' === true)) {
       handleLogin()
-      // getProfile()
+    }
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+
+    const popup = document.getElementById('popup')
+    if (popup.style.display === "none") {
+      //change the logo here
+      setLoggedIn(true)
     }
   }, [])
 
   return (
-    <div> <AuthPrompt />
-      <div className="container">
-        <CeramicWrapper>
-          <div className="body">
-            <Component {...pageProps} ceramic />
-          </div>
-        </CeramicWrapper>
-      </div>
+    <div>
+      <AuthPrompt />
+      <ApolloProvider client={apolloClient}>
+        <div>
+          <CeramicWrapper>
+            <div>
+              <Component {...pageProps} loggedIn={loggedIn} />
+            </div>
+          </CeramicWrapper>
+        </div>
+      </ApolloProvider>
     </div>
   );
 }

@@ -5,10 +5,6 @@ import { getResolver } from 'key-did-resolver'
 import { DID } from "dids";
 import { DIDSession } from "did-session";
 import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
-import { SolanaWebAuth, getAccountIdByNetwork } from '@didtools/pkh-solana'
-import { StreamID } from "@ceramicnetwork/streamid";
-import { ModelInstanceDocument } from "@composedb/types";
-import { makeCeramicDaemon } from "@ceramicnetwork/cli/lib/__tests__/make-ceramic-daemon";
 
 const DID_SEED_KEY = 'ceramic:did_seed'
 
@@ -29,11 +25,10 @@ export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeC
   const popup = document.getElementById('popup')
   if (logged_in == "true") {
     if (popup) {
-      popup.classList.add('hidden');
+      popup.style.display = "none"
     }
   }
   let auth_type = localStorage.getItem("ceramic:auth_type")
-  console.log(auth_type)
   if (auth_type == "key") {
     authenticateKeyDID(ceramic, compose)
   }
@@ -99,8 +94,9 @@ const authenticateEthPKH = async (ceramic: CeramicApi, compose: ComposeClient) =
      *        This is not done here to allow you to add more datamodels to your application.
      */
 
+    const oneWeek = 60 * 60 * 24 * 7
     // TODO: Switch to explicitly authorized resources. This sets a bad precedent.
-    session = await DIDSession.authorize(authMethod, { resources: compose.resources })
+    session = await DIDSession.authorize(authMethod, { resources: compose.resources, expiresInSecs: oneWeek })
     // Set the session in localStorage.
     localStorage.setItem('ceramic:eth_did', session.serialize());
   }

@@ -14,6 +14,7 @@ type Card
     resourceId: StreamID @documentReference(model: "IcarusResource")
     resource: IcarusResource @relationDocument(property: "resourceId")
     pageYOffset: Float
+    scrollHeight: Float
     srcUrl: String @string(minLength: 1, maxLength: 3000)
     deleted: Boolean
 }
