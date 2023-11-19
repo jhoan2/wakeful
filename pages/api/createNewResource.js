@@ -99,11 +99,9 @@ const handler = async (req, res) => {
                   }
                   `)
 
-                console.log(connectResourceToAccount)
-
                 return res.status(200).json({ newResourceId: newResourceId })
             } catch (error) {
-                return res.status(500).send(error)
+                return res.status(500).send({ message: error.message })
             }
         default:
             res.setHeader('Allow', ['GET, POST'])
