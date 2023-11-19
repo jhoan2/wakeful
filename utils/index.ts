@@ -21,13 +21,6 @@ declare global {
  * @returns Promise<DID-Session> - The User's authenticated sesion.
  */
 export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeClient) => {
-  let logged_in = localStorage.getItem('logged_in')
-  const popup = document.getElementById('popup')
-  if (logged_in == "true") {
-    if (popup) {
-      popup.style.display = "none"
-    }
-  }
   let auth_type = localStorage.getItem("ceramic:auth_type")
   if (auth_type == "key") {
     authenticateKeyDID(ceramic, compose)
