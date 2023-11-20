@@ -1,0 +1,7 @@
+type Card @loadModel(id: "kjzl6hvfrbw6c7o4n0jwmtsq3or3rr9z0f7y9u80va4fnxeh0f4bcrieic0aepb") {
+  id: ID!
+}
+
+type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239") {
+  cards: [Card] @relationFrom(model: "Card", property: "resourceId")
+}
