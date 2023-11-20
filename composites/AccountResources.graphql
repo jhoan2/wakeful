@@ -1,0 +1,10 @@
+type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239") {
+  id: ID!
+}
+
+type AccountResources @createModel(accountRelation: LIST, description: "Resources that belong to an account") 
+  @createIndex(fields: [{ path: ["recipient"]} ]){
+  recipient: DID! @accountReference
+  resourceId: StreamID @documentReference(model: "IcarusResource")
+  resource: IcarusResource @relationDocument(property: "resourceId")
+}
