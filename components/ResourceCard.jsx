@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-export default function Card({ resource }) {
+export default function Resource({ resource }) {
     const { id, title, cid } = resource.node.resource
     return (
         <Link href={`/resource/${id}`} className="m-3 flex flex-col bg-white border shadow-sm max-w-sm rounded-xl group hover:shadow-lg transition dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
