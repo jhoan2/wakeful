@@ -14,7 +14,7 @@ export default function SideBar({ page }) {
         localStorage.removeItem('ceramic:eth_did')
         localStorage.removeItem('did')
         localStorage.removeItem('ceramic:auth_type')
-        router.push('/')
+        window.location.reload()
     }
 
     return (
