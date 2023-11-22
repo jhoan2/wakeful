@@ -50,12 +50,6 @@
          offset="1"
          id="stop18" />
     </linearGradient>
-    <rect
-       x="207"
-       y="515"
-       width="421"
-       height="174"
-       id="rect2" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient17"
@@ -87,11 +81,20 @@
        transform="rotate(90)" />
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,4.1536588,7.9260143)"
-       id="text2"
-       style="font-size:96px;white-space:pre;shape-inside:url(#rect2);display:inline;fill:#94a3b8;fill-opacity:1"><tspan
-         x="207"
-         y="602.58371"
-         id="tspan2">idealite</tspan></text>
+       style="font-size:64.8099px;fill:#552200;stroke-width:0.675102"
+       x="37.183731"
+       y="127.46549"
+       id="text1"
+       transform="scale(0.91510337,1.0927727)"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="fill:#552200;stroke-width:0.675102"
+         x="37.183731"
+         y="127.46549">IDEA</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#552200;stroke-width:0.675102"
+         x="37.183731"
+         y="208.47786"
+         id="tspan2">LITE</tspan></text>
   </g>
 </svg>
