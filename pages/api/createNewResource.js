@@ -70,14 +70,23 @@ const handler = async (req, res) => {
                 input.cid = fileCid
             }
 
-            try {
-                let variableValues = {
-                    "i": {
-                        "content": input
+            let variableValues = {
+                "i": {
+                    "content": input
+                }
+            }
+            let connectResourceAccountValues = {
+                "i": {
+                    "content": {
+                        recipient: clientMutationId,
+                        resourceId: null,
+                        url: url,
+                        createdAt: createdAt,
+                        updatedAt: updatedAt
                     }
                 }
-
-                const newResourceObj = await composeClient.executeQuery(`
+            }
+            composeClient.executeQuery(`
                     mutation CreateNewResource ($i: CreateIcarusResourceInput!) {
                       createIcarusResource(
                         input: $i
@@ -87,22 +96,27 @@ const handler = async (req, res) => {
                         }
                       }
                     }
-                  `, variableValues);
-                const newResourceId = newResourceObj.data.createIcarusResource.document.id
-                const connectResourceToAccount = await composeClient.executeQuery(`
-                  mutation MyMutation {
-                    createAccountResources(input: {content: {recipient: "${clientMutationId}", resourceId: "${newResourceId}"}}) {
-                      document {
-                        id
-                      }
-                    }
-                  }
-                  `)
-
-                return res.status(200).json({ newResourceId: newResourceId })
-            } catch (error) {
-                return res.status(500).send({ message: error.message })
-            }
+                  `, variableValues)
+                .then(newResourceObj => {
+                    connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIcarusResource.document.id
+                    return composeClient.executeQuery(`
+                        mutation MyMutation ($i: CreateAccountResourcesInput!) {
+                          createAccountResources(
+                            input: $i
+                          ) {
+                            document {
+                              id
+                            }
+                          }
+                        }
+                        `, connectResourceAccountValues)
+                }).then(connectResourceToAccountResult => {
+                    console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createAccountResources)
+                    return res.status(200).json({ newResourceId: connectResourceAccountValues.i.content.resourceId })
+                })
+                .catch(error => {
+                    return res.status(500).send({ message: error.message })
+                })
         default:
             res.setHeader('Allow', ['GET, POST'])
             res.status(405).end(`Method ${req.method} is not allowed.`)
