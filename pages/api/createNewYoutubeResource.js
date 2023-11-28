@@ -8,96 +8,109 @@ import { Ed25519Provider } from "key-did-provider-ed25519";
 import KeyResolver from "key-did-resolver";
 
 const handler = async (req, res) => {
-    const ceramic = new CeramicClient('http://localhost:7007')
+  const ceramic = new CeramicClient('http://localhost:7007')
 
-    //instantiate a composeDB client instance
-    const composeClient = new ComposeClient({
-        ceramic: 'http://localhost:7007',
-        definition: definition
+  //instantiate a composeDB client instance
+  const composeClient = new ComposeClient({
+    ceramic: 'http://localhost:7007',
+    definition: definition
+  });
+  const client = new Web3Storage({ token: process.env.WEB_3_STORAGE_TOKEN });
+  const { clientMutationId, url, title, createdAt, updatedAt, cid } = req.body
+  const uniqueKey = process.env.ADMIN_DID_KEY;
+  let input = {
+    url: url,
+    title: title,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+    cid: cid,
+    clientMutationId: clientMutationId
+  }
+
+  //authenticate developer DID in order to create a write transaction
+  const authenticateDID = async (seed) => {
+    const key = fromString(seed, "base16");
+    const provider = new Ed25519Provider(key);
+    const staticDid = new DID({
+      // @ts-expect-error: Ignore type error
+      resolver: KeyResolver.getResolver(),
+      provider
     });
-    const client = new Web3Storage({ token: process.env.WEB_3_STORAGE_TOKEN });
-    const { clientMutationId, url, title, createdAt, updatedAt, cid } = req.body
-    const uniqueKey = process.env.ADMIN_DID_KEY;
-    let input = {
-        url: url,
-        title: title,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        cid: cid,
-        clientMutationId: clientMutationId
-    }
+    await staticDid.authenticate();
+    ceramic.did = staticDid;
+    return staticDid;
+  }
 
-    //authenticate developer DID in order to create a write transaction
-    const authenticateDID = async (seed) => {
-        const key = fromString(seed, "base16");
-        const provider = new Ed25519Provider(key);
-        const staticDid = new DID({
-            // @ts-expect-error: Ignore type error
-            resolver: KeyResolver.getResolver(),
-            provider
-        });
-        await staticDid.authenticate();
-        ceramic.did = staticDid;
-        return staticDid;
+  try {
+    if (uniqueKey) {
+      const did = await authenticateDID(uniqueKey);
+      composeClient.setDID(did);
     }
+  } catch (e) {
+    console.log({ message: e.message })
+  }
 
-    try {
-        if (uniqueKey) {
-            const did = await authenticateDID(uniqueKey);
-            composeClient.setDID(did);
+
+  switch (req.method) {
+    case 'GET':
+      try {
+        return res.status(200).json({ noteTree: 'success' })
+      } catch (error) {
+        return res.status(500).send(error)
+      }
+    case 'POST':
+      let variableValues = {
+        "i": {
+          "content": input
         }
-    } catch (e) {
-        console.log({ message: e.message })
-    }
+      }
 
-
-    switch (req.method) {
-        case 'GET':
-            try {
-                return res.status(200).json({ noteTree: 'success' })
-            } catch (error) {
-                return res.status(500).send(error)
-            }
-        case 'POST':
-            try {
-                let variableValues = {
-                    "i": {
-                        "content": input
-                    }
+      let connectResourceAccountValues = {
+        "i": {
+          "content": {
+            recipient: clientMutationId,
+            resourceId: null,
+            url: url,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+          }
+        }
+      }
+      composeClient.executeQuery(`
+              mutation CreateNewResource ($i: CreateIcarusResourceInput!) {
+                createIcarusResource(
+                  input: $i
+                ) {
+                  document {
+                    id
+                  }
                 }
-
-                const newResourceObj = await composeClient.executeQuery(`
-                    mutation CreateNewResource ($i: CreateIcarusResourceInput!) {
-                      createIcarusResource(
-                        input: $i
-                      ) {
-                        document {
-                          id
-                        }
-                      }
-                    }
-                  `, variableValues);
-
-                const newResourceId = newResourceObj.data.createIcarusResource.document.id
-                const connectResourceToAccount = await composeClient.executeQuery(`
-                  mutation MyMutation {
-                    createAccountResources(input: {content: {recipient: "${clientMutationId}", resourceId: "${newResourceId}"}}) {
+              }
+            `, variableValues)
+        .then(newResourceObj => {
+          connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIcarusResource.document.id
+          return composeClient.executeQuery(`
+                  mutation MyMutation ($i: CreateAccountResourcesInput!) {
+                    createAccountResources(
+                      input: $i
+                    ) {
                       document {
                         id
                       }
                     }
                   }
-                  `)
-
-
-                return res.status(200).json({ newResourceId: newResourceId })
-            } catch (error) {
-                return res.status(500).send(error)
-            }
-        default:
-            res.setHeader('Allow', ['GET, POST'])
-            res.status(405).end(`Method ${req.method} is not allowed.`)
-    }
+                  `, connectResourceAccountValues)
+        }).then(connectResourceToAccountResult => {
+          console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createAccountResources)
+          return res.status(200).json({ newResourceId: connectResourceAccountValues.i.content.resourceId })
+        })
+        .catch(error => {
+          return res.status(500).send({ message: error.message })
+        })
+    default:
+      res.setHeader('Allow', ['GET, POST'])
+      res.status(405).end(`Method ${req.method} is not allowed.`)
+  }
 }
 
 export default handler 
