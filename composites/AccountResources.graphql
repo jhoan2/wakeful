@@ -3,8 +3,12 @@ type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrk
 }
 
 type AccountResources @createModel(accountRelation: LIST, description: "Resources that belong to an account") 
-  @createIndex(fields: [{ path: ["recipient"]} ]){
+  @createIndex(fields: [{ path: ["recipient"]} ])
+  @createIndex(fields: [{ path: ["url"]} ]){
+  createdAt: DateTime
   recipient: DID! @accountReference
   resourceId: StreamID @documentReference(model: "IcarusResource")
   resource: IcarusResource @relationDocument(property: "resourceId")
+  url: String @string(minLength: 1, maxLength: 140)
+  updatedAt: DateTime
 }
