@@ -1,9 +1,9 @@
 import '../styles/globals.css'
 import { CeramicWrapper } from "../context";
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { useCeramicContext } from '../context';
-import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client'
-
+import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
+import { Toaster } from 'sonner';
 
 const MyApp = ({ Component, pageProps }) => {
   const clients = useCeramicContext()
@@ -31,6 +31,7 @@ const MyApp = ({ Component, pageProps }) => {
           <CeramicWrapper>
             <div>
               <Component {...pageProps} />
+              <Toaster richColors />
             </div>
           </CeramicWrapper>
         </div>
