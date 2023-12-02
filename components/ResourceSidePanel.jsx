@@ -78,6 +78,7 @@ export default function ResourceSidePanel({ data }) {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`bg-gray-200 hover:bg-gray-300 text-gray-700 rounded fixed top-1/2  ease-in-out duration-300 transform -translate-y-1/2 z-50 ${isOpen ? 'right-3/4 md:right-1/2' : 'right-0'}`}
+                title={'Edit Resource'}
             >
                 {isOpen ?
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M10.0859 12.0001L5.29297 16.793L6.70718 18.2072L12.9143 12.0001L6.70718 5.79297L5.29297 7.20718L10.0859 12.0001ZM17.0001 6.00008L17.0001 18.0001H15.0001L15.0001 6.00008L17.0001 6.00008Z"></path></svg>
