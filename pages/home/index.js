@@ -6,7 +6,7 @@ import { authenticateCeramic } from "../../utils";
 import SideBar from '../../components/SideBar';
 import HomeCardList from '../../components/HomeCardList';
 import BottomNavBar from '../../components/BottomNavBar';
-import SkeletonCard from '../../components/SkeletonCard';
+import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ErrorPage from '../../components/ErrorPage';
 
@@ -14,34 +14,33 @@ export default function index() {
   const clients = useCeramicContext();
   const { ceramic, composeClient } = clients;
   const router = useRouter()
-  const handleLogout = () => {
-    localStorage.setItem("logged_in", "false")
-    localStorage.removeItem('ceramic:did_seed')
-    localStorage.removeItem('ceramic:eth_did')
-    localStorage.removeItem('did')
-    localStorage.removeItem('ceramic:auth_type')
-    router.push('/')
-  }
 
   const handleLogin = () => {
     authenticateCeramic(ceramic, composeClient)
   }
 
   const GET_CARDS_PER_URL_PER_USER = gql`
-  query MyQuery ($account: String){
-    accountResourcesIndex(first: 10, filters: {where: {recipient: {equalTo: $account}}}) {
+  query GetCardsPerUrlPerUser ($account: String, $cursor: String){
+    accountResourcesIndex (first: 5, filters: {where: {recipient: {equalTo: $account}}}, after: $cursor){
       edges {
         node {
           resource {
             cid
             title
             id
+            url
           }
         }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }
   `
+
+
 
   useEffect(() => {
     if (localStorage.getItem('ceramic:eth_did')) {
@@ -57,14 +56,26 @@ export default function index() {
   if (error) return <ErrorPage message={error.message} />;
 
   const resources = data?.accountResourcesIndex.edges
+  const pageInfo = data?.accountResourcesIndex.pageInfo
+
+  const getMoreResources = (pageInfo) => {
+    if (pageInfo.hasNextPage) {
+      fetchMore({
+        variables: {
+          cursor: pageInfo.endCursor,
+        },
+      });
+    }
+  }
+
   return (
     <div className='flex h-screen'>
-      <SideBar />
+      <SideBar page={'home'} />
       {loading ?
         (<div className='md:flex'>
-          <SkeletonCard />
-          <SkeletonCard />
-          <SkeletonCard />
+          <SkeletonHomeCard />
+          <SkeletonHomeCard />
+          <SkeletonHomeCard />
         </div>)
         :
         (
@@ -72,18 +83,22 @@ export default function index() {
             <div className='flex-grow flex-row  overflow-auto sm:justify-center'>
               <HomeCardList resources={resources} getMoreResources={getMoreResources} pageInfo={pageInfo} />
               <div className=' pb-24 md:pb-4 p-4'>
-                <button
-                  className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
-                  onClick={() => getMoreResources(pageInfo)}>
-                  Load more
-                </button>
+                {pageInfo.hasNextPage ?
+                  <button
+                    className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
+                    onClick={() => getMoreResources(pageInfo)}
+                  >
+                    Load more
+                  </button> :
+                  null
+                }
               </div>
             </div>
             :
             <NoContent src='/no-content-cat.png' />
         )
       }
-      <BottomNavBar />
+      <BottomNavBar page={'home'} />
     </div>
   )
 }
