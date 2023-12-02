@@ -4,7 +4,7 @@ import { useCeramicContext } from '../../context';
 import { useQuery, gql } from '@apollo/client';
 import { authenticateCeramic } from "../../utils";
 import SideBar from '../../components/SideBar';
-import CardList from '../../components/CardList';
+import HomeCardList from '../../components/HomeCardList';
 import BottomNavBar from '../../components/BottomNavBar';
 import SkeletonCard from '../../components/SkeletonCard';
 import NoContent from '../../components/NoContent';
@@ -69,7 +69,16 @@ export default function index() {
         :
         (
           resources.length > 0 ?
-            <CardList resources={resources} />
+            <div className='flex-grow flex-row  overflow-auto sm:justify-center'>
+              <HomeCardList resources={resources} getMoreResources={getMoreResources} pageInfo={pageInfo} />
+              <div className=' pb-24 md:pb-4 p-4'>
+                <button
+                  className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
+                  onClick={() => getMoreResources(pageInfo)}>
+                  Load more
+                </button>
+              </div>
+            </div>
             :
             <NoContent src='/no-content-cat.png' />
         )
