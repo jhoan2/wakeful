@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
+import { relayStylePagination } from "@apollo/client/utilities";
+
 
 const MyApp = ({ Component, pageProps }) => {
   const clients = useCeramicContext()
@@ -22,7 +24,17 @@ const MyApp = ({ Component, pageProps }) => {
     })
   })
 
-  const apolloClient = new ApolloClient({ cache: new InMemoryCache(), link })
+  const apolloClient = new ApolloClient({
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            accountResourcesIndex: relayStylePagination(),
+          },
+        },
+      },
+    }), link
+  })
 
   return (
     <div>
