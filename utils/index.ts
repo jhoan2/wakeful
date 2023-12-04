@@ -23,12 +23,13 @@ declare global {
 export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeClient) => {
   let auth_type = localStorage.getItem("ceramic:auth_type")
   if (auth_type == "key") {
-    authenticateKeyDID(ceramic, compose)
+    await authenticateKeyDID(ceramic, compose)
   }
   if (auth_type == "eth") {
-    authenticateEthPKH(ceramic, compose)
+    await authenticateEthPKH(ceramic, compose)
   }
   localStorage.setItem('logged_in', "true");
+  return true
 }
 
 const authenticateKeyDID = async (ceramic: CeramicApi, compose: ComposeClient) => {
