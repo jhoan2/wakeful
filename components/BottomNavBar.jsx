@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-export default function BottomNavBar({ page }) {
+export default function BottomNavBar({ page, setShowModal }) {
     return (
         <div className="fixed inset-x-0 bottom-0 bg-white shadow md:hidden ">
             <nav className="flex justify-between max-w-md mx-auto p-4 bg-slate-100">
