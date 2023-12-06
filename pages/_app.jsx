@@ -32,6 +32,11 @@ const MyApp = ({ Component, pageProps }) => {
             accountResourcesIndex: relayStylePagination(),
           },
         },
+        IcarusResource: {
+          fields: {
+            cards: relayStylePagination(),
+          }
+        }
       },
     }), link
   })
