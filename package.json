@@ -21,6 +21,7 @@
     "@composedb/client": "^0.5.2",
     "@didtools/cacao": "^2.1.0",
     "@didtools/pkh-ethereum": "^0.4.1",
+    "@pinata/sdk": "^2.1.0",
     "@tiptap/extension-bubble-menu": "^2.1.13",
     "@tiptap/pm": "^2.1.13",
     "@tiptap/react": "^2.1.13",
