@@ -32,9 +32,8 @@
     "allow-queries-before-historical-sync": true,
     "models": [
       "kjzl6hvfrbw6c9ra7nw6wvjdlu89gmqzz8x2ra4h9yttjsf30o24f89ov1ngcql",
-      "kjzl6hvfrbw6c7njz9d8d2h5pqnbxy0c0qcdjkncnzg5rq5nwa4g5geqae1kkxo",
-      "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239",
-      "kjzl6hvfrbw6ca0wicsg3fnkxkvkquf7nwwnsrljvg31rd4xp8ocwbnf3zw1pkk"
+      "kjzl6hvfrbw6c6cdsofc19nczvmyofzx5ileatfgaqcbr68cvpguzy76iqkteed",
+      "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239"
     ]
   }
 }

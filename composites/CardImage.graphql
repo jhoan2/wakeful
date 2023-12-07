@@ -1,7 +1,0 @@
-type Image @loadModel(id: "kjzl6hvfrbw6ca0wicsg3fnkxkvkquf7nwwnsrljvg31rd4xp8ocwbnf3zw1pkk") {
-  id: ID!
-}
-
-type Card @loadModel(id: "kjzl6hvfrbw6c7njz9d8d2h5pqnbxy0c0qcdjkncnzg5rq5nwa4g5geqae1kkxo") {
-  images: [Image] @relationFrom(model: "Image", property: "cardId")
-}
