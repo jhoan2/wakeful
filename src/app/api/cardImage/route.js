@@ -24,12 +24,12 @@ export async function POST(request) {
             body: data,
         })
 
-        const { IpfsHash } = await res.json();
+        const pinataData = await res.json();
 
-        return Response.json({ cid: IpfsHash }, { status: 200 });
+        return Response.json({ pinataData: pinataData }, { status: 200 });
     } catch (e) {
         console.log(e);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+        return Response.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }
 
@@ -43,10 +43,10 @@ export async function GET() {
         })
         const resData = await res.json();
         const files = resData.rows[0]
-        return NextResponse.json({ files }, { status: 200 });
+        return Response.json({ files }, { status: 200 });
     } catch (e) {
         console.log(e);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+        return Response.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 
 }

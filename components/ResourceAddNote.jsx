@@ -55,9 +55,8 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json();
-            const { cid } = data;
-
-            return { cid: cid }
+            const { pinataData } = data;
+            return pinataData;
         } catch (error) {
             console.log(error);
         }
@@ -82,8 +81,8 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
 
     const handleSubmit = async () => {
         const content = editor.getHTML()
-        const data = await pinFileToIPFS(file);
-        const { cid } = data;
+        const data = await pinFileToIPFS(image);
+        const { IpfsHash, PinSize } = data;
 
         addNote({
             variables: {
@@ -91,10 +90,12 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
                     content: {
                         createdAt: new Date().toISOString(),
                         updatedAt: new Date().toISOString(),
-                        resourceId: resourceId,
                         annotation: content || null,
-                        cid: cid || null,
-                        url: resourceUrl
+                        cid: IpfsHash || null,
+                        mimeType: image.type || null,
+                        pinSize: PinSize || null,
+                        resourceId: resourceId,
+                        url: resourceUrl,
                     }
                 }
             }
