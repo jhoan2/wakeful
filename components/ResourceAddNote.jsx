@@ -81,23 +81,36 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
 
     const handleSubmit = async () => {
         const content = editor.getHTML()
-        const data = await pinFileToIPFS(image);
-        const { IpfsHash, PinSize } = data;
+        let IpfsHash, PinSize;
+
+        if (image) {
+            const data = await pinFileToIPFS(image);
+            IpfsHash = data?.IpfsHash;
+            PinSize = data?.PinSize;
+        }
+
+        let noteContent = {
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            annotation: content,
+            cid: IpfsHash,
+            mimeType: image?.type,
+            pinSize: PinSize,
+            resourceId: resourceId,
+            url: resourceUrl,
+            deleted: false,
+        }
+
+        for (const key in noteContent) {
+            if (noteContent[key] === undefined || noteContent[key] === null) {
+                delete noteContent[key];
+            }
+        }
 
         addNote({
             variables: {
                 input: {
-                    content: {
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString(),
-                        annotation: content || null,
-                        cid: IpfsHash || null,
-                        mimeType: image.type || null,
-                        pinSize: PinSize || null,
-                        resourceId: resourceId,
-                        url: resourceUrl,
-                        deleted: false,
-                    }
+                    content: noteContent
                 }
             }
         })
