@@ -96,6 +96,7 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
                         pinSize: PinSize || null,
                         resourceId: resourceId,
                         url: resourceUrl,
+                        deleted: false,
                     }
                 }
             }
