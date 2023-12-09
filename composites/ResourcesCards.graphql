@@ -3,5 +3,5 @@ type Card @loadModel(id: "kjzl6hvfrbw6c6cdsofc19nczvmyofzx5ileatfgaqcbr68cvpguzy
 }
 
 type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239") {
-  cards: [Card] @relationFrom(model: "Card", property: "cardId")
+  cards: [Card] @relationFrom(model: "Card", property: "resourceId")
 }
