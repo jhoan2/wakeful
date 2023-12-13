@@ -2,6 +2,7 @@ import { ComposeClient } from '@composedb/client';
 import { CeramicClient } from '@ceramicnetwork/http-client'
 import { definition } from '../../src/__generated__/definition';
 import { fromString } from 'uint8arrays/from-string'
+import { Web3Storage } from 'web3.storage';
 import { DID } from "dids";
 import { Ed25519Provider } from "key-did-provider-ed25519";
 import KeyResolver from "key-did-resolver";
@@ -14,7 +15,8 @@ const handler = async (req, res) => {
         ceramic: 'http://localhost:7007',
         definition: definition
     });
-    const { clientMutationId, url, title, createdAt, updatedAt } = req.body
+    const client = new Web3Storage({ token: process.env.WEB_3_STORAGE_TOKEN });
+    const { imgUrl, clientMutationId, url, title, createdAt, updatedAt } = req.body
     const uniqueKey = process.env.ADMIN_DID_KEY;
     let input = {
         url: url,
@@ -56,6 +58,18 @@ const handler = async (req, res) => {
                 return res.status(500).send(error)
             }
         case 'POST':
+            if (imgUrl) {
+                const response = await fetch(imgUrl)
+                if (!response.ok) {
+                    input.cid = 'https://w3s.link/ipfs/bafybeifq45vncec2g7awfflvipemzprv77g4lvgvvt46aeaeqepmqgey2i'
+                }
+                const blob = await response.blob();
+                const file = new File([blob], `image.jpg`, { type: 'image/jpeg' });
+                //this returns an object with the cid, need to destructure it out. 
+                const fileCid = await client.put([file])
+                input.cid = fileCid
+            }
+
             let variableValues = {
                 "i": {
                     "content": input
