@@ -33,20 +33,3 @@ export async function POST(request) {
     }
 }
 
-export async function GET() {
-    try {
-        const res = await fetch(process.env.PINATA_PRIVATE_GATEWAY_URL, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${process.env.PINATA_JWT}`,
-            },
-        })
-        const resData = await res.json();
-        const files = resData.rows[0]
-        return Response.json({ files }, { status: 200 });
-    } catch (e) {
-        console.log(e);
-        return Response.json({ error: 'Internal Server Error' }, { status: 500 })
-    }
-
-}
