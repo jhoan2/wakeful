@@ -43,9 +43,6 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <div>
-      <Head>
-        <link rel="icon" href="/icon128.png" />
-      </Head>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
