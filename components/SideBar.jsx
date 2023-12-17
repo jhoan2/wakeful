@@ -21,9 +21,11 @@ export default function SideBar({ page }) {
     return (
         <div id="sidebar-mini" className="flex flex-col hs-overlay hs-overlay-open:translate-x-0 -translate-x-full h-full transition-all duration-300 transform hidden z-[1] bg-slate-100 border-e border-gray-200 md:block md:translate-x-0 md:end-auto md:bottom-0  dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col justify-center items-center gap-y-2 py-4">
-                <div className="mb-4">
-                    <Image src='/icon128.png' alt='idealite logo' width={64} height={64} />
-                </div>
+                <Link href={'/'}>
+                    <div className="mb-4">
+                        <Image src='/icon128.png' alt='idealite logo' width={64} height={64} />
+                    </div>
+                </Link>
                 <div className="hs-tooltip inline-block [--placement:right]">
                     <Link href={'/home'}>
                         <button title='Home' className={`hs-tooltip-toggle w-16 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'home' ? 'bg-gray-400' : 'bg-slate-100'}`}>
