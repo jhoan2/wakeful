@@ -189,7 +189,7 @@ export default function ResourceCard({ card }) {
             }
             {cid ?
                 <div className='mb-4'>
-                    <Image src={`${process.env.NEXT_PRIVATE_GATEWAY}/${cid}?img-width=240`} width={240} height={240} />
+                    <Image src={`https://purple-defensive-anglerfish-674.mypinata.cloud/ipfs/${cid}?img-width=240`} width={240} height={240} />
                 </div>
                 : null
             }
