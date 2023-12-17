@@ -5,7 +5,7 @@ import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
-
+import Head from 'next/head';
 
 const MyApp = ({ Component, pageProps }) => {
   const clients = useCeramicContext()
@@ -43,6 +43,9 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <div>
+      <Head>
+        <link rel="icon" href="/icon128.png" />
+      </Head>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
