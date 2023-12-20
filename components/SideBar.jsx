@@ -23,7 +23,7 @@ export default function SideBar({ page }) {
             <div className="flex flex-col justify-center items-center gap-y-2 py-4">
                 <Link href={'/'}>
                     <div className="mb-4">
-                        <Image src='/icon128.png' alt='idealite logo' width={64} height={64} />
+                        <Image src='/icon48.png' alt='idealite logo' width={64} height={64} />
                     </div>
                 </Link>
                 <div className="hs-tooltip inline-block [--placement:right]">

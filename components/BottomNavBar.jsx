@@ -27,7 +27,7 @@ export default function BottomNavBar({ page, setShowModal }) {
                 }
                 <Link href={'/'} className="flex flex-col items-center">
                     <button title='Projects' className={`hs-tooltip-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}>
-                        <img src={'/icon128.png'} />
+                        <img src={'/icon48.png'} />
                     </button>
                     <span className="text-xs">Idealite</span>
                 </Link>

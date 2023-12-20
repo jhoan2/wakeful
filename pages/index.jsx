@@ -23,7 +23,7 @@ const Home = () => {
     <>
       <Head>
         <title>Idealite</title>
-        <link rel="icon" href="/icon128.png" />
+        <link rel="icon" href="/icon16.png" />
       </Head>
       <div class="absolute inset-0 -z-10 h-full w-full bg-white overflow-hidden [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
         <div className="px-6 pt-6 lg:px-8">
