@@ -10,12 +10,12 @@ export default function BottomNavBar({ page, setShowModal }) {
                     </button>
                     <span className="text-xs">Home</span>
                 </Link>
-                <Link href={'/projects'} className="flex flex-col items-center">
+                {/* <Link href={'/projects'} className="flex flex-col items-center">
                     <button title='Projects' className={`hs-tooltip-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'projects' ? 'bg-gray-400' : 'bg-slate-100'}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM8 19H20V11H8V19ZM6 19V10C6 9.44772 6.44772 9 7 9H20V7H11.5858L9.58579 5H4V19H6Z"></path></svg>
                     </button>
                     <span className="text-xs">Projects</span>
-                </Link>
+                </Link> */}
                 {(page === 'resource') ?
                     <div className="flex flex-col items-center">
                         <button title='Open Add Note' onClick={() => setShowModal(true)} className={`hs-tooltip-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'projects' ? 'bg-gray-400' : 'bg-slate-100'}`}>
@@ -25,15 +25,11 @@ export default function BottomNavBar({ page, setShowModal }) {
                     :
                     null
                 }
-                <a href="#" className="flex flex-col items-center">
-                    <svg className="h-6 w-6" /* Add your SVG icon here */></svg>
-                    <span className="text-xs">Notifications</span>
-                </a>
                 <Link href={'/'} className="flex flex-col items-center">
                     <button title='Projects' className={`hs-tooltip-toggle w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}>
-                        <img src={'/idealite-day-double.svg'} />
+                        <img src={'/icon128.png'} />
                     </button>
-                    <span className="text-xs">Front Page</span>
+                    <span className="text-xs">Idealite</span>
                 </Link>
             </nav>
         </div>
