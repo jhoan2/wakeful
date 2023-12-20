@@ -2,13 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import AuthPrompt from './did-select-popup'
 import { useCeramicContext } from '../context'
-import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 export default function SideBar({ page }) {
     const clients = useCeramicContext();
     const { ceramic, composeClient } = clients
-    const router = useRouter()
     const handleLogout = () => {
         localStorage.setItem("logged_in", "false")
         localStorage.removeItem('ceramic:did_seed')

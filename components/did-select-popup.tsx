@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { authenticateCeramic } from '../utils'
 import { useCeramicContext } from "../context";
 import { useRouter } from "next/router";
