@@ -27,40 +27,12 @@ export default function ResourceCard({ card }) {
         }
       }`
 
-    const [sendUpdateNote, { data, loading, error }] = useMutation(UPDATE_NOTE);
-
-    const GET_CARDS_FOR_RESOURCE = gql`
-      query MyQuery ($resourceId: ID!, $account: ID!) {
-        node(id: $resourceId) {
-          ... on IcarusResource {
-            author
-            createdAt
-            description
-            doi
-            id
-            mediaType
-            isbn
-            title
-            updatedAt
-            url
-            cards(account: $account, last: 10, filters: {where: {deleted: {equalTo: false}}}) {
-              edges {
-                node {
-                  id
-                  annotation
-                  quote
-                }
-              }
-            }
-          }
-        }
-      }
-        `
+    const [sendUpdateNote, { data, loading, error }] = useMutation(UPDATE_NOTE, {
+        refetchQueries: ['getCardsForResource'],
+    });
 
     const [sendDeleteNote, { data: deleteData, loading: deleteLoading, error: deleteError }] = useMutation(UPDATE_NOTE, {
-        refetchQueries: [
-            { query: GET_CARDS_FOR_RESOURCE }
-        ]
+        refetchQueries: ['getCardsForResource'],
     });
 
     const deleteNote = async () => {

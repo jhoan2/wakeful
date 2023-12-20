@@ -18,7 +18,8 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
       }`
 
     const [addNote, { data, loading, error }] = useMutation(ADD_NOTE, {
-        onCompleted: () => setShowModal(false)
+        onCompleted: () => setShowModal(false),
+        refetchQueries: ['getCardsForResource'],
     });
 
     const editor = useEditor({
