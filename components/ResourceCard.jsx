@@ -149,7 +149,7 @@ export default function ResourceCard({ card }) {
     }
 
     return (
-        <div className="m-3 relative flex flex-col bg-white border shadow-sm max-w-sm rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+        <div className="m-3 relative flex flex-col bg-white border shadow-sm max-w-xs md:max-w-md rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
             <button className='absolute top-2 right-2 text-red-300 hover:bg-red-600 rounded-md p-1' onClick={() => deleteNote()}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-4 h-4'><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
             </button>

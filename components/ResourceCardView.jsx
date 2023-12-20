@@ -4,7 +4,7 @@ import ResourceAddNote from './ResourceAddNote'
 
 export default function ResourceCardView({ cards, resourceUrl, resourceId, setShowModal, showModal }) {
     return (
-        <div className='flex flex-wrap sm:justify-center pb-24 justify-start md:pb-0 mx-auto p-4 '>
+        <div className='flex flex-wrap  pb-24 justify-center md:pb-0 mx-auto p-4'>
             {cards.map((card) => {
                 return <ResourceCard key={card.node.id} card={card} />
             })}
