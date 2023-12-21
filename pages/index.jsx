@@ -35,9 +35,11 @@ const Home = () => {
               </div>
             </nav>
             <main>
-              <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8">
-                <p className='text-4xl'>This is what is what you get from using our product and how we help</p>
-                <p className='text-2xl text-gray-400'>This is more information about how this works</p>
+              <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8">
+                <div className='flex flex-col items-center space-y-8'>
+                  <p className='text-5xl md:text-8xl text-left md:text-center'>Learn better, together.</p>
+                  <p className='text-xl md:text-3xl text-gray-400'>Idealite is a community chasing their curiosities through a shared note-taking app workspace.</p>
+                </div>
                 <div className='flex flex-row space-x-2 items-center'>
                   <button class="bg-gray-100 inline-flex py-3 px-5 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 512 512">
