@@ -5,7 +5,8 @@ type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrk
 type Card 
     @createModel(accountRelation: LIST, description: "Blocks of text") 
     @createIndex(fields: [{ path: ["deleted"]} ])
-    @createIndex(fields: [{ path: ["url"]} ]) {
+    @createIndex(fields: [{ path: ["url"]} ])
+    @createIndex(fields: [{ path: ["updatedAt"]} ]) {
     account: DID! @documentAccount
     altText: String @string(minLength: 1, maxLength: 3000)
     annotation: String @string(minLength: 1, maxLength: 3000)

@@ -32,7 +32,7 @@ export default function resource() {
         title
         updatedAt
         url
-        cards(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor) {
+        cards(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
           edges {
             node {
               id

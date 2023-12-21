@@ -21,7 +21,7 @@ export default function index() {
 
   const GET_CARDS_PER_URL_PER_USER = gql`
   query GetCardsPerUrlPerUser ($account: String, $cursor: String){
-    accountResourcesIndex (first: 5, filters: {where: {recipient: {equalTo: $account}}}, after: $cursor){
+    accountResourcesIndex (after: $cursor, first: 5, filters: {where: {recipient: {equalTo: $account}}}, sorting: {updatedAt: DESC} ){
       edges {
         node {
           resource {
@@ -57,6 +57,7 @@ export default function index() {
 
   const resources = data?.accountResourcesIndex.edges
   const pageInfo = data?.accountResourcesIndex.pageInfo
+  console.log(pageInfo)
 
   const getMoreResources = (pageInfo) => {
     if (pageInfo.hasNextPage) {
