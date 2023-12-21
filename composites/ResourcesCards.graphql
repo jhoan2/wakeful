@@ -1,7 +1,7 @@
-type Card @loadModel(id: "kjzl6hvfrbw6c6cdsofc19nczvmyofzx5ileatfgaqcbr68cvpguzy76iqkteed") {
+type Card @loadModel(id: "kjzl6hvfrbw6cajg3cfb6qmfgofa42n4zv42wijqru1ltczyehxgbamycrdudpz") {
   id: ID!
 }
 
-type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239") {
+type IdealiteResource @loadModel(id: "kjzl6hvfrbw6c5lswatqis3e6nqalsz9hipxr6s1lzj4kdmnbd54jjuwiu7xg1x") {
   cards: [Card] @relationFrom(model: "Card", property: "resourceId")
 }

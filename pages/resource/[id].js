@@ -21,7 +21,7 @@ export default function resource() {
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
     node(id: $resourceId) {
-      ... on IcarusResource {
+      ... on IdealiteResource {
         author
         createdAt
         description

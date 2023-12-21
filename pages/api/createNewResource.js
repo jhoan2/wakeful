@@ -74,8 +74,8 @@ const handler = async (req, res) => {
                 }
             }
             composeClient.executeQuery(`
-                    mutation CreateNewResource ($i: CreateIcarusResourceInput!) {
-                      createIcarusResource(
+                    mutation CreateNewResource ($i: CreateIdealiteResourceInput!) {
+                      createIdealiteResource(
                         input: $i
                       ) {
                         document {
@@ -85,7 +85,7 @@ const handler = async (req, res) => {
                     }
                   `, variableValues)
                 .then(newResourceObj => {
-                    connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIcarusResource.document.id
+                    connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIdealiteResource.document.id
                     return composeClient.executeQuery(`
                         mutation MyMutation ($i: CreateAccountResourcesInput!) {
                           createAccountResources(

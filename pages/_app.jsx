@@ -32,7 +32,7 @@ const MyApp = ({ Component, pageProps }) => {
             accountResourcesIndex: relayStylePagination(),
           },
         },
-        IcarusResource: {
+        IdealiteResource: {
           fields: {
             cards: relayStylePagination(),
           }

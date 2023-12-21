@@ -1,4 +1,4 @@
-type IcarusResource 
+type IdealiteResource 
     @createModel(accountRelation: LIST, description: "Resource used to create blocks of text")
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])

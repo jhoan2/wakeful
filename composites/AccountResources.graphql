@@ -1,15 +1,15 @@
-type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239") {
+type IdealiteResource @loadModel(id: "kjzl6hvfrbw6c5lswatqis3e6nqalsz9hipxr6s1lzj4kdmnbd54jjuwiu7xg1x") {
   id: ID!
 }
 
-type AccountResources @createModel(accountRelation: LIST, description: "Resources that belong to an account") 
+type AccountResources @createModel(accountRelation: LIST, description: "Resources that belong to an Idealite account") 
   @createIndex(fields: [{ path: ["recipient"]} ])
   @createIndex(fields: [{ path: ["url"]} ])
   @createIndex(fields: [{ path: ["updatedAt"]} ]){
   createdAt: DateTime
   recipient: DID! @accountReference
-  resourceId: StreamID @documentReference(model: "IcarusResource")
-  resource: IcarusResource @relationDocument(property: "resourceId")
+  resourceId: StreamID @documentReference(model: "IdealiteResource")
+  resource: IdealiteResource @relationDocument(property: "resourceId")
   url: String @string(minLength: 1, maxLength: 140)
   updatedAt: DateTime
 }
