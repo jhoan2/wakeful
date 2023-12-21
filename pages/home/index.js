@@ -29,6 +29,7 @@ export default function index() {
             title
             id
             url
+            updatedAt
           }
         }
       }
