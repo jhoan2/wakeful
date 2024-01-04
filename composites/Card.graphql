@@ -1,20 +1,26 @@
-type IcarusResource @loadModel(id: "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239") {
+type IdealiteResource @loadModel(id: "kjzl6hvfrbw6c5lswatqis3e6nqalsz9hipxr6s1lzj4kdmnbd54jjuwiu7xg1x") {
     id: ID!
 }
 
 type Card 
-    @createModel(accountRelation: LIST, description: "Blocks of text") 
-    @createIndex(fields: [{ path: ["deleted"]} ]) {
+    @createModel(accountRelation: LIST, description: "Blocks of text for Idealite") 
+    @createIndex(fields: [{ path: ["deleted"]} ])
+    @createIndex(fields: [{ path: ["url"]} ])
+    @createIndex(fields: [{ path: ["updatedAt"]} ]) {
     account: DID! @documentAccount
-    annotation: String @string(minLength: 1, maxLength: 3000)
+    altText: String @string(minLength: 1, maxLength: 3000)
+    annotation: String @string(minLength: 1, maxLength: 10000)
     cid: String @string(minLength: 1, maxLength: 3000)
     createdAt: DateTime
     deleted: Boolean
+    mimeType: String @string(minLength: 1, maxLength: 140)
     pageYOffset: Float
-    quote: String @string(minLength: 1, maxLength: 3000)
-    resourceId: StreamID @documentReference(model: "IcarusResource")
-    resource: IcarusResource @relationDocument(property: "resourceId")
+    pinSize: Int
+    quote: String @string(minLength: 1, maxLength: 10000)
+    resourceId: StreamID @documentReference(model: "IdealiteResource")
+    resource: IdealiteResource @relationDocument(property: "resourceId")
     scrollHeight: Float
     updatedAt: DateTime
-    videoTime: String @string(minLength: 1, maxLength: 3000)
+    url: String @string(minLength: 1, maxLength: 140)
+    videoTime: String @string(minLength: 1, maxLength: 300)
 }

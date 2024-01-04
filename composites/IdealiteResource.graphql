@@ -1,7 +1,8 @@
-type IcarusResource 
+type IdealiteResource 
     @createModel(accountRelation: LIST, description: "Resource used to create blocks of text")
     @createIndex(fields: [{ path: ["url"]} ]) 
-    @createIndex(fields: [{ path: ["title"]} ]) {
+    @createIndex(fields: [{ path: ["title"]} ])
+    @createIndex(fields: [{ path: ["updatedAt"]} ]) {
     author: String @string(minLength: 1, maxLength: 140)
     cid: String @string(minLength: 1, maxLength: 140)
     clientMutationId: String @string(minLength: 1, maxLength: 140)

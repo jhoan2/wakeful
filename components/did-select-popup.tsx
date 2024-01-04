@@ -1,37 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { authenticateCeramic } from '../utils'
 import { useCeramicContext } from "../context";
-
+import { useRouter } from "next/router";
 const AuthPrompt = () => {
-  const [isVisible, setIsVisible] = useState(true);
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
+  const router = useRouter();
 
   const handleKeyDid = () => {
     localStorage.setItem("ceramic:auth_type", "key");
-    setIsVisible(false);
     // authenticateCeramic(ceramic, composeClient)
   };
 
-  const handleEthPkh = () => {
+  const handleEthPkh = async () => {
     localStorage.setItem("ceramic:auth_type", "eth");
-    setIsVisible(false);
-    authenticateCeramic(ceramic, composeClient)
+    await authenticateCeramic(ceramic, composeClient)
+    if (localStorage.getItem("logged_in") === 'true') {
+      window.location.reload()
+    }
   };
 
 
   return (
-    <div>
-      {
-        isVisible && (
-          <div id='popup' className="flex">
-            <div className="popup-content">
-              <span><button onClick={handleKeyDid}>Key DID</button></span>
-              <span><button onClick={handleEthPkh}>Ethereum DID PKH</button></span>
-            </div>
-          </div>
-        )}
-    </div>
+    <button type="button" title='Wallet Connect' onClick={() => handleEthPkh()} className="hs-tooltip-toggle w-16 h-16 inline-flex justify-center items-center gap-x-2 text-md text-black font-semibold rounded-full border border-transparent bg-amber-400 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 animate-bounce">
+      Login
+    </button>
   );
 };
 

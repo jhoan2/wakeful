@@ -14,7 +14,17 @@ const nextConfig = {
         ]
       }
     ]
-  }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'purple-defensive-anglerfish-674.mypinata.cloud',
+        port: '',
+        pathname: '/ipfs/**',
+      },
+    ],
+  },
 }
 
 module.exports = nextConfig

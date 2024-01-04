@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SkeletonCard() {
+export default function SkeletonHomeCard() {
     return (
         <div className='flex-grow flex-row overflow-auto sm:justify-center'>
             <div className='flex flex-wrap sm:justify-center pb-2 justify-start md:pb-0 mx-auto p-4 animate-pulse'>

@@ -31,10 +31,9 @@
     "db": "sqlite:///home/johnhoang1994/EthDenver2023Demo/ceramic-indexing/indexing.sqlite",
     "allow-queries-before-historical-sync": true,
     "models": [
-      "kjzl6hvfrbw6c7rtdo8hxm5d6g1uw72bhjkg8z51gkq02cnqf9o9kh90p7ulnp6",
-      "kjzl6hvfrbw6c6q83f1r39rb7nl2zyqsoatu7th8dogluiq0rlaoii3py535q86",
-      "kjzl6hvfrbw6c9iyhtj3nx23eujqrgbx18hc3hn5j3qmnt065ejt9632av0u2id",
-      "kjzl6hvfrbw6cas10z4ju58efix7vsg2s3njh20qgh9okak61ujequa8prbx2e6"
+      "kjzl6hvfrbw6c9ra7nw6wvjdlu89gmqzz8x2ra4h9yttjsf30o24f89ov1ngcql",
+      "kjzl6hvfrbw6c6cdsofc19nczvmyofzx5ileatfgaqcbr68cvpguzy76iqkteed",
+      "kjzl6hvfrbw6c8grga35wz1aq9yg52lnuap4pimcmtrkvpz94rqubcqwy7i7239"
     ]
   }
 }
