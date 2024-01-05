@@ -4,7 +4,8 @@ import SideBar from '../../components/SideBar';
 import BottomNavBar from '../../components/BottomNavBar';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
-export default function index() {
+
+export default function Projects() {
     const clients = useCeramicContext()
     const { composeClient, ceramic } = clients
     const data = true

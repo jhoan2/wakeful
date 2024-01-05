@@ -11,7 +11,7 @@ import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ResourceAddNote from '../../components/ResourceAddNote';
 
-export default function resource() {
+export default function Resource() {
   const router = useRouter()
   const resourceId = router.query.id
   const clients = useCeramicContext()

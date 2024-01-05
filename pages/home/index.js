@@ -10,7 +10,7 @@ import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ErrorPage from '../../components/ErrorPage';
 
-export default function index() {
+export default function Home() {
   const clients = useCeramicContext();
   const { ceramic, composeClient } = clients;
   const router = useRouter()
