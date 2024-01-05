@@ -48,6 +48,9 @@ const authenticateKeyDID = async (ceramic: CeramicApi, compose: ComposeClient) =
     console.log("Generated new seed: " + seed)
   } else {
     let seed_json_value = localStorage.getItem(DID_SEED_KEY)
+    if (seed_json_value === null) {
+      throw new Error("Could not find seed in local storage.")
+    }
     let seed_object = JSON.parse(seed_json_value)
     seed_array = seed_object
     console.log("Found seed: " + seed_array)
