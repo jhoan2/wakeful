@@ -7,11 +7,11 @@ import { Ed25519Provider } from "key-did-provider-ed25519";
 import KeyResolver from "key-did-resolver";
 
 const handler = async (req, res) => {
-    const ceramic = new CeramicClient('http://localhost:7007')
+    const ceramic = new CeramicClient('https://ceramic-idealite-mainnet.hirenodes.io/')
 
     //instantiate a composeDB client instance
     const composeClient = new ComposeClient({
-        ceramic: 'http://localhost:7007',
+        ceramic: 'https://ceramic-idealite-mainnet.hirenodes.io/',
         definition: definition
     });
     const { data } = req.body

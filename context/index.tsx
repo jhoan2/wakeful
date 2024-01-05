@@ -8,19 +8,19 @@ import { RuntimeCompositeDefinition } from "@composedb/types";
 /**
  * Configure ceramic Client & create context.
  */
-const ceramic = new CeramicClient("http://localhost:7007");
+const ceramic = new CeramicClient("https://ceramic-idealite-mainnet.hirenodes.io/");
 
 const composeClient = new ComposeClient({
-  ceramic: "http://localhost:7007",
+  ceramic: "https://ceramic-idealite-mainnet.hirenodes.io/",
   // cast our definition as a RuntimeCompositeDefinition
   definition: definition as RuntimeCompositeDefinition,
 });
 
-const CeramicContext = createContext({ceramic: ceramic, composeClient: composeClient});
+const CeramicContext = createContext({ ceramic: ceramic, composeClient: composeClient });
 
 export const CeramicWrapper = ({ children }: any) => {
   return (
-    <CeramicContext.Provider value={{ceramic, composeClient}}>
+    <CeramicContext.Provider value={{ ceramic, composeClient }}>
       {children}
     </CeramicContext.Provider>
   );
