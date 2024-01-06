@@ -2,10 +2,6 @@
 node_modules/*
 package.lock
 admin_seed.txt
-<<<<<<< HEAD
-
-=======
->>>>>>> 32d60dcf48d7322b58d3f7aef833c8dcfe194a1f
 .env
 
 composedb.config.json
