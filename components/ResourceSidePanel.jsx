@@ -50,7 +50,7 @@ export default function ResourceSidePanel({ data }) {
         filterdObj.id = id
         try {
             setSubmitLoading(true)
-            const res = await fetch('https://www.idealite.xyz/api/updateResource', {
+            const res = await fetch('http://localhost:3000/api/updateResource', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
