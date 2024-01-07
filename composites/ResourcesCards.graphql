@@ -1,7 +1,7 @@
-type Card @loadModel(id: "kjzl6hvfrbw6cajg3cfb6qmfgofa42n4zv42wijqru1ltczyehxgbamycrdudpz") {
+type Card @loadModel(id: "$CARD_ID") {
   id: ID!
 }
 
-type IdealiteResource @loadModel(id: "kjzl6hvfrbw6c5lswatqis3e6nqalsz9hipxr6s1lzj4kdmnbd54jjuwiu7xg1x") {
+type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
   cards: [Card] @relationFrom(model: "Card", property: "resourceId")
 }
