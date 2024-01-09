@@ -4,7 +4,4 @@ package.lock
 admin_seed.txt
 .env
 
-composedb.config.json
-src/__generated__/
-
 .ceramic
