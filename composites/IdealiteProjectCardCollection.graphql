@@ -1,0 +1,15 @@
+type Card @loadModel(id: "$CARD_ID") {
+  id: ID!
+}
+
+type IdealiteProject @loadModel(id: "$IDEALITE_PROJECT_ID") {
+    id: ID!
+}
+
+type IdealiteProjectCardCollection
+  @createModel(accountRelation: LIST, description: "Association between a project and card") {
+  projectId: StreamID @documentReference(model: "IdealiteProject")
+  project: IdealiteProject @relationDocument(property: "projectId")
+  cardId: StreamID! @documentReference(model: "Card")
+  card: Card! @relationDocument(property: "cardId")
+}
