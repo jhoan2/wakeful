@@ -7,7 +7,8 @@ type IdealiteProject @loadModel(id: "$IDEALITE_PROJECT_ID") {
 }
 
 type IdealiteProjectCardCollection
-  @createModel(accountRelation: LIST, description: "Association between a project and card") {
+  @createModel(accountRelation: LIST, description: "Association between a project and card")
+  @createIndex(fields: [{ path: ["projectId"]} ]) {
   projectId: StreamID @documentReference(model: "IdealiteProject")
   project: IdealiteProject @relationDocument(property: "projectId")
   cardId: StreamID! @documentReference(model: "Card")
