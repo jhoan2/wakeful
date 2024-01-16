@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import SideBar from '../../components/SideBar';
-import BottomNavBar from '../../components/BottomNavBar';
 import ErrorPage from '../../components/ErrorPage';
 import { useCeramicContext } from '../../context';
 import { useQuery, gql } from '@apollo/client';
