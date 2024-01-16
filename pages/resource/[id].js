@@ -73,7 +73,6 @@ export default function Resource() {
 
   return (
     <div className='flex h-screen'>
-      <SideBar page={'home'} />
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
@@ -121,10 +120,6 @@ export default function Resource() {
             <NoContent src='/no-content-cat.png' />
         )
       }
-      <BottomNavBar
-        setShowModal={setShowModal}
-        page={'resource'}
-      />
     </div>
   )
 }
