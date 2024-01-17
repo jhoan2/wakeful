@@ -5,7 +5,7 @@ import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
-import Head from 'next/head';
+import Layout from '../components/Layout';
 
 const MyApp = ({ Component, pageProps }) => {
   const clients = useCeramicContext()
@@ -46,9 +46,11 @@ const MyApp = ({ Component, pageProps }) => {
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
-            <div>
-              <Component {...pageProps} />
-              <Toaster richColors />
+            <div className='flex h-screen'>
+              <Layout>
+                <Component {...pageProps} />
+                <Toaster richColors />
+              </Layout>
             </div>
           </CeramicWrapper>
         </div>

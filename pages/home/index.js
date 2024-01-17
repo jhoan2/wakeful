@@ -58,7 +58,7 @@ export default function Home() {
 
   const resources = data?.accountResourcesIndex.edges
   const pageInfo = data?.accountResourcesIndex.pageInfo
-  console.log(pageInfo)
+
 
   const getMoreResources = (pageInfo) => {
     if (pageInfo.hasNextPage) {
@@ -71,8 +71,7 @@ export default function Home() {
   }
 
   return (
-    <div className='flex h-screen'>
-      <SideBar page={'home'} />
+    <div className='flex justify-center h-screen'>
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
@@ -100,7 +99,6 @@ export default function Home() {
             <NoContent src='/no-content-cat.png' />
         )
       }
-      <BottomNavBar page={'home'} />
     </div>
   )
 }
