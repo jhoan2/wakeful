@@ -3,7 +3,7 @@ import Link from 'next/link'
 import AuthPrompt from './did-select-popup'
 import { useCeramicContext } from '../context'
 import Image from 'next/image'
-import { Button } from "@/components/ui/button"
+
 
 export default function SideBar({ page, setPage }) {
     const clients = useCeramicContext();
