@@ -2,10 +2,12 @@ type IdealiteProject
     @createModel(accountRelation: LIST, description: "Idealite Projects")
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])
-    @createIndex(fields: [{ path: ["updatedAt"]} ]) {
+    @createIndex(fields: [{ path: ["updatedAt"]} ])
+    @createIndex(fields: [{ path: ["deleted"]} ]) {
     account: DID! @documentAccount
     cid: String @string(minLength: 1, maxLength: 140)
     createdAt: DateTime
+    deleted: Boolean
     description: String @string(minLength: 1, maxLength: 3000)
     priority: ProjectPriority
     status: ProjectStatus

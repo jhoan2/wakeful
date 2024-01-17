@@ -1,33 +1,49 @@
 import React from 'react'
-import { useCeramicContext } from '../../context';
-import SideBar from '../../components/SideBar';
-import BottomNavBar from '../../components/BottomNavBar';
-import SkeletonHomeCard from '../../components/SkeletonHomeCard';
-import NoContent from '../../components/NoContent';
+import { useQuery, gql } from '@apollo/client';
+import ErrorPage from '../../components/ErrorPage';
+import DataTable from '../../components/project/DataTable';
+import { Columns } from '../../components/project/Columns';
+import { Loader2 } from 'lucide-react';
+
 
 export default function Projects() {
-    const clients = useCeramicContext()
-    const { composeClient, ceramic } = clients
-    const data = true
-    const loading = false
+    const GET_USERS_PROJECTS = gql`
+        query getUsersProjects {
+            viewer {
+                idealiteProjectList(first: 100, filters: {where: {deleted: {equalTo: false}}}) {
+                    edges {
+                        node {
+                            id
+                            title
+                            priority
+                            status
+                            description
+                            createdAt
+                            updatedAt
+                        }
+                    }
+                }
+            }
+        }
+    `
+
+    const { loading, error, data } = useQuery(GET_USERS_PROJECTS);
+    if (error) return <ErrorPage message={error.message} />;
+    const projects = data?.viewer?.idealiteProjectList.edges.map((edge) => edge.node)
     return (
-        <div className='flex h-screen'>
-            <SideBar page={'projects'} />
+        <div className='flex justify-center'>
             {loading ?
-                (<div className='md:flex'>
-                    <SkeletonHomeCard />
-                    <SkeletonHomeCard />
-                    <SkeletonHomeCard />
+                (<div className='flex h-screen items-center'>
+                    <Loader2 className='animate-spin' />
                 </div>)
                 :
                 (
-                    data ?
-                        <div>Projects</div>
-                        :
-                        <NoContent src='/no-content-cat.png' />
+                    <div className='space-y-4 w-3/4'>
+                        <p className='text-3xl font-bold'>All Projects</p>
+                        {projects ? <DataTable columns={Columns} data={projects} /> : null}
+                    </div>
                 )
             }
-            <BottomNavBar page={'projects'} />
         </div>
     )
 }
