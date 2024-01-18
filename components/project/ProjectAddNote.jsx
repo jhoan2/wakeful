@@ -3,8 +3,9 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import EditorBubbleMenu from '../EditorBubbleMenu';
 import { gql, useMutation } from '@apollo/client';
+import { toast } from 'sonner';
 
-export default function ProjectAddNote({ projectId, setShowProjectModal }) {
+export default function ProjectAddNote({ projectId, setShowProjectModal, projectCardResourceId }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
@@ -106,7 +107,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
             updatedAt: new Date().toISOString(),
             annotation: content,
             cid: IpfsHash,
-            resourceId: process.env.RESOURCE_ID_FOR_PROJECT_ADD_NOTE,
+            resourceId: projectCardResourceId,
             mimeType: image?.type,
             pinSize: PinSize,
             deleted: false,
@@ -143,6 +144,17 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
 
         setLoadingCreateCollection(false)
     }
+
+    if (errorAddNote) {
+        toast.error("Oops, something went wrong creating a card!")
+        console.log(errorAddNote.message)
+    }
+
+    if (errorCreateCollection) {
+        toast.error("Oops, something went wrong creating a collection!")
+        console.log(errorCreateCollection.message)
+    }
+
 
     return (
         <div className='fixed z-1 top-0 left-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-75' onClick={(e) => handleClickOutside(e)}>
