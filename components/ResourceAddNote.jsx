@@ -3,6 +3,7 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import EditorBubbleMenu from './EditorBubbleMenu';
 import { gql, useMutation } from '@apollo/client';
+import { toast } from 'sonner';
 
 export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl }) {
     const [inputImage, setInputImage] = useState(false)
@@ -115,6 +116,11 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
                 }
             }
         })
+    }
+
+    if (error) {
+        toast.error("Oops, something went wrong!")
+        console.log(error.message)
     }
 
     return (
