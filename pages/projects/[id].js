@@ -20,7 +20,7 @@ export default function ProjectPage() {
             viewer {
             idealiteProjectCardCollectionList(
                 after: $cursor,
-                first: 10,
+                first: 20,
                 filters: {where: {deleted: {equalTo: false}, projectId: {equalTo: $projectId}}}
             ) {
                 edges {

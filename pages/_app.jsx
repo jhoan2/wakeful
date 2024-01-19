@@ -32,14 +32,21 @@ const MyApp = ({ Component, pageProps }) => {
             accountResourcesIndex: relayStylePagination(),
           },
         },
+        CeramicAccount: {
+          fields: {
+            idealiteProjectCardCollectionList: relayStylePagination(),
+          }
+        },
         IdealiteResource: {
           fields: {
             cards: relayStylePagination(),
           }
-        }
+        },
       },
     }), link
   })
+
+
 
   return (
     <div>
