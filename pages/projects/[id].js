@@ -8,6 +8,7 @@ import NoContent from '../../components/NoContent';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import ProjectSidePanel from '../../components/project/ProjectSidePanel';
 import ProjectCard from '../../components/project/ProjectCard';
+import Layout from '../../components/Layout';
 
 
 export default function ProjectPage() {
@@ -145,5 +146,13 @@ export default function ProjectPage() {
             }
         </div>
 
+    )
+}
+
+ProjectPage.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
     )
 }

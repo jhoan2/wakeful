@@ -8,6 +8,7 @@ import ResourceCardView from '../../components/ResourceCardView';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ResourceAddNote from '../../components/ResourceAddNote';
+import Layout from '../../components/Layout';
 
 export default function Resource() {
   const router = useRouter()
@@ -71,7 +72,7 @@ export default function Resource() {
   }
 
   return (
-    <div className='flex h-screen'>
+    <div className='flex h-screen w-full'>
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
@@ -81,7 +82,7 @@ export default function Resource() {
         :
         (
           data ?
-            <div className='flex-grow flex-row  overflow-auto sm:justify-center'>
+            <div className='flex-grow flex-row overflow-auto sm:justify-center'>
               <div>
                 {cards.length > 0 ?
                   <ResourceCardView
@@ -125,5 +126,13 @@ export default function Resource() {
         )
       }
     </div>
+  )
+}
+
+Resource.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
   )
 }

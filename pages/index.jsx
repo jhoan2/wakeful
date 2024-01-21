@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const Home = () => {
+const FrontPage = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -61,4 +61,4 @@ const Home = () => {
   );
 }
 
-export default Home
+export default FrontPage

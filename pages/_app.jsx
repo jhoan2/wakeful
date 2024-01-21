@@ -8,6 +8,7 @@ import { relayStylePagination } from "@apollo/client/utilities";
 import Layout from '../components/Layout';
 
 const MyApp = ({ Component, pageProps }) => {
+  const getLayout = Component.getLayout || ((page) => page)
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
   const link = new ApolloLink((operation) => {
@@ -48,16 +49,14 @@ const MyApp = ({ Component, pageProps }) => {
 
 
 
-  return (
-    <div>
+  return getLayout(
+    <div className='w-full h-screen'>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
-            <div className='flex h-screen'>
-              <Layout>
-                <Component {...pageProps} />
-                <Toaster richColors />
-              </Layout>
+            <div>
+              <Component {...pageProps} />
+              <Toaster richColors />
             </div>
           </CeramicWrapper>
         </div>

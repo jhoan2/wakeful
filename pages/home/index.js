@@ -7,7 +7,8 @@ import HomeCardList from '../../components/HomeCardList';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ErrorPage from '../../components/ErrorPage';
-
+import { Button } from '@/components/ui/button';
+import Layout from '../../components/Layout';
 export default function Home() {
   const clients = useCeramicContext();
   const { ceramic, composeClient } = clients;
@@ -69,7 +70,7 @@ export default function Home() {
   }
 
   return (
-    <div className='flex justify-center h-screen'>
+    <div className='flex justify-center h-screen w-full'>
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
@@ -98,5 +99,13 @@ export default function Home() {
         )
       }
     </div>
+  )
+}
+
+Home.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
   )
 }

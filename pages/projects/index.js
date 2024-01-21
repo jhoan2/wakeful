@@ -4,7 +4,7 @@ import ErrorPage from '../../components/ErrorPage';
 import DataTable from '../../components/project/DataTable';
 import { Columns } from '../../components/project/Columns';
 import { Loader2 } from 'lucide-react';
-
+import Layout from '../../components/Layout';
 
 export default function Projects() {
     const GET_USERS_PROJECTS = gql`
@@ -31,7 +31,7 @@ export default function Projects() {
     if (error) return <ErrorPage message={error.message} />;
     const projects = data?.viewer?.idealiteProjectList.edges.map((edge) => edge.node)
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center w-full'>
             {loading ?
                 (<div className='flex h-screen items-center'>
                     <Loader2 className='animate-spin' />
@@ -45,5 +45,13 @@ export default function Projects() {
                 )
             }
         </div>
+    )
+}
+
+Projects.getLayout = function getLayout(page) {
+    return (
+        <Layout>
+            {page}
+        </Layout>
     )
 }
