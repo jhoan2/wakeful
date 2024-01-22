@@ -35,6 +35,7 @@ export default function ProjectPage() {
                         createdAt
                         deleted
                         pageYOffset
+                        quote
                         resourceId
                         scrollHeight
                         updatedAt
