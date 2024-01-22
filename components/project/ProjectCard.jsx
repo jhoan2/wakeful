@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 
 export default function ProjectCard({ card }) {
+    console.log(card)
     const [editorStateChanged, setEditorStateChanged] = useState(false)
     const { annotation, quote, id, updatedAt, cid } = card.card
     const collectionId = card.id
@@ -123,7 +124,7 @@ export default function ProjectCard({ card }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-md lg:prose-lg dark:prose-invert focus:outline outline-amber-400 outline-offset-2 outline-2 rounded-md ',
+                class: 'prose prose-md lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md ',
             },
         },
         content: annotation,
