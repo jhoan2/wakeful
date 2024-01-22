@@ -15,7 +15,7 @@ export default function Resource() {
   const resourceId = router.query.id
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
-  const [showModal, setShowModal] = useState(false)
+  const [showResourceModal, setShowResourceModal] = useState(false)
 
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
@@ -89,17 +89,17 @@ export default function Resource() {
                     cards={cards}
                     resourceId={resourceId}
                     resourceUrl={resourceUrl}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
+                    showResourceModal={showResourceModal}
+                    setShowResourceModal={setShowResourceModal}
                     resourceTitle={resourceTitle}
                   />
                   :
                   <div className='flex h-screen'>
                     <NoContent src='/no-content-cat.png' />
-                    <button className='fixed top-12 md:right-12 lg:right-4 hidden md:block py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' onClick={() => setShowModal(true)}>Add Note</button>
-                    {showModal ?
+                    <button className='fixed top-12 md:right-12 lg:right-4 hidden md:block py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' onClick={() => setShowResourceModal(true)}>Add Note</button>
+                    {showResourceModal ?
                       <ResourceAddNote
-                        setShowModal={setShowModal}
+                        setShowResourceModal={setShowResourceModal}
                         resourceId={resourceId}
                         resourceUrl={resourceUrl}
                       />

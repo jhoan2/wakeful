@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl }) {
+export default function ResourceAddNote({ setShowResourceModal, resourceId, resourceUrl }) {
     const [inputImage, setInputImage] = useState(false)
     const [image, setImage] = useState(null);
 
@@ -21,7 +21,7 @@ export default function ResourceAddNote({ setShowModal, resourceId, resourceUrl 
       }`
 
     const [addNote, { data, loading, error }] = useMutation(ADD_NOTE, {
-        onCompleted: () => setShowModal(false),
+        onCompleted: () => setShowResourceModal(false),
         refetchQueries: ['getCardsForResource'],
     });
 
