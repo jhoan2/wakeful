@@ -3,7 +3,9 @@ type IdealiteProject
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ])
-    @createIndex(fields: [{ path: ["deleted"]} ]) {
+    @createIndex(fields: [{ path: ["deleted"]} ])
+    @createIndex(fields: [{ path: ["priority"]} ])
+    @createIndex(fields: [{ path: ["status"]} ]) {
     account: DID! @documentAccount
     cid: String @string(minLength: 1, maxLength: 140)
     createdAt: DateTime
