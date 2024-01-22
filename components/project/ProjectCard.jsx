@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 
 export default function ProjectCard({ card }) {
-    console.log(card)
+
     const [editorStateChanged, setEditorStateChanged] = useState(false)
     const { annotation, quote, id, updatedAt, cid } = card.card
     const collectionId = card.id
