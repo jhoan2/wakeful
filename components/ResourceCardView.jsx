@@ -26,7 +26,7 @@ export default function ResourceCardView({ cards, resourceUrl, resourceId, setSh
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-3'>
                 {cards.map((card) => {
-                    return <ResourceCard card={card} />
+                    return <ResourceCard card={card} key={card.node.id} />
                 })}
             </div>
         </div>
