@@ -9,6 +9,7 @@ import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import ProjectSidePanel from '../../components/project/ProjectSidePanel';
 import ProjectCard from '../../components/project/ProjectCard';
 import Layout from '../../components/Layout';
+import ProjectTitle from '../../components/project/ProjectTitle';
 
 
 export default function ProjectPage() {
@@ -132,17 +133,21 @@ export default function ProjectPage() {
                             <ProjectSidePanel projectData={cards[0].node.project} />
                         </div>
                         :
-                        <div className='flex flex-col items-center overflow-auto sm:justify-center'>
-                            <div className='space-y-6'>
-                                <Button variant='secondary' onClick={() => setShowProjectModal(true)}>Add Note</Button>
-                                {showProjectModal ?
-                                    <ProjectAddNote projectId={projectId} setShowProjectModal={setShowProjectModal} />
-                                    :
-                                    null
-                                }
-                                <NoContent src='/no-content-cat.png' />
+                        <div className='w-full'>
+                            <ProjectTitle projectId={projectId} />
+                            <div className='flex flex-col items-center overflow-auto sm:justify-center'>
+                                <div className='space-y-6'>
+                                    <Button variant='secondary' onClick={() => setShowProjectModal(true)}>Add Note</Button>
+                                    {showProjectModal ?
+                                        <ProjectAddNote projectId={projectId} setShowProjectModal={setShowProjectModal} />
+                                        :
+                                        null
+                                    }
+                                    <NoContent src='/no-content-cat.png' />
+                                </div>
                             </div>
                         </div>
+
                 )
             }
         </div>
