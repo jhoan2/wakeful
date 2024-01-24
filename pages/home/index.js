@@ -14,9 +14,9 @@ export default function Home() {
   const { ceramic, composeClient } = clients;
   const router = useRouter()
 
-  const handleLogin = () => {
-    authenticateCeramic(ceramic, composeClient)
-  }
+  // const handleLogin = () => {
+  //   authenticateCeramic(ceramic, composeClient)
+  // }
 
   const GET_CARDS_PER_URL_PER_USER = gql`
   query GetCardsPerUrlPerUser ($account: String, $cursor: String){
@@ -42,12 +42,12 @@ export default function Home() {
 
 
 
-  useEffect(() => {
-    if (localStorage.getItem('ceramic:eth_did')) {
-      handleLogin()
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem('ceramic:eth_did')) {
+  //     handleLogin()
+  //   }
 
-  }, [])
+  // }, [])
 
   const { loading, error, data, fetchMore } = useQuery(GET_CARDS_PER_URL_PER_USER, {
     variables: { account: composeClient.id },

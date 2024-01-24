@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './SideBar';
 import BottomNavBar from './BottomNavBar';
-import { useRouter } from 'next/router';
-
+import { authenticateCeramic } from '../utils';
+import { useCeramicContext } from '../context';
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
-    const router = useRouter();
+    const clients = useCeramicContext();
+    const { ceramic, composeClient } = clients;
+
+    const handleLogin = () => {
+        authenticateCeramic(ceramic, composeClient)
+    }
+
+    useEffect(() => {
+        if (localStorage.getItem('ceramic:eth_did')) {
+            handleLogin()
+        }
+
+    }, [])
 
     return (
         <div className='flex'>
-            {/* {router.pathname === '/' ? null : <Sidebar page={page} setPage={setPage} />}
-            <main className='w-full'>
-                {children}
-            </main>
-            {router.pathname === '/' ? null : <BottomNavBar page={page} setPage={setPage} />} */}
             <div>
                 <Sidebar page={page} setPage={setPage} />
             </div>
