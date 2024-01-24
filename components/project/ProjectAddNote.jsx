@@ -11,7 +11,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
-    const projectCardResourceId = 'kjzl6kcym7w8yb4dzax7jus64q2p97zc6rb0zk0ffkpkhay7e63bmnmatwqdkdw'
+    const projectCardResourceId = 'kjzl6kcym7w8yaq9x6tgf51z2g7t8rffykhnedgf08qtly01o3hk09jgmjg7xi8'
 
     const ADD_NOTE = gql`
     mutation ADD_NOTE($input: CreateCardInput!) {
@@ -202,9 +202,6 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
                                     Submit
                                 </button>
                             }
-                            {/* <button className='hover:bg-gray-300 rounded-xl' title='Send to a Project'>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M12 2.58594L18.2071 8.79304L16.7929 10.2073L13 6.41436V16.0002H11V6.41436L7.20711 10.2073L5.79289 8.79304L12 2.58594ZM3 18.0002V14.0002H5V18.0002C5 18.5524 5.44772 19.0002 6 19.0002H18C18.5523 19.0002 19 18.5524 19 18.0002V14.0002H21V18.0002C21 19.657 19.6569 21.0002 18 21.0002H6C4.34315 21.0002 3 19.657 3 18.0002Z"></path></svg>
-                            </button> */}
                         </div>
                     </div>
                 </div>
