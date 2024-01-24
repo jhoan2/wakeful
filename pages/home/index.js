@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/router';
-import { useCeramicContext } from '../../context';
+import React from 'react'
 import { useQuery, gql } from '@apollo/client';
-import { authenticateCeramic } from "../../utils";
-import SideBar from '../../components/SideBar';
 import HomeCardList from '../../components/HomeCardList';
-import BottomNavBar from '../../components/BottomNavBar';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ErrorPage from '../../components/ErrorPage';
+import Layout from '../../components/Layout';
+import { useCeramicContext } from '../../context';
 
 export default function Home() {
-  const clients = useCeramicContext();
-  const { ceramic, composeClient } = clients;
-  const router = useRouter()
-
-  const handleLogin = () => {
-    authenticateCeramic(ceramic, composeClient)
-  }
-
+  const clients = useCeramicContext()
+  const { composeClient } = clients
   const GET_CARDS_PER_URL_PER_USER = gql`
   query GetCardsPerUrlPerUser ($account: String, $cursor: String){
     accountResourcesIndex (after: $cursor, first: 5, filters: {where: {recipient: {equalTo: $account}}}, sorting: {updatedAt: DESC} ){
@@ -41,15 +32,6 @@ export default function Home() {
   }
   `
 
-
-
-  useEffect(() => {
-    if (localStorage.getItem('ceramic:eth_did')) {
-      handleLogin()
-    }
-
-  }, [])
-
   const { loading, error, data, fetchMore } = useQuery(GET_CARDS_PER_URL_PER_USER, {
     variables: { account: composeClient.id },
   });
@@ -58,7 +40,7 @@ export default function Home() {
 
   const resources = data?.accountResourcesIndex.edges
   const pageInfo = data?.accountResourcesIndex.pageInfo
-  console.log(pageInfo)
+
 
   const getMoreResources = (pageInfo) => {
     if (pageInfo.hasNextPage) {
@@ -71,8 +53,7 @@ export default function Home() {
   }
 
   return (
-    <div className='flex h-screen'>
-      <SideBar page={'home'} />
+    <div className='flex justify-center h-screen w-full'>
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
@@ -100,7 +81,14 @@ export default function Home() {
             <NoContent src='/no-content-cat.png' />
         )
       }
-      <BottomNavBar page={'home'} />
     </div>
+  )
+}
+
+Home.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
   )
 }

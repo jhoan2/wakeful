@@ -62,11 +62,67 @@ export const writeComposite = async (spinner) => {
     schema: resourcesCardsSchema,
   });
 
+  const idealiteProjectComposite = await createComposite(
+    ceramic,
+    "./composites/IdealiteProject.graphql"
+  );
+
+
+  const idealiteProjectCardCollectionSchema = readFileSync(
+    "./composites/IdealiteProjectCardCollection.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$CARD_ID", cardComposite.modelIDs[1])
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectComposite.modelIDs[0]);
+
+  const idealiteProjectCardCollectionComposite = await Composite.create({
+    ceramic,
+    schema: idealiteProjectCardCollectionSchema,
+  });
+
+  const cardsProjectsScehma = readFileSync(
+    "./composites/CardsProjects.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$CARD_ID", cardComposite.modelIDs[1])
+    .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[0]);
+
+  const cardsProjectsComposite = await Composite.create({
+    ceramic,
+    schema: cardsProjectsScehma,
+  });
+
+  const projectsCardsSchema = readFileSync(
+    "./composites/ProjectsCards.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_PROJECT_ID", cardComposite.modelIDs[1])
+    .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[0]);
+
+  console.log('idealiteresourcecomposite', idealiteResourceComposite.modelIDs)
+  console.log('cardcomposite', cardComposite.modelIDs)
+  console.log('idealiteprojectcardcollectioncomposite', idealiteProjectCardCollectionComposite.modelIDs)
+
+  const projectsCardsComposite = await Composite.create({
+    ceramic,
+    schema: projectsCardsSchema,
+  });
+
   const composite = Composite.from([
     idealiteResourceComposite,
     cardComposite,
     accountResourcesComposite,
     resourcesCardsComposite,
+    idealiteProjectComposite,
+    idealiteProjectCardCollectionComposite,
+    cardsProjectsComposite,
+    projectsCardsComposite
   ]);
 
   await writeEncodedComposite(composite, "./src/__generated__/definition.json");

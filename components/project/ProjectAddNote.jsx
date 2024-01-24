@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import EditorBubbleMenu from './EditorBubbleMenu';
+import EditorBubbleMenu from '../EditorBubbleMenu';
 import { gql, useMutation } from '@apollo/client';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function ResourceAddNote({ setShowResourceModal, resourceId, resourceUrl }) {
+export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
+    const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
+    const projectCardResourceId = 'kjzl6kcym7w8yaq9x6tgf51z2g7t8rffykhnedgf08qtly01o3hk09jgmjg7xi8'
 
     const ADD_NOTE = gql`
     mutation ADD_NOTE($input: CreateCardInput!) {
@@ -20,9 +22,20 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
         }
       }`
 
-    const [addNote, { data, loading, error }] = useMutation(ADD_NOTE, {
-        onCompleted: () => setShowResourceModal(false),
-        refetchQueries: ['getCardsForResource'],
+    const [addNote, { data: dataAddNote, error: errorAddNote }] = useMutation(ADD_NOTE);
+
+    const CREATE_COLLECTION = gql`
+    mutation createCollection($input: CreateIdealiteProjectCardCollectionInput!) {
+        createIdealiteProjectCardCollection(input: $input) {
+          document {
+            id
+          }
+        }
+      }`
+
+    const [createCollection, { data: dataCreateCollection, error: errorCreateCollection }] = useMutation(CREATE_COLLECTION, {
+        onCompleted: () => setShowProjectModal(false),
+        refetchQueries: ['getUsersProjectCardCollection'],
     });
 
     const editor = useEditor({
@@ -39,11 +52,9 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
 
     const handleClickOutside = (event) => {
         if (event.target !== document.getElementById('modal-content') && event.target.contains(document.getElementById('modal-content'))) {
-            setShowResourceModal(false)
+            setShowProjectModal(false)
         }
     };
-
-
 
     const pinFileToIPFS = async (file) => {
         const formData = new FormData();
@@ -84,6 +95,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
     }
 
     const handleSubmit = async () => {
+        setLoadingCreateCollection(true)
         const content = editor.getHTML()
         let IpfsHash, PinSize;
 
@@ -98,10 +110,9 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
             updatedAt: new Date().toISOString(),
             annotation: content,
             cid: IpfsHash,
+            resourceId: projectCardResourceId,
             mimeType: image?.type,
             pinSize: PinSize,
-            resourceId: resourceId,
-            url: resourceUrl,
             deleted: false,
         }
 
@@ -117,20 +128,45 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
                     content: noteContent
                 }
             }
+        }).then((data) => {
+            if (data.data.createCard.document.id) {
+                createCollection({
+                    variables: {
+                        input: {
+                            content: {
+                                projectId: projectId,
+                                cardId: data.data.createCard.document.id,
+                                deleted: false
+                            }
+                        }
+                    }
+                })
+                setLoadingCreateCollection(false)
+
+            } else {
+                throw new Error('Error creating project and card collection')
+            }
         })
+
     }
 
-    if (error) {
-        toast.error("Oops, something went wrong!")
-        console.log(error.message)
+    if (errorAddNote) {
+        toast.error("Oops, something went wrong creating a card!")
+        console.log(errorAddNote.message)
     }
+
+    if (errorCreateCollection) {
+        toast.error("Oops, something went wrong creating a collection!")
+        console.log(errorCreateCollection.message)
+    }
+
 
     return (
         <div className='fixed z-10 top-0 left-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-75' onClick={(e) => handleClickOutside(e)}>
             <div className='flex place-content-center mt-60 '>
                 <div id='modal-content' className="m-3 flex flex-col bg-white border w-full md:w-1/2 md:h-2/3 shadow-sm rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div className='flex justify-end mb-3'>
-                        <button className='hover:bg-gray-300 rounded-xl' title='Close Modal' onClick={() => setShowModal(false)}>
+                        <button className='hover:bg-gray-300 rounded-xl' title='Close Modal' onClick={() => setShowProjectModal(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-4 h-4'><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
                         </button>
                     </div>
@@ -157,7 +193,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
                             <button onClick={() => setInputImage(!inputImage)} className='py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' title='Add an image'>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M2.9918 21C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918ZM20 15V5H4V19L14 9L20 15ZM20 17.8284L14 11.8284L6.82843 19H20V17.8284ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
                             </button>
-                            {loading ?
+                            {loadingCreateCollection ?
                                 <Button disabled>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                     Please wait
@@ -166,9 +202,6 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
                                     Submit
                                 </button>
                             }
-                            {/* <button className='hover:bg-gray-300 rounded-xl' title='Send to a Project'>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M12 2.58594L18.2071 8.79304L16.7929 10.2073L13 6.41436V16.0002H11V6.41436L7.20711 10.2073L5.79289 8.79304L12 2.58594ZM3 18.0002V14.0002H5V18.0002C5 18.5524 5.44772 19.0002 6 19.0002H18C18.5523 19.0002 19 18.5524 19 18.0002V14.0002H21V18.0002C21 19.657 19.6569 21.0002 18 21.0002H6C4.34315 21.0002 3 19.657 3 18.0002Z"></path></svg>
-                            </button> */}
                         </div>
                     </div>
                 </div>

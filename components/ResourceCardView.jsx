@@ -1,18 +1,34 @@
 import React from 'react'
 import ResourceCard from './ResourceCard'
 import ResourceAddNote from './ResourceAddNote'
+import { Button } from "@/components/ui/button";
 
-export default function ResourceCardView({ cards, resourceUrl, resourceId, setShowModal, showModal }) {
+export default function ResourceCardView({ cards, resourceUrl, resourceId, setShowResourceModal, showResourceModal, resourceTitle }) {
     return (
-        <div className='flex flex-wrap  pb-24 justify-center md:pb-0 mx-auto p-4'>
-            {cards.map((card) => {
-                return <ResourceCard key={card.node.id} card={card} />
-            })}
-            <button className='fixed top-12 md:right-12 lg:right-4 hidden md:block py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' onClick={() => setShowModal(true)}>Add Note</button>
-            {showModal ?
-                <ResourceAddNote setShowModal={setShowModal} resourceId={resourceId} resourceUrl={resourceUrl} />
-                : null
-            }
+        <div className='flex-grow  overflow-auto sm:justify-center flex-wrap'>
+            <p className='text-3xl font-bold p-8'>{resourceTitle}</p>
+            <div className='grid grid-cols-3'>
+                <div></div>
+                <div className='flex justify-end'>
+                    <Button
+                        variant='secondary'
+                        onClick={() => setShowResourceModal(true)}
+                    >
+                        Add Note
+                    </Button>
+                    {showResourceModal ?
+                        <ResourceAddNote setShowResourceModal={setShowResourceModal} resourceId={resourceId} resourceUrl={resourceUrl} />
+                        :
+                        null
+                    }
+                </div>
+                <div></div>
+            </div>
+            <div className='grid grid-cols-1 sm:grid-cols-3'>
+                {cards.map((card) => {
+                    return <ResourceCard card={card} key={card.node.id} />
+                })}
+            </div>
         </div>
     )
 }

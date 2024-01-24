@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
-import EditorBubbleMenu from './EditorBubbleMenu';
+import EditorBubbleMenu from '../EditorBubbleMenu';
 import StarterKit from '@tiptap/starter-kit';
 import { gql, useMutation } from '@apollo/client';
 import Image from 'next/image';
-import ResourceCardAction from './ResourceCardAction';
+import { toast } from 'sonner';
 
+export default function ProjectCard({ card }) {
 
-export default function ResourceCard({ card }) {
     const [editorStateChanged, setEditorStateChanged] = useState(false)
-    const { annotation, quote, id, updatedAt, cid } = card.node
+    const { annotation, quote, id, updatedAt, cid } = card.card
+    const collectionId = card.id
     const localeUpdatedAt = new Date(updatedAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -18,7 +19,6 @@ export default function ResourceCard({ card }) {
     const [inputImage, setInputImage] = useState(false)
     const [uploadImage, setUploadImage] = useState(null)
     const [editorContent, setEditorContent] = useState('')
-
     const UPDATE_NOTE = gql`
     mutation UPDATE_NOTE($input: UpdateCardInput!) {
         updateCard(input: $input) {
@@ -29,10 +29,51 @@ export default function ResourceCard({ card }) {
         }
       }`
 
+    const UPDATE_COLLECTION = gql`
+    mutation MyMutation($input: UpdateIdealiteProjectCardCollectionInput!) {
+        updateIdealiteProjectCardCollection(input: $input) {
+          document {
+            id
+          }
+        }
+      }
+    `
+
     const [sendUpdateNote, { data, loading, error }] = useMutation(UPDATE_NOTE, {
-        refetchQueries: ['getCardsForResource'],
+        refetchQueries: ['getUsersProjectCardCollection'],
     });
 
+    const [sendDeleteNote, { error: deleteError }] = useMutation(UPDATE_NOTE);
+
+    const [sendDeleteCollection, { error: deleteCollectionError }] = useMutation(UPDATE_COLLECTION, {
+        refetchQueries: ['getUsersProjectCardCollection'],
+    });
+
+    const deleteNote = async () => {
+        await sendDeleteNote({
+            variables: {
+                input: {
+                    id: id,
+                    content: {
+                        updatedAt: new Date().toISOString(),
+                        deleted: true,
+                    }
+                }
+            }
+        })
+
+        await sendDeleteCollection({
+            variables: {
+                input: {
+                    id: collectionId,
+                    content: {
+                        deleted: true,
+                    }
+                }
+            }
+        })
+
+    }
 
     const handlePaste = (event) => {
         const clipboardData = event.clipboardData;
@@ -83,7 +124,7 @@ export default function ResourceCard({ card }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-md lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
+                class: 'prose prose-md lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md ',
             },
         },
         content: annotation,
@@ -133,9 +174,16 @@ export default function ResourceCard({ card }) {
         })
     }
 
+    if (deleteCollectionError || deleteError) {
+        toast.error("Oops, something went wrong deleting project card!")
+        console.log(error.message)
+    }
+
     return (
-        <div className="m-3 relative flex flex-col bg-white border shadow-sm max-w-lg md:max-w-md rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-            <ResourceCardAction cardId={id} />
+        <div className="m-3 relative flex flex-col self-start bg-white border shadow-sm max-w-lg md:max-w-md rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+            <button className='absolute top-2 right-2 text-red-300 hover:bg-red-600 rounded-md p-1' onClick={() => deleteNote()}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-4 h-4'><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
+            </button>
             {quote ?
                 <p className='italic border rounded p-2 hover:bg-gray-100'>
                     {quote}

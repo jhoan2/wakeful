@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import SideBar from '../../components/SideBar';
-import BottomNavBar from '../../components/BottomNavBar';
 import ErrorPage from '../../components/ErrorPage';
 import { useCeramicContext } from '../../context';
 import { useQuery, gql } from '@apollo/client';
@@ -10,13 +8,15 @@ import ResourceCardView from '../../components/ResourceCardView';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
 import ResourceAddNote from '../../components/ResourceAddNote';
+import Layout from '../../components/Layout';
+import { Button } from "@/components/ui/button";
 
 export default function Resource() {
   const router = useRouter()
   const resourceId = router.query.id
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
-  const [showModal, setShowModal] = useState(false)
+  const [showResourceModal, setShowResourceModal] = useState(false)
 
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
@@ -59,6 +59,7 @@ export default function Resource() {
   if (error) return <ErrorPage message={error.message} />;
   const cards = data?.node.cards.edges
   const resourceUrl = data?.node.url
+  const resourceTitle = data?.node.title
   const pageInfo = data?.node.cards.pageInfo
 
   const getMoreCards = (pageInfo) => {
@@ -72,8 +73,7 @@ export default function Resource() {
   }
 
   return (
-    <div className='flex h-screen'>
-      <SideBar page={'home'} />
+    <div className='flex justify-center h-screen w-full'>
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
@@ -83,24 +83,41 @@ export default function Resource() {
         :
         (
           data ?
-            <div className='flex-grow flex-row  overflow-auto sm:justify-center'>
+            <div className='flex-grow flex-row overflow-auto sm:justify-center'>
               <div>
-                {cards.length > 0 ?
+                {cards && cards.length > 0 ?
                   <ResourceCardView
                     cards={cards}
                     resourceId={resourceId}
                     resourceUrl={resourceUrl}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
+                    showResourceModal={showResourceModal}
+                    setShowResourceModal={setShowResourceModal}
+                    resourceTitle={resourceTitle}
                   />
                   :
-                  <div className='flex h-screen'>
-                    <NoContent src='/no-content-cat.png' />
-                    <button className='fixed top-12 md:right-12 lg:right-4 hidden md:block py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' onClick={() => setShowModal(true)}>Add Note</button>
-                    {showModal ?
-                      <ResourceAddNote setShowModal={setShowModal} resourceId={resourceId} resourceUrl={resourceUrl} />
-                      : null
-                    }
+                  <div className='flex flex-col h-screen'>
+                    <p className='text-3xl font-bold p-8 text-balance'>{resourceTitle}</p>
+                    <div className='grid grid-cols-3'>
+                      <div></div>
+                      <div className='flex justify-end'>
+                        <Button
+                          variant='secondary'
+                          onClick={() => setShowResourceModal(true)}
+                        >
+                          Add Note
+                        </Button>
+                        {showResourceModal ?
+                          <ResourceAddNote
+                            setShowResourceModal={setShowResourceModal}
+                            resourceId={resourceId}
+                            resourceUrl={resourceUrl}
+                          />
+                          : null
+                        }
+                        <NoContent src='/no-content-cat.png' />
+                      </div>
+                      <div></div>
+                    </div>
                   </div>
                 }
                 <div className=' pb-24 md:pb-4 p-4'>
@@ -121,10 +138,14 @@ export default function Resource() {
             <NoContent src='/no-content-cat.png' />
         )
       }
-      <BottomNavBar
-        setShowModal={setShowModal}
-        page={'resource'}
-      />
     </div>
+  )
+}
+
+Resource.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      {page}
+    </Layout>
   )
 }

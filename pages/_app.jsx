@@ -5,9 +5,10 @@ import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
-import Head from 'next/head';
+import Layout from '../components/Layout';
 
 const MyApp = ({ Component, pageProps }) => {
+  const getLayout = Component.getLayout || ((page) => page)
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
   const link = new ApolloLink((operation) => {
@@ -32,17 +33,24 @@ const MyApp = ({ Component, pageProps }) => {
             accountResourcesIndex: relayStylePagination(),
           },
         },
+        CeramicAccount: {
+          fields: {
+            idealiteProjectCardCollectionList: relayStylePagination(),
+          }
+        },
         IdealiteResource: {
           fields: {
             cards: relayStylePagination(),
           }
-        }
+        },
       },
     }), link
   })
 
-  return (
-    <div>
+
+
+  return getLayout(
+    <div className='w-full'>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
