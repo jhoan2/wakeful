@@ -31,7 +31,7 @@ export default function Projects() {
     if (error) return <ErrorPage message={error.message} />;
     const projects = data?.viewer?.idealiteProjectList.edges.map((edge) => edge.node)
     return (
-        <div className='flex justify-center w-full'>
+        <div className='flex justify-center w-full h-screen'>
             {loading ?
                 (<div className='flex h-screen items-center'>
                     <Loader2 className='animate-spin' />

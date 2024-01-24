@@ -50,7 +50,7 @@ const MyApp = ({ Component, pageProps }) => {
 
 
   return getLayout(
-    <div className='w-full h-screen'>
+    <div className='w-full'>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
