@@ -1,12 +1,10 @@
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync } from 'fs';
 import { CeramicClient } from '@ceramicnetwork/http-client'
-import path, { extname } from 'path'
 import {
   createComposite,
   readEncodedComposite,
   writeEncodedComposite,
   writeEncodedCompositeRuntime,
-  mergeEncodedComposites
 } from "@composedb/devtools-node";
 import { Composite } from "@composedb/devtools";
 import { DID } from 'dids';
