@@ -113,7 +113,7 @@ export default function ProjectAdd() {
                 <DialogHeader>
                     <DialogTitle>Add Project</DialogTitle>
                     <DialogDescription>
-                        Add a new project here. Click submit when you're done.
+                        Add a new project here. Click submit when you are done.
                     </DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
