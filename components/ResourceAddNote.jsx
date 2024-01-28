@@ -50,7 +50,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
         formData.set('file', file)
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/cardImage`, {
+            const res = await fetch('https://www.idealite.xyz/api/cardImage', {
                 method: 'POST',
                 body: formData
             });
