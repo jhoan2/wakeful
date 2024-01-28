@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { useMutation, gql } from '@apollo/client';
+import { Button } from '@/components/ui/button';
 
 export default function ProjectDelete({ projectId }) {
     const DELETE_PROJECT = gql`mutation DeleteProject($input: UpdateIdealiteProjectInput!) {
