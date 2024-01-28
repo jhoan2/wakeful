@@ -1,11 +1,11 @@
 import '../styles/globals.css'
 import { CeramicWrapper } from "../context";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
-import Layout from '../components/Layout';
+import Head from 'next/head';
 
 const MyApp = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page)
@@ -51,6 +51,10 @@ const MyApp = ({ Component, pageProps }) => {
 
   return getLayout(
     <div className='w-full'>
+      <Head>
+        <title>Idealite</title>
+        <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
+      </Head>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
