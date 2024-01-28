@@ -50,7 +50,7 @@ export default function ResourceSidePanel({ data }) {
         filterdObj.id = id
         try {
             setSubmitLoading(true)
-            const res = await fetch('http://localhost:3000/api/updateResource', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/updateResource`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
