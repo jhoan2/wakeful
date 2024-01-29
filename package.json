@@ -24,6 +24,7 @@
     "@didtools/cacao": "^3.0.1",
     "@didtools/pkh-ethereum": "^0.5.0",
     "@hookform/resolvers": "^3.3.4",
+    "@next/third-parties": "^14.1.0",
     "@pinata/sdk": "^2.1.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",

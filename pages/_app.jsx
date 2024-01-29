@@ -6,6 +6,7 @@ import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } f
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const MyApp = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page)
@@ -65,6 +66,7 @@ const MyApp = ({ Component, pageProps }) => {
           </CeramicWrapper>
         </div>
       </ApolloProvider>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY} />
     </div>
   );
 }
