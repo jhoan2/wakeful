@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Sidebar from './SideBar';
 import BottomNavBar from './BottomNavBar';
 import { authenticateCeramic } from '../utils';
@@ -19,6 +19,7 @@ export default function Layout({ children }) {
         }
 
     }, [])
+
 
     return (
         <div className='flex'>

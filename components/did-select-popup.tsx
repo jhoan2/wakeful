@@ -4,8 +4,8 @@ import { useCeramicContext } from "../context";
 import { useRouter } from "next/router";
 const AuthPrompt = () => {
   const clients = useCeramicContext()
+  const router = useRouter()
   const { ceramic, composeClient } = clients
-  const router = useRouter();
 
   const handleKeyDid = () => {
     localStorage.setItem("ceramic:auth_type", "key");
@@ -14,10 +14,10 @@ const AuthPrompt = () => {
 
   const handleEthPkh = async () => {
     localStorage.setItem("ceramic:auth_type", "eth");
-    await authenticateCeramic(ceramic, composeClient)
-    if (localStorage.getItem("logged_in") === 'true') {
-      window.location.reload()
-    }
+    await authenticateCeramic(ceramic, composeClient).then(() => {
+      // window.location.reload()
+      router.push('/home')
+    })
   };
 
 
