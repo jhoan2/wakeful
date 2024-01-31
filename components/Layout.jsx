@@ -8,6 +8,9 @@ export default function Layout({ children }) {
     const [page, setPage] = useState('home')
     const clients = useCeramicContext();
     const { ceramic, composeClient } = clients;
+    const composeClientId = composeClient.id
+    const avatarFallback = composeClientId ? composeClientId.substring(composeClientId.length - 5) : ''
+
 
     const handleLogin = () => {
         authenticateCeramic(ceramic, composeClient)
@@ -17,19 +20,18 @@ export default function Layout({ children }) {
         if (localStorage.getItem('ceramic:eth_did')) {
             handleLogin()
         }
-
     }, [])
 
 
     return (
         <div className='flex'>
             <div>
-                <Sidebar page={page} setPage={setPage} />
+                <Sidebar page={page} setPage={setPage} avatarFallback={avatarFallback} />
             </div>
             <main className='flex justify-center w-full'>
                 {children}
             </main>
-            <BottomNavBar page={page} setPage={setPage} />
+            <BottomNavBar page={page} setPage={setPage} avatarFallback={avatarFallback} />
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery, gql, useLazyQuery } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 import HomeCardList from '../../components/HomeCardList';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
