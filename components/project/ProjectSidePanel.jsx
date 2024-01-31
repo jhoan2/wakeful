@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCeramicContext } from '../../context';
 import {
     Form,
     FormControl,
@@ -30,8 +29,6 @@ import {
 export default function ProjectSidePanel({ projectData }) {
     const [openProjectSidePanel, setOpenProjectSidePanel] = useState(false)
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [submitLoading, setSubmitLoading] = useState(false)
-    const clients = useCeramicContext();
     const {
         createdAt,
         title,
@@ -41,7 +38,6 @@ export default function ProjectSidePanel({ projectData }) {
         priority,
         description
     } = projectData
-    const { composeClient } = clients
 
     const localeCreatedAt = new Date(createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
