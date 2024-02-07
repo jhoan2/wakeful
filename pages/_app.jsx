@@ -1,13 +1,15 @@
 import '../styles/globals.css'
 import { CeramicWrapper } from "../context";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const MyApp = ({ Component, pageProps }) => {
+  const getLayout = Component.getLayout || ((page) => page)
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
   const link = new ApolloLink((operation) => {
@@ -32,17 +34,28 @@ const MyApp = ({ Component, pageProps }) => {
             accountResourcesIndex: relayStylePagination(),
           },
         },
+        CeramicAccount: {
+          fields: {
+            idealiteProjectCardCollectionList: relayStylePagination(),
+          }
+        },
         IdealiteResource: {
           fields: {
             cards: relayStylePagination(),
           }
-        }
+        },
       },
     }), link
   })
 
-  return (
-    <div>
+
+
+  return getLayout(
+    <div className='w-full'>
+      <Head>
+        <title>Idealite</title>
+        <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
+      </Head>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
@@ -53,6 +66,7 @@ const MyApp = ({ Component, pageProps }) => {
           </CeramicWrapper>
         </div>
       </ApolloProvider>
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY} />
     </div>
   );
 }

@@ -8,10 +8,10 @@ import { RuntimeCompositeDefinition } from "@composedb/types";
 /**
  * Configure ceramic Client & create context.
  */
-const ceramic = new CeramicClient("https://ceramic-idealite-mainnet.hirenodes.io/");
+const ceramic = new CeramicClient(`${process.env.NEXT_PUBLIC_CERAMIC_URL}`);
 
 const composeClient = new ComposeClient({
-  ceramic: "https://ceramic-idealite-mainnet.hirenodes.io/",
+  ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
   // cast our definition as a RuntimeCompositeDefinition
   definition: definition as RuntimeCompositeDefinition,
 });

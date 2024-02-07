@@ -4,6 +4,8 @@ import EditorBubbleMenu from './EditorBubbleMenu';
 import StarterKit from '@tiptap/starter-kit';
 import { gql, useMutation } from '@apollo/client';
 import Image from 'next/image';
+import ResourceCardAction from './ResourceCardAction';
+
 
 export default function ResourceCard({ card }) {
     const [editorStateChanged, setEditorStateChanged] = useState(false)
@@ -31,23 +33,6 @@ export default function ResourceCard({ card }) {
         refetchQueries: ['getCardsForResource'],
     });
 
-    const [sendDeleteNote, { data: deleteData, loading: deleteLoading, error: deleteError }] = useMutation(UPDATE_NOTE, {
-        refetchQueries: ['getCardsForResource'],
-    });
-
-    const deleteNote = async () => {
-        await sendDeleteNote({
-            variables: {
-                input: {
-                    id: id,
-                    content: {
-                        updatedAt: new Date().toISOString(),
-                        deleted: true,
-                    }
-                }
-            }
-        })
-    }
 
     const handlePaste = (event) => {
         const clipboardData = event.clipboardData;
@@ -71,7 +56,7 @@ export default function ResourceCard({ card }) {
         formData.set('file', file)
 
         try {
-            const res = await fetch("https://www.idealite.xyz/api/cardImage", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/cardImage`, {
                 method: 'POST',
                 body: formData
             });
@@ -98,7 +83,7 @@ export default function ResourceCard({ card }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-md lg:prose-lg dark:prose-invert focus:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
+                class: 'prose prose-md lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
             },
         },
         content: annotation,
@@ -149,10 +134,8 @@ export default function ResourceCard({ card }) {
     }
 
     return (
-        <div className="m-3 relative flex flex-col bg-white border shadow-sm max-w-xs md:max-w-md rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-            <button className='absolute top-2 right-2 text-red-300 hover:bg-red-600 rounded-md p-1' onClick={() => deleteNote()}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-4 h-4'><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
-            </button>
+        <div className="m-3 relative flex flex-col bg-white border shadow-sm max-w-lg md:max-w-md rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+            <ResourceCardAction cardId={id} />
             {quote ?
                 <p className='italic border rounded p-2 hover:bg-gray-100'>
                     {quote}
@@ -199,9 +182,6 @@ export default function ResourceCard({ card }) {
                         </button> :
                         null
                     }
-                    {/* <button className='hover:bg-gray-300 rounded-xl' title='Send to a Project'>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M12 2.58594L18.2071 8.79304L16.7929 10.2073L13 6.41436V16.0002H11V6.41436L7.20711 10.2073L5.79289 8.79304L12 2.58594ZM3 18.0002V14.0002H5V18.0002C5 18.5524 5.44772 19.0002 6 19.0002H18C18.5523 19.0002 19 18.5524 19 18.0002V14.0002H21V18.0002C21 19.657 19.6569 21.0002 18 21.0002H6C4.34315 21.0002 3 19.657 3 18.0002Z"></path></svg>
-                    </button> */}
                 </div>
             </div>
         </div>
