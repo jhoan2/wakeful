@@ -21,7 +21,7 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, userProfil
     const { displayName, bio, id } = userProfile
     const formSchema = z.object({
         displayName: z.string().min(2).max(240),
-        bio: z.optional(z.string()),
+        bio: z.optional(z.string().min(2).max(240)),
     })
 
     const form = useForm({
