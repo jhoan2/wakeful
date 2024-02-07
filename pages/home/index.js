@@ -6,6 +6,7 @@ import NoContent from '../../components/NoContent';
 import ErrorPage from '../../components/ErrorPage';
 import Layout from '../../components/Layout';
 import { useCeramicContext } from '../../context';
+import HomeGetProfile from '../../components/HomeGetProfile';
 
 export default function Home() {
   const clients = useCeramicContext()
@@ -36,6 +37,7 @@ export default function Home() {
     variables: { account: composeClient.id },
   });
 
+
   if (error) return <ErrorPage message={error.message} />;
 
   const resources = data?.accountResourcesIndex.edges
@@ -54,6 +56,7 @@ export default function Home() {
 
   return (
     <div className='flex justify-center h-screen w-full'>
+      <HomeGetProfile />
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />

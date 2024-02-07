@@ -8,7 +8,7 @@
     "css": "styles/globals.css",
     "baseColor": "slate",
     "cssVariables": false,
-    "prefix": "-tw"
+    "prefix": "tw-"
   },
   "aliases": {
     "components": "@/components",

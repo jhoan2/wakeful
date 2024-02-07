@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCeramicContext } from '../../context';
 import {
     Form,
     FormControl,
@@ -30,8 +29,6 @@ import {
 export default function ProjectSidePanel({ projectData }) {
     const [openProjectSidePanel, setOpenProjectSidePanel] = useState(false)
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [submitLoading, setSubmitLoading] = useState(false)
-    const clients = useCeramicContext();
     const {
         createdAt,
         title,
@@ -41,7 +38,6 @@ export default function ProjectSidePanel({ projectData }) {
         priority,
         description
     } = projectData
-    const { composeClient } = clients
 
     const localeCreatedAt = new Date(createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -285,10 +281,12 @@ export default function ProjectSidePanel({ projectData }) {
                                         )}
                                     />
                                     {loading ?
-                                        <Button disabled>
-                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                            Please wait
-                                        </Button>
+                                        <div className="flex justify-end">
+                                            <Button disabled>
+                                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                                Please wait
+                                            </Button>
+                                        </div>
                                         :
                                         <div className='flex justify-between'>
                                             <button type="button" onClick={() => setIsEditOpen(!isEditOpen)} className="px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:bg-red-100 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
