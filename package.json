@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/run.mjs",
-    "dev:prod": "node scripts/deploy2.mjs",
+    "dev:prod": "node scripts/deploy.mjs",
     "generate": "node scripts/commands.mjs",
     "nextDev": "next dev",
     "ceramic": "CERAMIC_ENABLE_EXPERIMENTAL_COMPOSE_DB='true' ceramic daemon --config ./composedb.config.json",
