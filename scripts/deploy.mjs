@@ -30,6 +30,11 @@ export const writeComposite = async (spinner) => {
         "./composites/IdealiteResource.graphql"
     );
 
+    const idealiteProfileComposite = await createComposite(
+        ceramic,
+        "./composites/IdealiteProfile.graphql"
+    );
+
     const cardSchema = readFileSync("./composites/Card.graphql", {
         encoding: "utf-8",
     }).replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
@@ -112,6 +117,7 @@ export const writeComposite = async (spinner) => {
 
     const composite = Composite.from([
         idealiteResourceComposite,
+        idealiteProfileComposite,
         cardComposite,
         accountResourcesComposite,
         resourcesCardsComposite,
