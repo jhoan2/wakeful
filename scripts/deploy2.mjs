@@ -37,26 +37,35 @@ export const writeComposite = async (spinner) => {
         ]
     });
 
-    const composite = compositeNoViews.setViews({
+    const compositeWithAlises = compositeNoViews.setAliases({
+        ['kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5']: 'IdealiteResource',
+        ['kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml']: 'IdealiteProfile',
+        ['kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq']: 'Cards',
+        ['kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502']: 'AccountResources',
+        ['kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6']: 'IdealiteProject',
+        ['kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41']: 'IdealiteProjectCardCollection'
+    })
+
+    const composite = compositeWithAlises.setViews({
         "models": {
-            "kjzl6hvfrbw6cb8n44ykipfxuj6qqwdik5s049wt0kmswirmrawcxw9ydywm0nq": {
+            "kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5": {
                 "cards": {
                     "type": "relationFrom",
-                    "model": "kjzl6hvfrbw6c9zehj40sgq3i3r6b78pw63ue8mrj8gop2qztfi4c7dvntzpc5c",
+                    "model": "kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq",
                     "property": "resourceId"
                 }
             },
-            "kjzl6hvfrbw6c7kx70x0j9v78sqmbpqtjzalrxwytq4jww7ex9s87f7pctyhfqt": {},
-            "kjzl6hvfrbw6c9zehj40sgq3i3r6b78pw63ue8mrj8gop2qztfi4c7dvntzpc5c": {
+            "kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml": {},
+            "kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq": {
                 "collection": {
                     "type": "relationFrom",
-                    "model": "kjzl6hvfrbw6c98tpwkrfui3afsvgmdjqhhy2jqzup58jiok8kgp4sqdflsjj5y",
+                    "model": "kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41",
                     "property": "projectId"
                 }
             },
-            "kjzl6hvfrbw6c97wg1nnk5faqlu2xq9jc5txmp387u7jjoizaa5ls2yobapk9tt": {},
-            "kjzl6hvfrbw6c6uteptv0tq574aplqowarja0zvmzdp6kyfzfaas9k5tfx63vpy": {},
-            "kjzl6hvfrbw6c98tpwkrfui3afsvgmdjqhhy2jqzup58jiok8kgp4sqdflsjj5y": {}
+            "kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502": {},
+            "kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6": {},
+            "kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41": {}
         }
     });
 
