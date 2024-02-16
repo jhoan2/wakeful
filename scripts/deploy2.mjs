@@ -25,7 +25,7 @@ export const writeComposite = async (spinner) => {
     await authenticate()
     spinner.info("writing composite to Ceramic")
 
-    const composite = await Composite.fromModels({
+    const compositeNoViews = await Composite.fromModels({
         ceramic: ceramic,
         models: [
             'kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41',
@@ -35,6 +35,29 @@ export const writeComposite = async (spinner) => {
             'kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5',
             'kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml'
         ]
+    });
+
+    const composite = compositeNoViews.setViews({
+        "models": {
+            "kjzl6hvfrbw6cb8n44ykipfxuj6qqwdik5s049wt0kmswirmrawcxw9ydywm0nq": {
+                "cards": {
+                    "type": "relationFrom",
+                    "model": "kjzl6hvfrbw6c9zehj40sgq3i3r6b78pw63ue8mrj8gop2qztfi4c7dvntzpc5c",
+                    "property": "resourceId"
+                }
+            },
+            "kjzl6hvfrbw6c7kx70x0j9v78sqmbpqtjzalrxwytq4jww7ex9s87f7pctyhfqt": {},
+            "kjzl6hvfrbw6c9zehj40sgq3i3r6b78pw63ue8mrj8gop2qztfi4c7dvntzpc5c": {
+                "collection": {
+                    "type": "relationFrom",
+                    "model": "kjzl6hvfrbw6c98tpwkrfui3afsvgmdjqhhy2jqzup58jiok8kgp4sqdflsjj5y",
+                    "property": "projectId"
+                }
+            },
+            "kjzl6hvfrbw6c97wg1nnk5faqlu2xq9jc5txmp387u7jjoizaa5ls2yobapk9tt": {},
+            "kjzl6hvfrbw6c6uteptv0tq574aplqowarja0zvmzdp6kyfzfaas9k5tfx63vpy": {},
+            "kjzl6hvfrbw6c98tpwkrfui3afsvgmdjqhhy2jqzup58jiok8kgp4sqdflsjj5y": {}
+        }
     });
 
     await writeEncodedComposite(composite, "./src/__generated__/definition.json");
