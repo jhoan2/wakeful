@@ -6,7 +6,6 @@ import { gql, useMutation } from '@apollo/client';
 import Image from 'next/image';
 import ResourceCardAction from './ResourceCardAction';
 
-
 export default function ResourceCard({ card }) {
     const [editorStateChanged, setEditorStateChanged] = useState(false)
     const { annotation, quote, id, updatedAt, cid } = card.node
