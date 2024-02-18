@@ -24,10 +24,12 @@ export default function ResourceCardView({ cards, resourceUrl, resourceId, setSh
                 </div>
                 <div></div>
             </div>
-            <div className='grid grid-cols-1 sm:grid-cols-3'>
-                {cards.map((card) => {
-                    return <ResourceCard card={card} key={card.node.id} />
-                })}
+            <div className='flex justify-center'>
+                <div className='grid grid-cols-1 sm:grid-cols-3'>
+                    {cards.map((card) => {
+                        return <ResourceCard card={card} key={card.node.id} />
+                    })}
+                </div>
             </div>
         </div>
     )
