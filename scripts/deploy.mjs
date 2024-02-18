@@ -44,13 +44,13 @@ export const writeComposite = async (spinner) => {
         schema: cardSchema,
     });
 
-    const accountResourcesSchema = readFileSync("./composites/AccountResources.graphql", {
+    const idealiteAccountResourcesSchema = readFileSync("./composites/IdealiteAccountResources.graphql", {
         encoding: "utf-8",
     }).replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
 
-    const accountResourcesComposite = await Composite.create({
+    const idealiteAccountResourcesComposite = await Composite.create({
         ceramic,
-        schema: accountResourcesSchema,
+        schema: idealiteAccountResourcesSchema,
     });
 
     const resourcesCardsSchema = readFileSync(
@@ -119,7 +119,7 @@ export const writeComposite = async (spinner) => {
         idealiteResourceComposite,
         idealiteProfileComposite,
         cardComposite,
-        accountResourcesComposite,
+        idealiteAccountResourcesComposite,
         resourcesCardsComposite,
         idealiteProjectComposite,
         idealiteProjectCardCollectionComposite,

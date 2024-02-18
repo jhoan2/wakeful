@@ -3,7 +3,7 @@ type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
 }
 
 type Card 
-    @createModel(accountRelation: LIST, description: "Blocks of text for Idealite") 
+    @createModel(accountRelation: LIST, description: "v0: Blocks of text for Idealite") 
     @createIndex(fields: [{ path: ["deleted"]} ])
     @createIndex(fields: [{ path: ["url"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ]) {

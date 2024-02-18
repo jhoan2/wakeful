@@ -1,5 +1,5 @@
 type IdealiteResource 
-    @createModel(accountRelation: LIST, description: "Resource used to create blocks of text")
+    @createModel(accountRelation: LIST, description: "v0: Resource used to create blocks of text")
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])
     @createIndex(fields: [{ path: ["author"]} ])
