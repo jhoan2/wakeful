@@ -28,7 +28,7 @@ export default function ProjectPage() {
                 edges {
                 node {
                     id
-                    card {
+                    idealiteCard {
                         id
                         cid
                         annotation
@@ -115,7 +115,7 @@ export default function ProjectPage() {
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-3'>
                                 {cards.map((card) => {
-                                    return <ProjectCard key={card.node.card.id} card={card.node} />
+                                    return <ProjectCard key={card.node.idealiteCard.id} card={card.node} />
                                 })}
                             </div>
 

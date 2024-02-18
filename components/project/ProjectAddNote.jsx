@@ -11,11 +11,11 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
-    const projectCardResourceId = 'kjzl6kcym7w8y72f9y4j0vi9n8e425h266nb2ctui2e8brlujnj3fn32icxe8yf'
+    const projectCardResourceId = "kjzl6kcym7w8y9pcqktmfruttbdnm1cevqefd7ro9agpca18yrfztkf20t89k8c"
 
     const ADD_NOTE = gql`
-    mutation ADD_NOTE($input: CreateCardInput!) {
-        createCard(input: $input) {
+    mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
+        createIdealiteCards(input: $input) {
           document {
             id
           }
@@ -129,13 +129,13 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
                 }
             }
         }).then((data) => {
-            if (data.data.createCard.document.id) {
+            if (data.data.createIdealiteCards.document.id) {
                 createCollection({
                     variables: {
                         input: {
                             content: {
                                 projectId: projectId,
-                                cardId: data.data.createCard.document.id,
+                                idealiteCardId: data.data.createIdealiteCards.document.id,
                                 deleted: false
                             }
                         }

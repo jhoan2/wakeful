@@ -32,7 +32,7 @@ export default function Resource() {
         title
         updatedAt
         url
-        cards(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
+        idealiteCards(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
           edges {
             node {
               id
@@ -57,10 +57,10 @@ export default function Resource() {
   });
 
   if (error) return <ErrorPage message={error.message} />;
-  const cards = data?.node.cards.edges
+  const cards = data?.node.idealiteCards.edges
   const resourceUrl = data?.node.url
   const resourceTitle = data?.node.title
-  const pageInfo = data?.node.cards.pageInfo
+  const pageInfo = data?.node.idealiteCards.pageInfo
 
   const getMoreCards = (pageInfo) => {
     if (pageInfo.hasNextPage) {

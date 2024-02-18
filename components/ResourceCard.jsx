@@ -20,8 +20,8 @@ export default function ResourceCard({ card }) {
     const [editorContent, setEditorContent] = useState('')
 
     const UPDATE_NOTE = gql`
-    mutation UPDATE_NOTE($input: UpdateCardInput!) {
-        updateCard(input: $input) {
+    mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
+        updateIdealiteCards(input: $input) {
           document {
             id
             annotation
