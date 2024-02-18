@@ -113,10 +113,12 @@ export default function ProjectPage() {
                                 </div>
                                 <div></div>
                             </div>
-                            <div className='grid grid-cols-1 sm:grid-cols-3'>
-                                {cards.map((card) => {
-                                    return <ProjectCard key={card.node.idealiteCard.id} card={card.node} />
-                                })}
+                            <div className='flex justify-center'>
+                                <div className='grid grid-cols-1 sm:grid-cols-3'>
+                                    {cards.map((card) => {
+                                        return <ProjectCard key={card.node.idealiteCard.id} card={card.node} />
+                                    })}
+                                </div>
                             </div>
 
                             <div className=' pb-24 md:pb-4 p-4'>
