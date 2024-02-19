@@ -61,12 +61,12 @@ const MyApp = ({ Component, pageProps }) => {
           <CeramicWrapper>
             <div>
               <Component {...pageProps} />
+              <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_KEY} />
               <Toaster richColors />
             </div>
           </CeramicWrapper>
         </div>
       </ApolloProvider>
-      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_KEY} />
     </div>
   );
 }
