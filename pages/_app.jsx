@@ -57,13 +57,13 @@ const MyApp = ({ Component, pageProps }) => {
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
       {/* <!-- Google tag (gtag.js) --> */}
-      <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_KEY}`}></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></script>
       <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments)}
         gtag('js', new Date());
 
-        gtag('config', `${process.env.GOOGLE_ANALYTICS_KEY}`);
+        gtag('config', 'G-DTEXJ081WW');
       </script>
       <ApolloProvider client={apolloClient}>
         <div>
