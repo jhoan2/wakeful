@@ -7,6 +7,7 @@ import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script'
 
 const MyApp = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page)
@@ -57,14 +58,16 @@ const MyApp = ({ Component, pageProps }) => {
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
       {/* <!-- Google tag (gtag.js) --> */}
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)}
-        gtag('js', new Date());
-
-        gtag('config', 'G-DTEXJ081WW');
-      </script>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
+      <Script>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)}
+          gtag('js', new Date());
+  
+          gtag('config', 'G-DTEXJ081WW');
+        `}
+      </Script>
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>
