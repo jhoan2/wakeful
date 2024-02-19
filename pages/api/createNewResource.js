@@ -87,8 +87,8 @@ const handler = async (req, res) => {
                 .then(newResourceObj => {
                     connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIdealiteResource.document.id
                     return composeClient.executeQuery(`
-                        mutation MyMutation ($i: CreateAccountResourcesInput!) {
-                          createAccountResources(
+                        mutation MyMutation ($i: CreateIdealiteAccountResourcesInput!) {
+                          createIdealiteAccountResources(
                             input: $i
                           ) {
                             document {
@@ -98,7 +98,7 @@ const handler = async (req, res) => {
                         }
                         `, connectResourceAccountValues)
                 }).then(connectResourceToAccountResult => {
-                    console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createAccountResources)
+                    console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createIdealiteAccountResources)
                     return res.status(200).json({ newResourceId: connectResourceAccountValues.i.content.resourceId })
                 })
                 .catch(error => {

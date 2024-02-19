@@ -1,5 +1,5 @@
 type IdealiteProject
-    @createModel(accountRelation: LIST, description: "Idealite Projects")
+    @createModel(accountRelation: LIST, description: "v0: Idealite Projects")
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ])

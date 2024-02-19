@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 export default function ProjectCard({ card }) {
 
     const [editorStateChanged, setEditorStateChanged] = useState(false)
-    const { annotation, quote, id, updatedAt, cid } = card.card
+    const { annotation, quote, id, updatedAt, cid } = card.idealiteCard
     const collectionId = card.id
     const localeUpdatedAt = new Date(updatedAt).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -20,8 +20,8 @@ export default function ProjectCard({ card }) {
     const [uploadImage, setUploadImage] = useState(null)
     const [editorContent, setEditorContent] = useState('')
     const UPDATE_NOTE = gql`
-    mutation UPDATE_NOTE($input: UpdateCardInput!) {
-        updateCard(input: $input) {
+    mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
+        updateIdealiteCards(input: $input) {
           document {
             id
             annotation

@@ -79,15 +79,13 @@ export const writeComposite = async (spinner) => {
     spinner.info("deploying composite");
     const deployComposite = await readEncodedComposite(
         ceramic,
-        "./src/__generated__/definition.json"
+        "./src/__generated__/definition.json",
     );
-
 
     await deployComposite.startIndexingOn(ceramic);
 
     spinner.succeed("composite deployed & ready for use");
 }
-
 
 /**
  * Authenticating DID for publishing composite

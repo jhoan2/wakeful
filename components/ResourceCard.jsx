@@ -6,7 +6,6 @@ import { gql, useMutation } from '@apollo/client';
 import Image from 'next/image';
 import ResourceCardAction from './ResourceCardAction';
 
-
 export default function ResourceCard({ card }) {
     const [editorStateChanged, setEditorStateChanged] = useState(false)
     const { annotation, quote, id, updatedAt, cid } = card.node
@@ -20,8 +19,8 @@ export default function ResourceCard({ card }) {
     const [editorContent, setEditorContent] = useState('')
 
     const UPDATE_NOTE = gql`
-    mutation UPDATE_NOTE($input: UpdateCardInput!) {
-        updateCard(input: $input) {
+    mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
+        updateIdealiteCards(input: $input) {
           document {
             id
             annotation
@@ -131,6 +130,8 @@ export default function ResourceCard({ card }) {
                 }
             }
         })
+
+        setEditorStateChanged(false)
     }
 
     return (
@@ -177,9 +178,17 @@ export default function ResourceCard({ card }) {
                         null
                     }
                     {editorStateChanged ?
-                        <button title='Submit Note' onClick={() => updateNote()} className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                            Submit
-                        </button> :
+                        (
+                            loading ?
+                                <button title='Submit Note' onClick={() => updateNote()} className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    Updating..
+                                </button>
+                                :
+                                <button title='Submit Note' onClick={() => updateNote()} className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    Submit
+                                </button>
+                        )
+                        :
                         null
                     }
                 </div>

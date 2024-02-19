@@ -13,7 +13,7 @@ export default function Home() {
   const { composeClient } = clients
   const GET_CARDS_PER_URL_PER_USER = gql`
   query GetCardsPerUrlPerUser ($account: String, $cursor: String){
-    accountResourcesIndex (after: $cursor, first: 5, filters: {where: {recipient: {equalTo: $account}}}, sorting: {updatedAt: DESC} ){
+    idealiteAccountResourcesIndex (after: $cursor, first: 5, filters: {where: {recipient: {equalTo: $account}}}, sorting: {updatedAt: DESC} ){
       edges {
         node {
           resource {
@@ -40,8 +40,8 @@ export default function Home() {
 
   if (error) return <ErrorPage message={error.message} />;
 
-  const resources = data?.accountResourcesIndex.edges
-  const pageInfo = data?.accountResourcesIndex.pageInfo
+  const resources = data?.idealiteAccountResourcesIndex.edges
+  const pageInfo = data?.idealiteAccountResourcesIndex.pageInfo
 
 
   const getMoreResources = (pageInfo) => {

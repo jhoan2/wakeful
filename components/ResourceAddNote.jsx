@@ -12,8 +12,8 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
     const [image, setImage] = useState(null);
 
     const ADD_NOTE = gql`
-    mutation ADD_NOTE($input: CreateCardInput!) {
-        createCard(input: $input) {
+    mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
+        createIdealiteCards(input: $input) {
           document {
             id
           }

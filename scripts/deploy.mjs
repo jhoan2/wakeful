@@ -35,22 +35,22 @@ export const writeComposite = async (spinner) => {
         "./composites/IdealiteProfile.graphql"
     );
 
-    const cardSchema = readFileSync("./composites/Card.graphql", {
+    const idealiteCardSchema = readFileSync("./composites/IdealiteCard.graphql", {
         encoding: "utf-8",
     }).replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
 
-    const cardComposite = await Composite.create({
+    const idealiteCardComposite = await Composite.create({
         ceramic,
-        schema: cardSchema,
+        schema: idealiteCardSchema,
     });
 
-    const accountResourcesSchema = readFileSync("./composites/AccountResources.graphql", {
+    const idealiteAccountResourcesSchema = readFileSync("./composites/IdealiteAccountResources.graphql", {
         encoding: "utf-8",
     }).replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
 
-    const accountResourcesComposite = await Composite.create({
+    const idealiteAccountResourcesComposite = await Composite.create({
         ceramic,
-        schema: accountResourcesSchema,
+        schema: idealiteAccountResourcesSchema,
     });
 
     const resourcesCardsSchema = readFileSync(
@@ -59,7 +59,7 @@ export const writeComposite = async (spinner) => {
             encoding: "utf-8",
         }
     )
-        .replace("$CARD_ID", cardComposite.modelIDs[1])
+        .replace("$IDEALITE_CARD_ID", idealiteCardComposite.modelIDs[1])
         .replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
 
     const resourcesCardsComposite = await Composite.create({
@@ -79,7 +79,7 @@ export const writeComposite = async (spinner) => {
             encoding: "utf-8",
         }
     )
-        .replace("$CARD_ID", cardComposite.modelIDs[1])
+        .replace("$IDEALITE_CARD_ID", idealiteCardComposite.modelIDs[1])
         .replace("$IDEALITE_PROJECT_ID", idealiteProjectComposite.modelIDs[0]);
 
     const idealiteProjectCardCollectionComposite = await Composite.create({
@@ -93,7 +93,7 @@ export const writeComposite = async (spinner) => {
             encoding: "utf-8",
         }
     )
-        .replace("$CARD_ID", cardComposite.modelIDs[1])
+        .replace("$IDEALITE_CARD_ID", idealiteCardComposite.modelIDs[1])
         .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[2]);
 
     const cardsProjectsComposite = await Composite.create({
@@ -107,7 +107,7 @@ export const writeComposite = async (spinner) => {
             encoding: "utf-8",
         }
     )
-        .replace("$IDEALITE_PROJECT_ID", cardComposite.modelIDs[1])
+        .replace("$IDEALITE_PROJECT_ID", idealiteCardComposite.modelIDs[1])
         .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[2]);
 
     const projectsCardsComposite = await Composite.create({
@@ -118,8 +118,8 @@ export const writeComposite = async (spinner) => {
     const composite = Composite.from([
         idealiteResourceComposite,
         idealiteProfileComposite,
-        cardComposite,
-        accountResourcesComposite,
+        idealiteCardComposite,
+        idealiteAccountResourcesComposite,
         resourcesCardsComposite,
         idealiteProjectComposite,
         idealiteProjectCardCollectionComposite,
@@ -129,7 +129,7 @@ export const writeComposite = async (spinner) => {
 
     const newComposite = composite.setAliases({
         [`${idealiteResourceComposite.modelIDs[0]}`]: 'IdealiteResource',
-        [`${cardComposite.modelIDs[1]}`]: 'Cards',
+        [`${idealiteCardComposite.modelIDs[1]}`]: 'IdealiteCards',
         [`${idealiteProjectComposite.modelIDs[0]}`]: 'IdealiteProject',
         [`${idealiteProjectCardCollectionComposite.modelIDs[2]}`]: 'IdealiteProjectCardCollection'
     })
