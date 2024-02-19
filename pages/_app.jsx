@@ -66,7 +66,7 @@ const MyApp = ({ Component, pageProps }) => {
           </CeramicWrapper>
         </div>
       </ApolloProvider>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY} />
+      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_KEY} />
     </div>
   );
 }

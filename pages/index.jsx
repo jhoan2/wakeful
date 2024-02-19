@@ -58,7 +58,7 @@ const FrontPage = () => {
           </div>
         </div>
       </div>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_KEY} />
+      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_KEY} />
     </>
   );
 }
