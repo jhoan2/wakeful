@@ -7,11 +7,11 @@ import { Ed25519Provider } from "key-did-provider-ed25519";
 import KeyResolver from "key-did-resolver";
 
 const handler = async (req, res) => {
-  const ceramic = new CeramicClient('https://ceramic-idealite-mainnet.hirenodes.io/')
+  const ceramic = new CeramicClient(`${process.env.NEXT_PUBLIC_CERAMIC_URL}`)
 
   //instantiate a composeDB client instance
   const composeClient = new ComposeClient({
-    ceramic: 'https://ceramic-idealite-mainnet.hirenodes.io/',
+    ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
     definition: definition
   });
   const { clientMutationId, url, title, createdAt, updatedAt, cid } = req.body
@@ -88,8 +88,8 @@ const handler = async (req, res) => {
         .then(newResourceObj => {
           connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIdealiteResource.document.id
           return composeClient.executeQuery(`
-                  mutation MyMutation ($i: CreateAccountResourcesInput!) {
-                    createAccountResources(
+                  mutation MyMutation ($i: CreateIdealiteAccountResourcesInput!) {
+                    createIdealiteAccountResources(
                       input: $i
                     ) {
                       document {
@@ -99,7 +99,7 @@ const handler = async (req, res) => {
                   }
                   `, connectResourceAccountValues)
         }).then(connectResourceToAccountResult => {
-          console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createAccountResources)
+          console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createIdealiteAccountResources)
           return res.status(200).json({ newResourceId: connectResourceAccountValues.i.content.resourceId })
         })
         .catch(error => {

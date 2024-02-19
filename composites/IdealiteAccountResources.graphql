@@ -1,8 +1,8 @@
-type IdealiteResource @loadModel(id: "kjzl6hvfrbw6c5lswatqis3e6nqalsz9hipxr6s1lzj4kdmnbd54jjuwiu7xg1x") {
+type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
   id: ID!
 }
 
-type AccountResources @createModel(accountRelation: LIST, description: "Resources that belong to an Idealite account") 
+type IdealiteAccountResources @createModel(accountRelation: LIST, description: "v0: Resources that belong to an Idealite account") 
   @createIndex(fields: [{ path: ["recipient"]} ])
   @createIndex(fields: [{ path: ["url"]} ])
   @createIndex(fields: [{ path: ["updatedAt"]} ]){

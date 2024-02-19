@@ -1,6 +1,4 @@
 import React from 'react'
-import SideBar from './SideBar'
-import BottomNavBar from './BottomNavBar'
 import { useRouter } from 'next/router';
 
 export default function ErrorPage({ message }) {
@@ -8,7 +6,6 @@ export default function ErrorPage({ message }) {
 
     return (
         <div className='flex h-screen'>
-            <SideBar />
             <div className='flex-grow flex justify-center items-center'>
                 <div className='flex flex-col items-center'>
                     <div className='rounded-full bg-gray-200 p-10 inline-flex justify-center items-center'>
@@ -18,7 +15,6 @@ export default function ErrorPage({ message }) {
                     <button onClick={() => router.push('/home')} className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-400 text-gray hover:bg-gradient-to-r from-amber-200 to-yellow-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Refresh</button>
                 </div>
             </div>
-            <BottomNavBar />
         </div>
     )
 }

@@ -1,9 +1,9 @@
-type IdealiteResource @loadModel(id: "kjzl6hvfrbw6c5lswatqis3e6nqalsz9hipxr6s1lzj4kdmnbd54jjuwiu7xg1x") {
+type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
     id: ID!
 }
 
-type Card 
-    @createModel(accountRelation: LIST, description: "Blocks of text for Idealite") 
+type IdealiteCard 
+    @createModel(accountRelation: LIST, description: "v0: Blocks of text for Idealite") 
     @createIndex(fields: [{ path: ["deleted"]} ])
     @createIndex(fields: [{ path: ["url"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ]) {
