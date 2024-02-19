@@ -6,7 +6,6 @@ import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } f
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script'
 
 const MyApp = ({ Component, pageProps }) => {
@@ -58,7 +57,7 @@ const MyApp = ({ Component, pageProps }) => {
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
       {/* <!-- Google tag (gtag.js) --> */}
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW" id="google-analytics"></Script>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
       <Script id="google-analytics">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -73,7 +72,6 @@ const MyApp = ({ Component, pageProps }) => {
           <CeramicWrapper>
             <div>
               <Component {...pageProps} />
-              <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_KEY} />
               <Toaster richColors />
             </div>
           </CeramicWrapper>
