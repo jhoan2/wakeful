@@ -25,8 +25,8 @@ const FrontPage = () => {
         <title>Idealite</title>
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
-      <Script id="google-analytics">
+      <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)}
