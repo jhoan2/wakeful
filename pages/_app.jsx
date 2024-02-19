@@ -6,7 +6,7 @@ import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } f
 import { Toaster } from 'sonner';
 import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
-import Script from 'next/script'
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const MyApp = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page)
@@ -56,17 +56,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>Idealite</title>
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
-      {/* <!-- Google tag (gtag.js) --> */}
-      <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments)}
-          gtag('js', new Date());
-  
-          gtag('config', 'G-DTEXJ081WW');
-        `}
-      </Script>
+      <GoogleTagManager gtmId="G-DTEXJ081WW" />
       <ApolloProvider client={apolloClient}>
         <div>
           <CeramicWrapper>

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Script from 'next/script'
+import { GoogleTagManager } from '@next/third-parties/google'
+
 const FrontPage = () => {
   const router = useRouter();
 
@@ -25,16 +26,7 @@ const FrontPage = () => {
         <title>Idealite</title>
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
-      <Script async strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments)}
-          gtag('js', new Date());
-  
-          gtag('config', 'G-DTEXJ081WW');
-        `}
-      </Script>
+      <GoogleTagManager gtmId="G-DTEXJ081WW" />
       <div className="absolute inset-0 -z-10 h-full w-full bg-white overflow-hidden [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
         <div className="px-6 pt-6 lg:px-8">
           <div>
