@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { GoogleAnalytics } from '@next/third-parties/google';
 
 const FrontPage = () => {
   const router = useRouter();
@@ -58,7 +57,6 @@ const FrontPage = () => {
           </div>
         </div>
       </div>
-      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_KEY} />
     </>
   );
 }
