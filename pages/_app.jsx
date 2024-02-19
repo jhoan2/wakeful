@@ -58,8 +58,8 @@ const MyApp = ({ Component, pageProps }) => {
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
       {/* <!-- Google tag (gtag.js) --> */}
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW"></Script>
-      <Script>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-DTEXJ081WW" id="google-analytics"></Script>
+      <Script id="google-analytics">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments)}
