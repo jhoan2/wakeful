@@ -25,7 +25,7 @@ export const writeComposite = async (spinner) => {
     await authenticate()
     spinner.info("writing composite to Ceramic")
 
-    const composite = await Composite.fromModels({
+    const compositeNoViews = await Composite.fromModels({
         ceramic: ceramic,
         models: [
             'kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41',
@@ -35,6 +35,38 @@ export const writeComposite = async (spinner) => {
             'kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5',
             'kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml'
         ]
+    });
+
+    const compositeWithAlises = compositeNoViews.setAliases({
+        ['kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5']: 'IdealiteResource',
+        ['kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml']: 'IdealiteProfile',
+        ['kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq']: 'Cards',
+        ['kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502']: 'AccountResources',
+        ['kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6']: 'IdealiteProject',
+        ['kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41']: 'IdealiteProjectCardCollection'
+    })
+
+    const composite = compositeWithAlises.setViews({
+        "models": {
+            "kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5": {
+                "cards": {
+                    "type": "relationFrom",
+                    "model": "kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq",
+                    "property": "resourceId"
+                }
+            },
+            "kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml": {},
+            "kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq": {
+                "collection": {
+                    "type": "relationFrom",
+                    "model": "kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41",
+                    "property": "projectId"
+                }
+            },
+            "kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502": {},
+            "kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6": {},
+            "kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41": {}
+        }
     });
 
     await writeEncodedComposite(composite, "./src/__generated__/definition.json");
