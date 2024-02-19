@@ -38,8 +38,8 @@ export default function ResourceCardAction({ cardId }) {
     const { loading, error, data } = useQuery(GET_USERS_PROJECT_LIST);
 
     const UPDATE_NOTE = gql`
-    mutation UPDATE_NOTE($input: UpdateCardInput!) {
-        updateCard(input: $input) {
+    mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
+        updateIdealiteCards(input: $input) {
           document {
             id
             annotation
@@ -83,7 +83,7 @@ export default function ResourceCardAction({ cardId }) {
             variables: {
                 input: {
                     content: {
-                        cardId: cardId,
+                        idealiteCardId: cardId,
                         projectId: projectId,
                         deleted: false,
                     }

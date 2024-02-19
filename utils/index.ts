@@ -5,6 +5,7 @@ import { getResolver } from 'key-did-resolver'
 import { DID } from "dids";
 import { DIDSession } from "did-session";
 import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
+import { toast } from "sonner";
 
 const DID_SEED_KEY = 'ceramic:did_seed'
 
@@ -78,6 +79,12 @@ const authenticateEthPKH = async (ceramic: CeramicApi, compose: ComposeClient) =
 
     // We enable the ethereum provider to get the user's addresses.
     const ethProvider = window.ethereum;
+    const chainId = await ethProvider.request({ method: 'eth_chainId' });
+    if (chainId !== '0xa') {
+      toast.info("Please switch to the Optimism network.");
+      return
+    }
+
     // request ethereum accounts.
     const addresses = await ethProvider.enable({
       method: "eth_requestAccounts",
