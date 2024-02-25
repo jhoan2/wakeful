@@ -63,7 +63,7 @@ export default function ResourceSidePanel({ data }) {
             if (!res.ok) {
                 setSubmitLoading(false)
                 toast.error('Something went wrong')
-                throw new Error('Server responded with an error: ' + res.status);
+                throw new Error('Server responded with an error: ' + res.error);
             }
 
             setSubmitLoading(false)

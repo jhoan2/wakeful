@@ -64,7 +64,8 @@ const handler = async (req, res) => {
             resourceId: null,
             url: url,
             createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
+            updatedAt: new Date().toISOString(),
+            readingStatus: 'READING'
           }
         }
       }

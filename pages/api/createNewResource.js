@@ -69,7 +69,8 @@ const handler = async (req, res) => {
                         resourceId: null,
                         url: url,
                         createdAt: createdAt,
-                        updatedAt: updatedAt
+                        updatedAt: updatedAt,
+                        readingStatus: 'READING'
                     }
                 }
             }

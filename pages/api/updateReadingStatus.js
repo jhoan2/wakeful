@@ -14,7 +14,7 @@ const handler = async (req, res) => {
         ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
         definition: definition
     });
-    const { data } = req.body
+    const { id, readingStatus } = req.body
     const uniqueKey = process.env.ADMIN_DID_KEY;
 
     //authenticate developer DID in order to create a write transaction
@@ -33,8 +33,10 @@ const handler = async (req, res) => {
 
     let variableValues = {
         "i": {
-            "id": data.id,
-            "content": data
+            "id": id,
+            "content": {
+                readingStatus: readingStatus
+            }
         }
     }
 
@@ -49,19 +51,17 @@ const handler = async (req, res) => {
 
     switch (req.method) {
         case 'PATCH':
-            delete variableValues.i.content.id
-            variableValues.i.content.updatedAt = new Date().toISOString()
             composeClient.executeQuery(`
-                mutation MyMutation ($i: UpdateIdealiteResourceInput!){
-                    updateIdealiteResource(input: $i) {
+                mutation updateReadingStatus ($i: UpdateIdealiteAccountResourcesInput!){
+                    updateIdealiteAccountResources(input: $i) {
                       document {
                         id
                       }
                     }
                   }
               `, variableValues)
-                .then(updateIdealiteResource => {
-                    return res.status(200).json({ updatedResourceId: updateIdealiteResource.data.updateIdealiteResource.document.id })
+                .then(updateIdealiteAccountResources => {
+                    return res.status(200).json({ updatedResourceId: updateIdealiteAccountResources.data.updateIdealiteAccountResources.document.id })
                 }).catch(error => {
                     return res.status(500).send({ message: error.message })
                 })

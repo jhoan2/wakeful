@@ -23,12 +23,12 @@ export default function Layout({ children }) {
         }
 
         // Track page views
-        const handleRouteChange = () => posthog?.capture('$pageview')
-        router.events.on('routeChangeComplete', handleRouteChange)
+        // const handleRouteChange = () => posthog?.capture('$pageview')
+        // router.events.on('routeChangeComplete', handleRouteChange)
 
-        return () => {
-            router.events.off('routeChangeComplete', handleRouteChange)
-        }
+        // return () => {
+        //     router.events.off('routeChangeComplete', handleRouteChange)
+        // }
     }, [])
 
 
