@@ -4,6 +4,7 @@ import BottomNavBar from './BottomNavBar';
 import { authenticateCeramic } from '../utils';
 import { useCeramicContext } from '../context';
 import { useRouter } from 'next/router';
+import posthog from 'posthog-js'
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
