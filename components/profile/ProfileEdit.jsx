@@ -18,8 +18,8 @@ import { toast } from 'sonner';
 import { gql, useMutation } from '@apollo/client';
 
 export default function ProfileEdit({ setEditProfile, avatarFallback, userProfile }) {
-    const displayName = userProfile.displayName || "Guest";
-    const bio = userProfile.bio || "No bio provided";
+    const displayName = userProfile?.displayName || "Guest";
+    const bio = userProfile?.bio || "No bio provided";
     const id = userProfile.id
     const formSchema = z.object({
         displayName: z.string().min(2).max(240),
