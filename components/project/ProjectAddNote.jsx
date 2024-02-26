@@ -11,7 +11,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
-    const projectCardResourceId = "kjzl6kcym7w8y6p7kkuw5upvt7dhe0tm04tvnpougmnhqx11n88406asvucr0j4"
+    const projectCardResourceId = "kjzl6kcym7w8y7dzo4nt5e3bqsb1jqzq3mphd0hityxr9miwgvu485wyhhfc4a9"
 
     const ADD_NOTE = gql`
     mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
