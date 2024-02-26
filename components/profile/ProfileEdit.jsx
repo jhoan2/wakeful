@@ -20,7 +20,7 @@ import { gql, useMutation } from '@apollo/client';
 export default function ProfileEdit({ setEditProfile, avatarFallback, userProfile }) {
     const displayName = userProfile?.displayName || "Guest";
     const bio = userProfile?.bio || "No bio provided";
-    const id = userProfile.id
+    const id = userProfile?.id
     const formSchema = z.object({
         displayName: z.string().min(2).max(240),
         bio: z.optional(z.string().min(2).max(240)),
