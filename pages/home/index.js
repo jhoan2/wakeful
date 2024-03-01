@@ -16,7 +16,7 @@ export default function Home() {
 
   const GET_CARDS_PER_URL_PER_USER = gql`
   query GetCardsPerUrlPerUser ($filters: IdealiteAccountResourcesFiltersInput, $cursor: String){
-    idealiteAccountResourcesIndex (after: $cursor, first: 5, filters: $filters, sorting: {updatedAt: DESC} ){
+    idealiteAccountResourcesIndex (after: $cursor, first: 10, filters: $filters, sorting: {updatedAt: DESC} ){
       edges {
         node {
           id
