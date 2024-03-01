@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,8 +17,12 @@ import { Loader2 } from "lucide-react";
 import { toast } from 'sonner';
 import { gql, useMutation } from '@apollo/client';
 
-export default function ProfileEdit({ setEditProfile, avatarFallback, userProfile }) {
-    const { displayName, bio, id } = userProfile
+export default function ProfileEdit({ setEditProfile, avatarFallback, profile }) {
+    const [loadingProfile, setLoadingProfile] = useState(false)
+    const displayName = profile?.displayName || "Guest";
+    const bio = profile?.bio || "No bio provided";
+    const id = profile?.id;
+
     const formSchema = z.object({
         displayName: z.string().min(2).max(240),
         bio: z.optional(z.string().min(2).max(240)),
@@ -31,6 +35,36 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, userProfil
             bio: `${bio}`,
         },
     })
+
+    const UPDATE_IDEALITE_PROFILE = gql`
+    mutation MyMutation($input: UpdateIdealiteProfileInput!) {
+        updateIdealiteProfile(input: $input) {
+            document {
+                id
+            }
+        }
+    }
+`
+
+    const [updateProfile, { error: errorUpdatingProfile }] = useMutation(UPDATE_IDEALITE_PROFILE, {
+        onCompleted: () => setEditProfile(false),
+        refetchQueries: ['getUserProfile'],
+    });
+
+    const CREATE_IDEALITE_PROFILE = gql`
+    mutation MyMutation ($input: CreateIdealiteProfileInput!) {
+        createIdealiteProfile(input: $input) {
+          document {
+            id
+          }
+        }
+      }
+        `
+
+    const [createProfile, { error: errorCreatingProfile }] = useMutation(CREATE_IDEALITE_PROFILE, {
+        onCompleted: () => setEditProfile(false),
+        refetchQueries: ['getUserProfile'],
+    });
 
     const onSubmit = (values) => {
         let profileContent = {
@@ -45,35 +79,42 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, userProfil
             }
         }
 
-        updateProfile({
-            variables: {
-                input: {
-                    id: id,
-                    content: profileContent
-                }
-            }
-        })
-    }
+        if (!profile.id) {
+            setLoadingProfile(true)
 
-    const UPDATE_IDEALITE_PROFILE = gql`
-        mutation MyMutation($input: UpdateIdealiteProfileInput!) {
-            updateIdealiteProfile(input: $input) {
-                document {
-                    id
+            createProfile({
+                variables: {
+                    input: {
+                        content: profileContent
+                    }
                 }
+            })
+
+            if (errorCreatingProfile) {
+                toast.error('Error creating profile')
+                console.log(errorCreatingProfile.message)
+            }
+            setLoadingProfile(false)
+        } else {
+            setLoadingProfile(true)
+
+            updateProfile({
+                variables: {
+                    input: {
+                        id: id,
+                        content: profileContent
+                    }
+                }
+            })
+
+            if (errorUpdatingProfile) {
+                toast.error("Error updating profile.")
+                console.log(errorUpdatingProfile.message)
             }
         }
-        `
-
-    const [updateProfile, { loading, error }] = useMutation(UPDATE_IDEALITE_PROFILE, {
-        onCompleted: () => setEditProfile(false),
-        refetchQueries: ['getUserProfile'],
-    });
-
-    if (error) {
-        toast.error("Error updating profile.")
-        console.log(error.message)
+        setLoadingProfile(false)
     }
+
 
     return (
         <div className="max-w-2xl w-full md:w-2/3 mx-auto bg-white p-4 rounded-lg shadow">
@@ -109,7 +150,7 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, userProfil
                             </FormItem>
                         )}
                     />
-                    {loading ?
+                    {loadingProfile ?
                         <div className="flex justify-end">
                             <Button disabled>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

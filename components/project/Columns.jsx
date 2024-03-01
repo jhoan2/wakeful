@@ -1,7 +1,7 @@
 import { Loader, Square, CheckSquare2, Archive, XSquare, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import ProjectDelete from "./ProjectDelete";
+import ProjectActions from "./ProjectActions";
 
 export const Columns = [
     {
@@ -147,7 +147,8 @@ export const Columns = [
         id: "actions",
         cell: ({ row }) => {
             const projectId = row.original.id
-            return <ProjectDelete project={projectId} />
+            const projectTitle = row.original.title
+            return <ProjectActions projectId={projectId} projectTitle={projectTitle} />
         },
     },
 ]

@@ -14,8 +14,10 @@ import { MoreVertical, Trash, FileSymlink } from 'lucide-react';
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { toast } from 'sonner';
+import { useProfileContext } from '../context';
 
 export default function ResourceCardAction({ cardId }) {
+    const { profile } = useProfileContext();
     const GET_USERS_PROJECT_LIST = gql`
     query getUsersProjectList {
         viewer {
@@ -122,6 +124,14 @@ export default function ResourceCardAction({ cardId }) {
                             <span>Send to Project</span>
                         </DropdownMenuSubTrigger>
                         <DropdownMenuSubContent className='w-56 max-w-56 overflow-auto max-h-96 '>
+                            <DropdownMenuLabel>Favorites</DropdownMenuLabel>
+                            {profile.favorites.map((favorite) => {
+                                return (
+                                    <DropdownMenuItem key={favorite.id} onClick={() => createCollection(favorite.id)} className='flex items-center relative flex cursor-default truncate select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
+                                        <span>{favorite.title}</span>
+                                    </DropdownMenuItem>
+                                )
+                            })}
                             {
                                 data && data?.viewer?.idealiteProjectList?.edges?.length === 0 ?
                                     <DropdownMenuItem className='flex items-center relative flex cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
@@ -130,6 +140,8 @@ export default function ResourceCardAction({ cardId }) {
                                     :
                                     null
                             }
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Recent Projects</DropdownMenuLabel>
                             {data?.viewer?.idealiteProjectList?.edges?.map((project) => {
                                 return (
                                     <DropdownMenuItem key={project?.node?.id} onClick={() => createCollection(project.node.id)} className='flex items-center relative flex cursor-default truncate select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
