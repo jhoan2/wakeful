@@ -40,6 +40,7 @@ export default function Resource() {
               quote
               cid
               updatedAt
+              googleBooksPage
             }
           }
           pageInfo {

@@ -13,6 +13,7 @@ type IdealiteCard
     cid: String @string(minLength: 1, maxLength: 3000)
     createdAt: DateTime
     deleted: Boolean
+    googleBooksPage: String @string(minLength: 1, maxLength: 10000)
     mimeType: String @string(minLength: 1, maxLength: 140)
     pageYOffset: Float
     pinSize: Int

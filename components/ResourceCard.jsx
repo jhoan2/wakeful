@@ -5,10 +5,11 @@ import StarterKit from '@tiptap/starter-kit';
 import { gql, useMutation } from '@apollo/client';
 import Image from 'next/image';
 import ResourceCardAction from './ResourceCardAction';
+import { Badge } from "@/components/ui/badge"
 
 export default function ResourceCard({ card }) {
     const [editorStateChanged, setEditorStateChanged] = useState(false)
-    const { annotation, quote, id, updatedAt, cid } = card.node
+    const { annotation, quote, id, updatedAt, cid, googleBooksPage } = card.node
     const localeUpdatedAt = new Date(updatedAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -193,6 +194,14 @@ export default function ResourceCard({ card }) {
                     }
                 </div>
             </div>
+            {googleBooksPage ?
+                <div className='flex justify-start pt-2'>
+                    <Badge variant='secondary' className='rounded'>page: {googleBooksPage}</Badge>
+                </div>
+                :
+                null
+            }
+
         </div>
     )
 }
