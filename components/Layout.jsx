@@ -3,11 +3,13 @@ import Sidebar from './SideBar';
 import BottomNavBar from './BottomNavBar';
 import { authenticateCeramic } from '../utils';
 import { useCeramicContext } from '../context';
+import { useProfileContext } from '../context';
 import { useRouter } from 'next/router';
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
     const clients = useCeramicContext();
+    const { profile } = useProfileContext();
     const { ceramic, composeClient } = clients;
     const composeClientId = composeClient.id
     const avatarFallback = composeClientId ? composeClientId.substring(composeClientId.length - 5) : ''
