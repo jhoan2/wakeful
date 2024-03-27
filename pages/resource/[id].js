@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import ErrorPage from '../../components/ErrorPage';
 import { useCeramicContext } from '../../context';
 import { useQuery, gql } from '@apollo/client';
-import ResourceSidePanel from '../../components/ResourceSidePanel';
-import ResourceCardView from '../../components/ResourceCardView';
+import ResourceSidePanel from '../../components/resource/ResourceSidePanel';
+import ResourceCardView from '../../components/resource/ResourceCardView';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import NoContent from '../../components/NoContent';
-import ResourceAddNote from '../../components/ResourceAddNote';
+import ResourceAddNote from '../../components/resource/ResourceAddNote';
 import Layout from '../../components/Layout';
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +41,10 @@ export default function Resource() {
               cid
               updatedAt
               googleBooksPage
+              tags {
+                name
+                tagId
+              }
             }
           }
           pageInfo {
