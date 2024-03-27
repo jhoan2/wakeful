@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import EditorBubbleMenu from './EditorBubbleMenu'
+import EditorBubbleMenu from '../EditorBubbleMenu'
 
 export default function ResourceCardEditor({ setEditorStateChanged, annotation }) {
     const [editorContent, setEditorContent] = useState('')
