@@ -6,7 +6,6 @@ import NoContent from '../../components/NoContent';
 import ErrorPage from '../../components/ErrorPage';
 import Layout from '../../components/Layout';
 import { useCeramicContext } from '../../context';
-import HomeGetProfile from '../../components/home/HomeGetProfile';
 import ReadingStatusFilter from '../../components/home/ReadingStatusFilter';
 
 export default function Home() {
@@ -27,6 +26,10 @@ export default function Home() {
             id
             url
             updatedAt
+          }
+          tags {
+            tagId
+            name
           }
         }
       }
@@ -80,7 +83,6 @@ export default function Home() {
 
   return (
     <div className='flex justify-center h-screen w-full'>
-      <HomeGetProfile />
       {loading ?
         (<div className='md:flex'>
           <SkeletonHomeCard />
