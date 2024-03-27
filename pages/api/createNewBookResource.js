@@ -14,7 +14,7 @@ const handler = async (req, res) => {
     ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
     definition: definition
   });
-  const { title, clientMutationId, description, publishedAt, author, url } = req.body
+  const { title, clientMutationId, description, publishedAt, author } = req.body
   const uniqueKey = process.env.ADMIN_DID_KEY;
   let input = {
     title: title,
@@ -23,7 +23,7 @@ const handler = async (req, res) => {
     clientMutationId: clientMutationId,
     description: description,
     publishedAt: publishedAt,
-    author: author
+    author: author || 'n/a'
   }
 
   //authenticate developer DID in order to create a write transaction
@@ -55,18 +55,6 @@ const handler = async (req, res) => {
       let variableValues = {
         "i": {
           "content": input
-        }
-      }
-      let connectResourceAccountValues = {
-        "i": {
-          "content": {
-            recipient: clientMutationId,
-            resourceId: null,
-            url: url,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            readingStatus: 'READING'
-          }
         }
       }
 
@@ -107,24 +95,8 @@ const handler = async (req, res) => {
           resourceId = existingResourceId.data.idealiteResourceIndex.edges[0].node.id
 
         }
-
-        //Once there is a resourceId, create an accountResources with it 
-        if (resourceId) {
-          connectResourceAccountValues.i.content.resourceId = resourceId
-          await composeClient.executeQuery(`
-                    mutation createIdealiteAccountResources ($i: CreateIdealiteAccountResourcesInput!) {
-                      createIdealiteAccountResources(
-                        input: $i
-                      ) {
-                        document {
-                          id
-                        }
-                      }
-                    }
-                    `, connectResourceAccountValues)
-        }
         //Return a resourceId to be used on chrome extension to add notes 
-        res.status(200).json({ newResourceId: connectResourceAccountValues.i.content.resourceId })
+        res.status(200).json({ newResourceId: resourceId })
       } catch (error) {
         console.log(error.message)
         return res.status(500).send({ message: error.message })
