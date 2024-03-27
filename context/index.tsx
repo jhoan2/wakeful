@@ -26,14 +26,37 @@ export const CeramicWrapper = ({ children }: any) => {
     id: '',
     displayName: '',
     bio: '',
-    favorites: []
+    favorites: [],
+    tags: []
   })
 
+  const updateTagTree = (newTag: any) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      tags: newTag
+    }));
+  };
 
+  const updateProfileBioAndName = (newBio: any, newDisplayName: any) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      bio: newBio,
+      displayName: newDisplayName
+    }));
+  };
+
+  const setCreatedProfile = (id: any, newBio: any, newDisplayName: any) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      id: id,
+      bio: newBio,
+      displayName: newDisplayName
+    }));
+  };
 
   return (
     <CeramicContext.Provider value={{ ceramic, composeClient }}>
-      <ProfileContext.Provider value={{ profile, setProfile }}>
+      <ProfileContext.Provider value={{ profile, setProfile, updateTagTree, updateProfileBioAndName, setCreatedProfile }}>
         {children}
       </ProfileContext.Provider>
     </CeramicContext.Provider>
