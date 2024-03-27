@@ -14,7 +14,7 @@ export default function Profile() {
   const { profile } = useProfileContext();
 
   return (
-    < div className='flex justify-center h-screen' >
+    < div className='flex justify-center h-screen w-full' >
       <div className='w-2/3'>
         {
           editProfile ?
