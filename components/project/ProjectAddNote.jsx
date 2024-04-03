@@ -11,7 +11,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
-    const projectCardResourceId = "kjzl6kcym7w8y59sjdq1x4vy392s3kn9w28hbhmqebrqcuvh6w9i0wayt5yrhvl"
+    const projectCardResourceId = "kjzl6kcym7w8y5w8hnor9kxn73n2i4q2h42ugu8odnljr46l3xmpnkekgg45b06"
 
     const ADD_NOTE = gql`
     mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
@@ -44,7 +44,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-md lg:prose-lg dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
+                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg  dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
             },
         },
         content: '',
