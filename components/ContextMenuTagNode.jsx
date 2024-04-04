@@ -24,6 +24,16 @@ export default function ContextMenuTagNode({ node, style, tree }) {
       }
     `
 
+    const ADD_TAG_TO_PROJECT = gql`
+    mutation addTagToProject($input: UpdateIdealiteProjectInput!) {
+        updateIdealiteProject(input: $input) {
+          document {
+            id
+          }
+        }
+      }
+    `
+
     const [addTagToCard] = useMutation(ADD_TAG_TO_CARD, {
         refetchQueries: ['getCardsForResource'],
         onError: (error) => {
@@ -34,6 +44,22 @@ export default function ContextMenuTagNode({ node, style, tree }) {
 
     const [addTagToAccountResource] = useMutation(ADD_TAG_TO_ACCOUNT_RESOURCE, {
         refetchQueries: ['GetCardsPerUrlPerUser'],
+        onError: (error) => {
+            toast.error('Something went wrong with tagging.')
+            console.log(error.message)
+        }
+    });
+
+    const [addTagToProject] = useMutation(ADD_TAG_TO_PROJECT, {
+        refetchQueries: ['getUsersProjects'],
+        onError: (error) => {
+            toast.error('Something went wrong with tagging.')
+            console.log(error.message)
+        }
+    });
+
+    const [addTagToProjectCard] = useMutation(ADD_TAG_TO_CARD, {
+        refetchQueries: ['getUsersProjectCardCollection'],
         onError: (error) => {
             toast.error('Something went wrong with tagging.')
             console.log(error.message)
@@ -67,6 +93,38 @@ export default function ContextMenuTagNode({ node, style, tree }) {
 
         if (category === 'accountResource') {
             addTagToAccountResource({
+                variables: {
+                    input: {
+                        id: cardId,
+                        content: {
+                            tags: [...arrTags, {
+                                name: node.data.name,
+                                tagId: node.data.id
+                            }]
+                        }
+                    }
+                }
+            })
+        }
+
+        if (category === 'project') {
+            addTagToProject({
+                variables: {
+                    input: {
+                        id: cardId,
+                        content: {
+                            tags: [...arrTags, {
+                                name: node.data.name,
+                                tagId: node.data.id
+                            }]
+                        }
+                    }
+                }
+            })
+        }
+
+        if (category === 'projectCard') {
+            addTagToProjectCard({
                 variables: {
                     input: {
                         id: cardId,
