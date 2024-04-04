@@ -42,6 +42,10 @@ export default function ProjectPage() {
                         updatedAt
                         url
                         videoTime
+                        tags {
+                            tagId
+                            name
+                        }
                     }
                     project {
                         url

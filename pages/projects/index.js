@@ -20,6 +20,10 @@ export default function Projects() {
                             description
                             createdAt
                             updatedAt
+                            tags {
+                                tagId
+                                name
+                              }
                         }
                     }
                 }
