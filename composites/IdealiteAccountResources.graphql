@@ -6,7 +6,8 @@ type IdealiteAccountResources @createModel(accountRelation: LIST, description: "
   @createIndex(fields: [{ path: ["recipient"]} ])
   @createIndex(fields: [{ path: ["url"]} ])
   @createIndex(fields: [{ path: ["updatedAt"]} ])
-  @createIndex(fields: [{ path: ["readingStatus"]} ]){
+  @createIndex(fields: [{ path: ["readingStatus"]} ])
+  @createIndex(fields: [{ path: ["resourceId"]} ]){
   createdAt: DateTime
   readingStatus: ResourceStatus
   recipient: DID! @accountReference

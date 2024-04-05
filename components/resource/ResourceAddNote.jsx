@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import EditorBubbleMenu from '../EditorBubbleMenu';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useLazyQuery } from '@apollo/client';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function ResourceAddNote({ setShowResourceModal, resourceId, resourceUrl }) {
+export default function ResourceAddNote({ setShowResourceModal, resourceId, resourceUrl, setResourceUrl }) {
     const [inputImage, setInputImage] = useState(false)
     const [image, setImage] = useState(null);
 
@@ -23,6 +23,32 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
     const [addNote, { data, loading, error }] = useMutation(ADD_NOTE, {
         onCompleted: () => setShowResourceModal(false),
         refetchQueries: ['getCardsForResource'],
+    });
+
+
+    const GET_URL_FROM_ACCOUNT_RESOURCES = gql`
+    query getUrlFromAccountResources {
+        viewer {
+          idealiteAccountResourcesList(
+            filters: {where: {resourceId: {equalTo: "${resourceId}"}}}
+            first: 1
+            ) {
+            edges {
+              node {
+                url
+              }
+            }
+          }
+        }
+      }
+    `
+    const [getUrlFromAccountResource] = useLazyQuery(GET_URL_FROM_ACCOUNT_RESOURCES, {
+        onCompleted: (data) => {
+            if (data.viewer.idealiteAccountResourcesList.edges.length > 0) {
+                setResourceUrl(data.viewer.idealiteAccountResourcesList.edges[0].node.url)
+            }
+        },
+        onError: (error) => console.error(error.message)
     });
 
     const editor = useEditor({
@@ -124,6 +150,16 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
         toast.error("Oops, something went wrong!")
         console.log(error.message)
     }
+
+    useEffect(() => {
+        //If the user is adding a note from the web for a google play books resource, 
+        //the url is null so the ext doesn't get the cards for it
+        //If the resoureUrl is null, we use the id to query for the url in the accountResource 
+        if (resourceUrl === null) {
+            getUrlFromAccountResource()
+        }
+    }, [])
+
 
     return (
         <div className='fixed z-10 top-0 left-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-75' onClick={(e) => handleClickOutside(e)}>
