@@ -82,7 +82,10 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
         }] = useMutation(CREATE_IDEALITE_PROFILE, {
             onCompleted: (data) => {
                 if (data && data.createIdealiteProfile.document) {
-                    const { id, displayName: newDisplayName, bio: newBio } = data.createIdealiteProfile.document
+                    const id = data.createIdealiteProfile.document.id
+                    const newDisplayName = data.createIdealiteProfile.document.displayName
+                    const newBio = data.createIdealiteProfile.document.bio
+                    console.log(id, newDisplayName)
                     setCreatedProfile(id, newBio, newDisplayName)
                 }
                 setEditProfile(false)

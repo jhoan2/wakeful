@@ -67,7 +67,7 @@ export default function TagTree({ setShowTags }) {
         )
     }
 
-    if (!profile.tags) {
+    if (!profile.tags || profile.tags.length === 0) {
         return (
             <div>
                 <Button variant='secondary' onClick={() => setShowTags(false)} className='hover:bg-slate-400 w-1/2 flex justify-start'>
