@@ -17,6 +17,7 @@ export default function Resource() {
   const clients = useCeramicContext()
   const { ceramic, composeClient } = clients
   const [showResourceModal, setShowResourceModal] = useState(false)
+  const [resourceUrl, setResourceUrl] = useState('')
 
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
@@ -59,11 +60,14 @@ export default function Resource() {
 
   const { loading, error, data, fetchMore } = useQuery(GET_CARDS_FOR_RESOURCE, {
     variables: { account: composeClient.id, resourceId: resourceId },
+    onCompleted: (data) => {
+      setResourceUrl(data.node.url)
+    }
   });
+
 
   if (error) return <ErrorPage message={error.message} />;
   const cards = data?.node.idealiteCards.edges
-  const resourceUrl = data?.node.url
   const resourceTitle = data?.node.title
   const pageInfo = data?.node.idealiteCards.pageInfo
 
@@ -97,6 +101,7 @@ export default function Resource() {
                     resourceUrl={resourceUrl}
                     showResourceModal={showResourceModal}
                     setShowResourceModal={setShowResourceModal}
+                    setResourceUrl={setResourceUrl}
                     resourceTitle={resourceTitle}
                   />
                   :
@@ -116,6 +121,8 @@ export default function Resource() {
                             setShowResourceModal={setShowResourceModal}
                             resourceId={resourceId}
                             resourceUrl={resourceUrl}
+                            setResourceUrl={setResourceUrl}
+
                           />
                           : null
                         }
