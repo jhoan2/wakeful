@@ -70,6 +70,8 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
         createIdealiteProfile(input: $input) {
           document {
             id
+            displayName
+            bio
           }
         }
       }
@@ -85,7 +87,6 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                     const id = data.createIdealiteProfile.document.id
                     const newDisplayName = data.createIdealiteProfile.document.displayName
                     const newBio = data.createIdealiteProfile.document.bio
-                    console.log(id, newDisplayName)
                     setCreatedProfile(id, newBio, newDisplayName)
                 }
                 setEditProfile(false)
