@@ -1,7 +1,7 @@
 import React from 'react'
 import { toast } from 'sonner';
 
-export default function TagEditInput({ node, setLoadingTagCreate }) {
+export default function TagEditInput({ node, setLoadingTagCreate, setTagTreeChanged }) {
 
     const handleSubmit = async (e, node) => {
         let value = e.currentTarget.value
@@ -29,6 +29,7 @@ export default function TagEditInput({ node, setLoadingTagCreate }) {
             toast.success('Successfully received tag suggestion')
         }
         node.submit(value)
+        setTagTreeChanged(true)
         setLoadingTagCreate(false)
     }
 

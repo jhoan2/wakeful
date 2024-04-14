@@ -3,7 +3,7 @@ import EditTagNode from './EditTagNode';
 import { Tree } from "react-arborist";
 import { ArrowBigUp } from 'lucide-react';
 
-export default function EditTagTree({ data }) {
+export default function EditTagTree({ data, setTagTreeChanged }) {
     return (
         <div className='flex-col justify-between'>
             <Tree
@@ -12,6 +12,7 @@ export default function EditTagTree({ data }) {
                 disableDrag={true}
                 disableDrop={true}
                 rowClassName={`focus:bg-slate-400 rounded-lg outline-none`}
+                setTagTreeChanged={setTagTreeChanged}
             >
                 {EditTagNode}
             </Tree>

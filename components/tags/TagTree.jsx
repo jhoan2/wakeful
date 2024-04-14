@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { MoveLeft, Search } from 'lucide-react';
 import { Tree } from "react-arborist";
@@ -14,6 +14,7 @@ export default function TagTree({ setShowTags }) {
     const [searchTerm, setSearchTerm] = useState('')
     const [originalTags, setOriginalTags] = useState(JSON.stringify(profile.tags))
     const [loadingSaveTagChanges, setLoadingSaveTagChanges] = useState(false)
+    const [tagTreeChanged, setTagTreeChanged] = useState(false)
 
     const SAVE_TAG_CHANGES = gql`
     mutation MyMutation($input: UpdateIdealiteProfileInput!) {
@@ -80,6 +81,13 @@ export default function TagTree({ setShowTags }) {
         )
     }
 
+    useEffect(() => {
+        if (originalTags != (JSON.stringify(profile.tags))) {
+            setTagTreeChanged(true)
+        }
+
+    }, [profile.tags])
+
     return (
         <div>
             <div>
@@ -114,6 +122,7 @@ export default function TagTree({ setShowTags }) {
                     <EditTagTree
                         data={profile.tags}
                         originalTags={originalTags}
+                        setTagTreeChanged={setTagTreeChanged}
                     />
                     : <Tree
                         data={profile.tags}
@@ -126,9 +135,7 @@ export default function TagTree({ setShowTags }) {
                 }
 
                 {
-                    originalTags === (JSON.stringify(profile.tags)) ?
-                        null
-                        :
+                    tagTreeChanged ?
                         <div className='flex justify-center'>
                             {
                                 loadingSaveTagChanges ?
@@ -137,6 +144,8 @@ export default function TagTree({ setShowTags }) {
                                     <Button onClick={() => saveTagChanges()}>Save Changes</Button>
                             }
                         </div>
+                        :
+                        null
                 }
             </div>
         </div>
