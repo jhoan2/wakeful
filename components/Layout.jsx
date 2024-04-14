@@ -5,6 +5,7 @@ import { authenticateCeramic } from '../utils';
 import { useCeramicContext } from '../context';
 import { useProfileContext } from '../context';
 import { useRouter } from 'next/router';
+import posthog from 'posthog-js'
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
@@ -25,12 +26,12 @@ export default function Layout({ children }) {
         }
 
         // Track page views
-        // const handleRouteChange = () => posthog?.capture('$pageview')
-        // router.events.on('routeChangeComplete', handleRouteChange)
+        const handleRouteChange = () => posthog?.capture('$pageview')
+        router.events.on('routeChangeComplete', handleRouteChange)
 
-        // return () => {
-        //     router.events.off('routeChangeComplete', handleRouteChange)
-        // }
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange)
+        }
     }, [])
 
 
