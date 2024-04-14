@@ -22,6 +22,7 @@ export default function Resource() {
   const GET_URL_FROM_ACCOUNT_RESOURCES = gql`
   query getUrlFromAccountResources {
       viewer {
+        id
         idealiteAccountResourcesList(
           filters: {where: {resourceId: {equalTo: "${resourceId}"}}}
           first: 1

@@ -7,6 +7,7 @@ export default function GetProfile() {
   const GET_USER_PROFILE = gql`
     query getUserProfile {
         viewer {
+          id
           idealiteProfile {
             id
             bio

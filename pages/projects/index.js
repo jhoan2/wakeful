@@ -10,6 +10,7 @@ export default function Projects() {
     const GET_USERS_PROJECTS = gql`
         query getUsersProjects {
             viewer {
+                id
                 idealiteProjectList(first: 100, filters: {where: {deleted: {equalTo: false}}}) {
                     edges {
                         node {
