@@ -37,8 +37,8 @@ const FrontPage = () => {
             <main>
               <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8">
                 <div className='flex flex-col items-center space-y-8'>
-                  <p className='text-5xl md:text-8xl text-left md:text-center'>Learn better, together.</p>
-                  <p className='text-xl md:text-3xl text-gray-400'>Idealite is a shared note-taking app.</p>
+                  <p className='text-5xl md:text-8xl text-left md:text-center'>Design your own education.</p>
+                  <p className='text-xl md:text-3xl text-gray-400'>Idealite is a digitally native educational institution.</p>
                 </div>
                 <div className='flex flex-row space-x-2 items-center'>
                   <button className="bg-gray-100 inline-flex py-3 px-5 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
