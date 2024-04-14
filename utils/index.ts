@@ -80,8 +80,8 @@ const authenticateEthPKH = async (ceramic: CeramicApi, compose: ComposeClient) =
     // We enable the ethereum provider to get the user's addresses.
     const ethProvider = window.ethereum;
     const chainId = await ethProvider.request({ method: 'eth_chainId' });
-    if (chainId !== '0xa') {
-      toast.info("Please switch to the Optimism network.");
+    if (chainId !== '0x2105') {
+      toast.info("Please switch to the Base network.");
       return
     }
 
