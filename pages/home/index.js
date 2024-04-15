@@ -61,7 +61,6 @@ export default function Home() {
   });
 
 
-  if (error) return <ErrorPage message={error.message} />;
 
   const resources = data?.idealiteAccountResourcesIndex.edges
   const pageInfo = data?.idealiteAccountResourcesIndex.pageInfo
@@ -80,6 +79,8 @@ export default function Home() {
   useEffect(() => {
     refetch();
   }, [readingStatus]);
+
+  if (error) return <ErrorPage message={error.message} />;
 
   return (
     <div className='flex justify-center h-screen w-full'>
