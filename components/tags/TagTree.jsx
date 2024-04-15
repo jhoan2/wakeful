@@ -55,6 +55,13 @@ export default function TagTree({ setShowTags }) {
         setLoadingSaveTagChanges(false)
     }
 
+    useEffect(() => {
+        if (originalTags != (JSON.stringify(profile.tags))) {
+            setTagTreeChanged(true)
+        }
+
+    }, [profile.tags])
+
     if (!profile.id) {
         return (
             <div>
@@ -80,13 +87,6 @@ export default function TagTree({ setShowTags }) {
             </div>
         )
     }
-
-    useEffect(() => {
-        if (originalTags != (JSON.stringify(profile.tags))) {
-            setTagTreeChanged(true)
-        }
-
-    }, [profile.tags])
 
     return (
         <div>
