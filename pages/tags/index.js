@@ -7,8 +7,12 @@ import { toast } from 'sonner';
 export default function Tags() {
     const [exploreTags, setExploreTags] = useState('')
     //Calculates the width and height to the hundreds place of the window innerHeight for the size of the tag pack circles. 
-    const width = Math.floor(window.innerHeight / 100) * 100;
-    const height = Math.floor(window.innerHeight / 100) * 100;
+    let width, height
+
+    if (window !== undefined) {
+        width = Math.floor(window.innerHeight / 100) * 100;
+        height = Math.floor(window.innerHeight / 100) * 100;
+    }
 
     const GET_TAG_TREE_FROM_ROOT = gql`
     query getTagTreeFromRoot {
@@ -21,6 +25,7 @@ export default function Tags() {
         }
       }
     `
+
     const { loading: exploreTagsLoading, error: exploreTagsError, data: exploreTagsData } = useQuery(GET_TAG_TREE_FROM_ROOT, {
         onCompleted: () => setExploreTags(exploreTagsData)
     });
