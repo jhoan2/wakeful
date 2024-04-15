@@ -28,58 +28,75 @@ export const writeComposite = async (spinner) => {
     const compositeNoViews = await Composite.fromModels({
         ceramic: ceramic,
         models: [
-            'kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41',
-            'kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6',
-            'kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502',
-            'kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq',
-            'kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5',
-            'kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml'
+            'kjzl6hvfrbw6c8v2iz3ltlhdvuq51oclivpajlckgoqtk9etgy4pwh7r030zro7',
+            'kjzl6hvfrbw6cb8l1tjfdrni85hgfpevfxi7ceh2thlvslxgy2m60uhkjh18s2o',
+            'kjzl6hvfrbw6carxwhe5mdw4k3r1qrlv5rrrs90ul8psqtlnjxvrqnk0x3oj47k',
+            'kjzl6hvfrbw6c8h6inzxxsgn89tqnqlkprlmgprbcg973eup41z6kij2gk80w3b',
+            'kjzl6hvfrbw6c5nj2syxmc04de9fjmzp87y0kltg7npexpxovogbnhwhxaxabjk',
+            'kjzl6hvfrbw6caqe3vlhkv1okijwfkar9c12k0qrb9bmin79bb4jsnb3efkxfqv',
+            'kjzl6hvfrbw6c7agg6ef2d6nv0sdd9br9ghwz07a7yuzkxazrigg6yx3c6badtk',
+            'kjzl6hvfrbw6c9v19k3dwpeett9gmjwpbt4dlj2qhka276ctjvzavczahhj7e5j',
+            'kjzl6hvfrbw6c6arqydlgy0r51bumx0fmrsimmucittiuvy6olrd8oym1j6a8ba',
+            'kjzl6hvfrbw6c6o0u5ui0wgpmgrcvdmtsrspqcc59hia4sqcpprayxt6guqwy6s',
+            'kjzl6hvfrbw6c9sjnttvd5hbh3o2azb9kixrn34n8az0difoj0l9t4z5q16tpwy',
+            'kjzl6hvfrbw6c8fzc49ryrppi1ibtsd0kbbu353lfjidr75griyjnah452upr92',
+            'kjzl6hvfrbw6c7bmi72m2twm9x46dw9gikykqyyanigsyrtfx5sf3hynbb5zpxi'
         ]
     });
 
     const compositeWithAlises = compositeNoViews.setAliases({
-        ['kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5']: 'IdealiteResource',
-        ['kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml']: 'IdealiteProfile',
-        ['kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq']: 'Cards',
-        ['kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502']: 'AccountResources',
-        ['kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6']: 'IdealiteProject',
-        ['kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41']: 'IdealiteProjectCardCollection'
+        ['kjzl6hvfrbw6c8v2iz3ltlhdvuq51oclivpajlckgoqtk9etgy4pwh7r030zro7']: 'IdealiteResourcev0',
+        ['kjzl6hvfrbw6cb8l1tjfdrni85hgfpevfxi7ceh2thlvslxgy2m60uhkjh18s2o']: 'IdealiteProfilev0',
+        ['kjzl6hvfrbw6carxwhe5mdw4k3r1qrlv5rrrs90ul8psqtlnjxvrqnk0x3oj47k']: 'IdealiteCardsv0',
+        ['kjzl6hvfrbw6c8h6inzxxsgn89tqnqlkprlmgprbcg973eup41z6kij2gk80w3b']: 'IdealiteAccountResourcesv0',
+        ['kjzl6hvfrbw6c5nj2syxmc04de9fjmzp87y0kltg7npexpxovogbnhwhxaxabjk']: 'IdealiteProjectv0',
+        ['kjzl6hvfrbw6caqe3vlhkv1okijwfkar9c12k0qrb9bmin79bb4jsnb3efkxfqv']: 'IdealiteProjectCardCollectionv0',
+        ['kjzl6hvfrbw6c7agg6ef2d6nv0sdd9br9ghwz07a7yuzkxazrigg6yx3c6badtk']: 'IdealiteResourcev0.1',
+        ['kjzl6hvfrbw6c9v19k3dwpeett9gmjwpbt4dlj2qhka276ctjvzavczahhj7e5j']: 'IdealiteProfilev0.1',
+        ['kjzl6hvfrbw6c6arqydlgy0r51bumx0fmrsimmucittiuvy6olrd8oym1j6a8ba']: 'IdealiteCardsv0.1',
+        ['kjzl6hvfrbw6c6o0u5ui0wgpmgrcvdmtsrspqcc59hia4sqcpprayxt6guqwy6s']: 'IdealiteAccountResourcesv0.1',
+        ['kjzl6hvfrbw6c9sjnttvd5hbh3o2azb9kixrn34n8az0difoj0l9t4z5q16tpwy']: 'IdealiteProjectv0.1',
+        ['kjzl6hvfrbw6c8fzc49ryrppi1ibtsd0kbbu353lfjidr75griyjnah452upr92']: 'IdealiteProjectCardCollectionv0.1',
+        ['kjzl6hvfrbw6c7bmi72m2twm9x46dw9gikykqyyanigsyrtfx5sf3hynbb5zpxi']: 'IdealiteTagv0.1'
     })
 
     const composite = compositeWithAlises.setViews({
+        "account": {},
+        "root": {},
         "models": {
-            "kjzl6hvfrbw6c5x0oqqj2684tgf1mxyvuprf9845wdi8zkdccjk308ind7rx9n5": {
-                "cards": {
+            "kjzl6hvfrbw6c7agg6ef2d6nv0sdd9br9ghwz07a7yuzkxazrigg6yx3c6badtk": {
+                "idealiteCards": {
                     "type": "relationFrom",
-                    "model": "kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq",
+                    "model": "kjzl6hvfrbw6c6arqydlgy0r51bumx0fmrsimmucittiuvy6olrd8oym1j6a8ba",
                     "property": "resourceId"
                 }
             },
-            "kjzl6hvfrbw6ca7vproo4zitweojj9kqukhpv2tz8ktet18dyz7a74zm4c7aaml": {},
-            "kjzl6hvfrbw6c75rjas273ew4g6lvr7569ynshcnk6q7zvwzodehjv7u40csmmq": {
+            "kjzl6hvfrbw6c9v19k3dwpeett9gmjwpbt4dlj2qhka276ctjvzavczahhj7e5j": {},
+            "kjzl6hvfrbw6c6arqydlgy0r51bumx0fmrsimmucittiuvy6olrd8oym1j6a8ba": {
                 "collection": {
                     "type": "relationFrom",
-                    "model": "kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41",
+                    "model": "kjzl6hvfrbw6c8fzc49ryrppi1ibtsd0kbbu353lfjidr75griyjnah452upr92",
                     "property": "projectId"
                 }
             },
-            "kjzl6hvfrbw6c7zzd6vap9c4787hhha1dy4dvqlgocv18rzir5agt00sifej502": {},
-            "kjzl6hvfrbw6c8he4pf834h1sxzepwy94921urziel3kzkz7cyw200h4rclzls6": {},
-            "kjzl6hvfrbw6c7z68mmqpinqf4qbpw53mqixve4vorwqtls0ney1nyjlo40gy41": {}
+            "kjzl6hvfrbw6c6o0u5ui0wgpmgrcvdmtsrspqcc59hia4sqcpprayxt6guqwy6s": {},
+            "kjzl6hvfrbw6c9sjnttvd5hbh3o2azb9kixrn34n8az0difoj0l9t4z5q16tpwy": {},
+            "kjzl6hvfrbw6c8fzc49ryrppi1ibtsd0kbbu353lfjidr75griyjnah452upr92": {},
+            "kjzl6hvfrbw6c7bmi72m2twm9x46dw9gikykqyyanigsyrtfx5sf3hynbb5zpxi": {}
         }
     });
 
-    await writeEncodedComposite(composite, "./src/__generated__/definition.json");
+    await writeEncodedComposite(composite, "./src/__generated__/definition2.json");
     spinner.info("creating composite for runtime usage");
     await writeEncodedCompositeRuntime(
         ceramic,
-        "./src/__generated__/definition.json",
-        "./src/__generated__/definition.js"
+        "./src/__generated__/definition2.json",
+        "./src/__generated__/definition2.js"
     );
     spinner.info("deploying composite");
     const deployComposite = await readEncodedComposite(
         ceramic,
-        "./src/__generated__/definition.json",
+        "./src/__generated__/definition2.json",
     );
 
     await deployComposite.startIndexingOn(ceramic);
