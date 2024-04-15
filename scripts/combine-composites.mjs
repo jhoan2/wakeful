@@ -51,13 +51,13 @@ export const writeComposite = async (spinner) => {
         ['kjzl6hvfrbw6c8h6inzxxsgn89tqnqlkprlmgprbcg973eup41z6kij2gk80w3b']: 'IdealiteAccountResourcesv0',
         ['kjzl6hvfrbw6c5nj2syxmc04de9fjmzp87y0kltg7npexpxovogbnhwhxaxabjk']: 'IdealiteProjectv0',
         ['kjzl6hvfrbw6caqe3vlhkv1okijwfkar9c12k0qrb9bmin79bb4jsnb3efkxfqv']: 'IdealiteProjectCardCollectionv0',
-        ['kjzl6hvfrbw6c7agg6ef2d6nv0sdd9br9ghwz07a7yuzkxazrigg6yx3c6badtk']: 'IdealiteResourcev0.1',
-        ['kjzl6hvfrbw6c9v19k3dwpeett9gmjwpbt4dlj2qhka276ctjvzavczahhj7e5j']: 'IdealiteProfilev0.1',
-        ['kjzl6hvfrbw6c6arqydlgy0r51bumx0fmrsimmucittiuvy6olrd8oym1j6a8ba']: 'IdealiteCardsv0.1',
-        ['kjzl6hvfrbw6c6o0u5ui0wgpmgrcvdmtsrspqcc59hia4sqcpprayxt6guqwy6s']: 'IdealiteAccountResourcesv0.1',
-        ['kjzl6hvfrbw6c9sjnttvd5hbh3o2azb9kixrn34n8az0difoj0l9t4z5q16tpwy']: 'IdealiteProjectv0.1',
-        ['kjzl6hvfrbw6c8fzc49ryrppi1ibtsd0kbbu353lfjidr75griyjnah452upr92']: 'IdealiteProjectCardCollectionv0.1',
-        ['kjzl6hvfrbw6c7bmi72m2twm9x46dw9gikykqyyanigsyrtfx5sf3hynbb5zpxi']: 'IdealiteTagv0.1'
+        ['kjzl6hvfrbw6c7agg6ef2d6nv0sdd9br9ghwz07a7yuzkxazrigg6yx3c6badtk']: 'IdealiteResource',
+        ['kjzl6hvfrbw6c9v19k3dwpeett9gmjwpbt4dlj2qhka276ctjvzavczahhj7e5j']: 'IdealiteProfile',
+        ['kjzl6hvfrbw6c6arqydlgy0r51bumx0fmrsimmucittiuvy6olrd8oym1j6a8ba']: 'IdealiteCards',
+        ['kjzl6hvfrbw6c6o0u5ui0wgpmgrcvdmtsrspqcc59hia4sqcpprayxt6guqwy6s']: 'IdealiteAccountResources',
+        ['kjzl6hvfrbw6c9sjnttvd5hbh3o2azb9kixrn34n8az0difoj0l9t4z5q16tpwy']: 'IdealiteProject',
+        ['kjzl6hvfrbw6c8fzc49ryrppi1ibtsd0kbbu353lfjidr75griyjnah452upr92']: 'IdealiteProjectCardCollection',
+        ['kjzl6hvfrbw6c7bmi72m2twm9x46dw9gikykqyyanigsyrtfx5sf3hynbb5zpxi']: 'IdealiteTag'
     })
 
     const composite = compositeWithAlises.setViews({
@@ -86,17 +86,17 @@ export const writeComposite = async (spinner) => {
         }
     });
 
-    await writeEncodedComposite(composite, "./src/__generated__/definition2.json");
+    await writeEncodedComposite(composite, "./src/__generated__/definition.json");
     spinner.info("creating composite for runtime usage");
     await writeEncodedCompositeRuntime(
         ceramic,
-        "./src/__generated__/definition2.json",
-        "./src/__generated__/definition2.js"
+        "./src/__generated__/definition.json",
+        "./src/__generated__/definition.js"
     );
     spinner.info("deploying composite");
     const deployComposite = await readEncodedComposite(
         ceramic,
-        "./src/__generated__/definition2.json",
+        "./src/__generated__/definition.json",
     );
 
     await deployComposite.startIndexingOn(ceramic);
