@@ -9,7 +9,7 @@ export default function Tags() {
     //Calculates the width and height to the hundreds place of the window innerHeight for the size of the tag pack circles. 
     let width, height
 
-    if (window !== undefined) {
+    if (typeof window !== "undefined") {
         width = Math.floor(window.innerHeight / 100) * 100;
         height = Math.floor(window.innerHeight / 100) * 100;
     }
