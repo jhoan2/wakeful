@@ -62,8 +62,8 @@ export default function Home() {
 
 
 
-  const resources = data?.idealiteAccountResourcesIndex.edges
-  const pageInfo = data?.idealiteAccountResourcesIndex.pageInfo
+  const resources = data?.idealiteAccountResourcesIndex?.edges
+  const pageInfo = data?.idealiteAccountResourcesIndex?.pageInfo
 
 
   const getMoreResources = (pageInfo) => {
