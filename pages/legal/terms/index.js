@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-export default function terms() {
+export default function Terms() {
     const router = useRouter();
 
     return (
@@ -27,14 +27,14 @@ export default function terms() {
 
                             <p>Your continued use of this Website after such modifications will constitute acknowledgement of the modified Terms of Service and agreement to abide and be bound by the modified Terms of Service.</p>
 
-                            <p>We reserve the sole right to either modify or discontinue the Website, including any of the Website’s features, at any time with or without notice to you. We will not be liable to you or any third party should we exercise such right. Any new features that augment or enhance the then-current services on this Website shall also be subject to these Terms of Service.</p>
+                            <p>We reserve the sole right to either modify or discontinue the Website, including any of the Website`s features, at any time with or without notice to you. We will not be liable to you or any third party should we exercise such right. Any new features that augment or enhance the then-current services on this Website shall also be subject to these Terms of Service.</p>
 
                             <h3 className='text-xl'>Conduct on Website</h3>
 
                             <p>Your use of the Website is subject to all applicable laws and regulations, and you are solely responsible for the substance of your communications through the Website. By posting information in or otherwise using any communications service, chat room, message board, newsgroup, software library, or other interactive service that may be available to you on or through this Website, you agree that you will not upload, share, post, or otherwise distribute or facilitate distribution of any content — including text, communications, software, images, sounds, data, or other information — that:</p>
 
                             <ul>
-                                <li>Is unlawful, threatening, abusive, harassing, defamatory, libelous, deceptive, fraudulent, invasive of another's privacy, tortious, contains explicit or graphic descriptions or accounts of sexual acts (including but not limited to sexual language of a violent or threatening nature directed at another individual or group of individuals), or otherwise violates our rules or policies</li>
+                                <li>Is unlawful, threatening, abusive, harassing, defamatory, libelous, deceptive, fraudulent, invasive of another`s privacy, tortious, contains explicit or graphic descriptions or accounts of sexual acts (including but not limited to sexual language of a violent or threatening nature directed at another individual or group of individuals), or otherwise violates our rules or policies</li>
                                 <li>Victimizes, harasses, degrades, or intimidates an individual or group of individuals on the basis of religion, gender, sexual orientation, race, ethnicity, age, or disability</li>
                                 <li>Infringes on any patent, trademark, trade secret, copyright, right of publicity, or other proprietary right of any party</li>
                                 <li>Constitutes unauthorized or unsolicited advertising, junk or bulk email (also known as "spamming"), chain letters, any other form of unauthorized solicitation, or any form of lottery or gambling</li>
