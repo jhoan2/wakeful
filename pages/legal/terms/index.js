@@ -19,7 +19,7 @@ export default function Terms() {
                         <div className='w-2/3 space-y-4'>
                             <h2 className='text-2xl'>Terms of Service of <span className="website_url">https://www.idealite.xyz</span></h2>
 
-                            <p><span className="website_name">Idealite</span> ('Us' or 'We') provides the <span className="website_url">https://www.idealite.xyz</span> website and various related services (collectively, the 'Website') to you, the User, subject to your compliance with all the terms, conditions, and notices contained or referenced herein (the 'Terms of Service'), as well as any other written agreement between us and you.</p>
+                            <p><span className="website_name">Idealite</span> (`&apos;`Us`&apos;` or `&apos;`We`&apos;`) provides the <span className="website_url">https://www.idealite.xyz</span> website and various related services (collectively, the `&apos;`Website`&apos;`) to you, the User, subject to your compliance with all the terms, conditions, and notices contained or referenced herein (the `&apos;`Terms of Service`&apos;`), as well as any other written agreement between us and you.</p>
 
                             <p>In addition, when using particular services or materials on this Website, Users shall be subject to any posted rules applicable to such services or materials that may contain terms and conditions in addition to those in these Terms of Service. All such guidelines or rules are hereby incorporated by reference into these Terms of Service.</p>
 
@@ -37,7 +37,7 @@ export default function Terms() {
                                 <li>Is unlawful, threatening, abusive, harassing, defamatory, libelous, deceptive, fraudulent, invasive of another`s privacy, tortious, contains explicit or graphic descriptions or accounts of sexual acts (including but not limited to sexual language of a violent or threatening nature directed at another individual or group of individuals), or otherwise violates our rules or policies</li>
                                 <li>Victimizes, harasses, degrades, or intimidates an individual or group of individuals on the basis of religion, gender, sexual orientation, race, ethnicity, age, or disability</li>
                                 <li>Infringes on any patent, trademark, trade secret, copyright, right of publicity, or other proprietary right of any party</li>
-                                <li>Constitutes unauthorized or unsolicited advertising, junk or bulk email (also known as 'spamming'), chain letters, any other form of unauthorized solicitation, or any form of lottery or gambling</li>
+                                <li>Constitutes unauthorized or unsolicited advertising, junk or bulk email (also known as `&apos;`spamming`&apos;`), chain letters, any other form of unauthorized solicitation, or any form of lottery or gambling</li>
                                 <li>Contains software viruses or any other computer code, files, or programs that are designed or intended to disrupt, damage, or limit the functioning of any software, hardware, or telecommunications equipment or to damage or obtain unauthorized access to any data or other information of any third party</li>
                                 <li>Impersonates any person or entity, including any of our employees or representatives</li>
                             </ul>
@@ -62,7 +62,7 @@ export default function Terms() {
 
                             <p>You understand and agree that temporary interruptions of the services available through this Website may occur as normal events. You further understand and agree that we have no control over third party networks you may access in the course of the use of this Website, and therefore, delays and disruption of other network transmissions are completely beyond our control.</p>
 
-                            <p>You understand and agree that the services available on this Website are provided 'AS IS' and that we assume no responsibility for the timeliness, deletion, mis-delivery or failure to store any user communications or personalization settings.</p>
+                            <p>You understand and agree that the services available on this Website are provided `&apos;`AS IS`&apos;` and that we assume no responsibility for the timeliness, deletion, mis-delivery or failure to store any user communications or personalization settings.</p>
 
                             <h3 className='text-xl'>International Use</h3>
 
