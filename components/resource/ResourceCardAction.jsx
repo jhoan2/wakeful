@@ -22,6 +22,7 @@ export default function ResourceCardAction({ cardId }) {
     const GET_USERS_PROJECT_LIST = gql`
     query getUsersProjectList {
         viewer {
+            id
           idealiteProjectList(
             filters: {where: {deleted: {equalTo: false}, status: {in: [TODO, DOING]}}},
             first: 15,

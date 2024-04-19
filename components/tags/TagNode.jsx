@@ -1,5 +1,7 @@
 import React from 'react'
 import { ChevronDown, ChevronRight, Tag } from 'lucide-react'
+import TagEditInput from './EditTagInput'
+
 export default function TagNode({ node, style }) {
     return (
         <div

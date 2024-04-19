@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import ErrorPage from '../../components/ErrorPage';
 import { useCeramicContext } from '../../context';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useLazyQuery } from '@apollo/client';
 import ResourceSidePanel from '../../components/resource/ResourceSidePanel';
 import ResourceCardView from '../../components/resource/ResourceCardView';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
@@ -18,6 +18,33 @@ export default function Resource() {
   const { ceramic, composeClient } = clients
   const [showResourceModal, setShowResourceModal] = useState(false)
   const [resourceUrl, setResourceUrl] = useState('')
+
+  const GET_URL_FROM_ACCOUNT_RESOURCES = gql`
+  query getUrlFromAccountResources {
+      viewer {
+        id
+        idealiteAccountResourcesList(
+          filters: {where: {resourceId: {equalTo: "${resourceId}"}}}
+          first: 1
+          ) {
+          edges {
+            node {
+              url
+            }
+          }
+        }
+      }
+    }
+  `
+
+  const [getUrlFromAccountResource] = useLazyQuery(GET_URL_FROM_ACCOUNT_RESOURCES, {
+    onCompleted: (data) => {
+      if (data.viewer.idealiteAccountResourcesList.edges.length > 0) {
+        setResourceUrl(data.viewer.idealiteAccountResourcesList.edges[0].node.url)
+      }
+    },
+    onError: (error) => console.error(error.message)
+  });
 
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
@@ -61,7 +88,14 @@ export default function Resource() {
   const { loading, error, data, fetchMore } = useQuery(GET_CARDS_FOR_RESOURCE, {
     variables: { account: composeClient.id, resourceId: resourceId },
     onCompleted: (data) => {
-      setResourceUrl(data.node.url)
+      if (data.node.url === null) {
+        //If the user is adding a note from the web for a google play books resource, 
+        //the url is null so the ext doesn't get the cards for it
+        //If the resoureUrl is null, we use the id to query for the url in the accountResource 
+        getUrlFromAccountResource()
+      } else {
+        setResourceUrl(data.node.url)
+      }
     }
   });
 
@@ -121,8 +155,6 @@ export default function Resource() {
                             setShowResourceModal={setShowResourceModal}
                             resourceId={resourceId}
                             resourceUrl={resourceUrl}
-                            setResourceUrl={setResourceUrl}
-
                           />
                           : null
                         }

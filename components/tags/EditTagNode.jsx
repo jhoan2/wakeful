@@ -36,7 +36,12 @@ export default function EditTagNode({ node, style, tree }) {
                     <span>
                         {
                             node.isEditing ?
-                                <EditTagInput className='w-[24px]' node={node} setLoadingTagCreate={setLoadingTagCreate} />
+                                <EditTagInput
+                                    className='w-[24px]'
+                                    node={node}
+                                    setLoadingTagCreate={setLoadingTagCreate}
+                                    setTagTreeChanged={tree.props.setTagTreeChanged}
+                                />
                                 :
                                 node.data.name
                         }

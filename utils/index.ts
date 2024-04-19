@@ -1,4 +1,3 @@
-import type { CeramicApi } from "@ceramicnetwork/common"
 import type { ComposeClient } from "@composedb/client";
 import { Ed25519Provider } from "key-did-provider-ed25519";
 import { getResolver } from 'key-did-resolver'
@@ -21,7 +20,7 @@ declare global {
  * Checks localStorage for a stored DID Session. If one is found we authenticate it, otherwise we create a new one.
  * @returns Promise<DID-Session> - The User's authenticated sesion.
  */
-export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeClient) => {
+export const authenticateCeramic = async (ceramic: any, compose: ComposeClient) => {
   let auth_type = localStorage.getItem("ceramic:auth_type")
   if (auth_type == "key") {
     await authenticateKeyDID(ceramic, compose)
@@ -33,7 +32,7 @@ export const authenticateCeramic = async (ceramic: CeramicApi, compose: ComposeC
   return true
 }
 
-const authenticateKeyDID = async (ceramic: CeramicApi, compose: ComposeClient) => {
+const authenticateKeyDID = async (ceramic: any, compose: ComposeClient) => {
   let seed_array: Uint8Array
   if (localStorage.getItem(DID_SEED_KEY) === null) { // for production you will want a better place than localStorage for your sessions.
     console.log("Generating seed...")
@@ -64,7 +63,7 @@ const authenticateKeyDID = async (ceramic: CeramicApi, compose: ComposeClient) =
   return
 }
 
-const authenticateEthPKH = async (ceramic: CeramicApi, compose: ComposeClient) => {
+const authenticateEthPKH = async (ceramic: any, compose: ComposeClient) => {
   const sessionStr = localStorage.getItem('ceramic:eth_did') // for production you will want a better place than localStorage for your sessions.
   let session
 
@@ -80,8 +79,8 @@ const authenticateEthPKH = async (ceramic: CeramicApi, compose: ComposeClient) =
     // We enable the ethereum provider to get the user's addresses.
     const ethProvider = window.ethereum;
     const chainId = await ethProvider.request({ method: 'eth_chainId' });
-    if (chainId !== '0xa') {
-      toast.info("Please switch to the Optimism network.");
+    if (chainId !== '0x2105') {
+      toast.info("Please switch to the Base network.");
       return
     }
 

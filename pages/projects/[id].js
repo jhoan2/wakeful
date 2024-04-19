@@ -20,6 +20,7 @@ export default function ProjectPage() {
     const GET_USERS_PROJECT_CARD_COLLECTION = gql`
         query getUsersProjectCardCollection ($projectId: String, $cursor: String) {
             viewer {
+                id
             idealiteProjectCardCollectionList(
                 after: $cursor,
                 first: 20,

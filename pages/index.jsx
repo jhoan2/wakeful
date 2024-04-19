@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -25,20 +25,20 @@ const FrontPage = () => {
         <title>Idealite</title>
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white overflow-hidden [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
-        <div className="px-6 pt-6 lg:px-8">
-          <div>
-            <nav className="flex h-9 items-center justify-between" aria-label="Global">
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
+        <div className="h-full px-6 pt-6 lg:px-8">
+          <div className='h-full'>
+            <nav className="flex h-9 items-center justify-between m-3" aria-label="Global">
               <div className="flex lg:min-w-0 lg:flex-1 rounded-full bg-gray-100 p-2 space-x-2" aria-label="Global">
                 <Image src='/icon128.png' width={32} height={32} alt='idealite logo' />
                 <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Idealite</h2>
               </div>
             </nav>
-            <main>
+            <main className='h-full'>
               <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8">
                 <div className='flex flex-col items-center space-y-8'>
-                  <p className='text-5xl md:text-8xl text-left md:text-center'>Learn better, together.</p>
-                  <p className='text-xl md:text-3xl text-gray-400'>Idealite is a shared note-taking app.</p>
+                  <p className='text-5xl md:text-8xl text-left md:text-center'>Design your own education.</p>
+                  <p className='text-xl md:text-3xl text-gray-400'>Idealite is a digitally native educational institution.</p>
                 </div>
                 <div className='flex flex-row space-x-2 items-center'>
                   <button className="bg-gray-100 inline-flex py-3 px-5 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
@@ -56,6 +56,13 @@ const FrontPage = () => {
             </main>
           </div>
         </div>
+        <footer className='flex justify-center items-center h-full max-h-16'>
+          <div className='flex space-x-4 jsutify-center items-center'>
+            <p className='hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/legal/privacy')}>Privacy Policy</p>
+            <p className='hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/legal/terms')}>Terms & Conditions</p>
+            <p className='hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/legal/cookies')}>Cookies</p>
+          </div>
+        </footer>
       </div>
     </>
   );
