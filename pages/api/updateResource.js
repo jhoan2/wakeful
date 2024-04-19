@@ -30,12 +30,14 @@ const handler = async (req, res) => {
         ceramic.did = staticDid;
         return staticDid;
     }
+
     let variableValues = {
         "i": {
             "id": data.id,
             "content": data
         }
     }
+
     try {
         if (uniqueKey) {
             const did = await authenticateDID(uniqueKey);
