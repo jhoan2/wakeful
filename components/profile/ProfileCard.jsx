@@ -2,8 +2,8 @@ import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-export default function ProfileCard({ setEditProfile, avatarFallback, userProfile }) {
-    const { displayName, bio } = userProfile || {}
+export default function ProfileCard({ setEditProfile, avatarFallback, profile }) {
+    const { displayName, bio } = profile || {}
     return (
         <div className="max-w-2xl w-full md:w-2/3 mx-auto bg-white p-4 rounded-lg shadow">
             <div className="flex items-center space-x-4">

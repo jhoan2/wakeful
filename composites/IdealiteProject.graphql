@@ -1,5 +1,5 @@
 type IdealiteProject
-    @createModel(accountRelation: LIST, description: "v0: Idealite Projects")
+    @createModel(accountRelation: LIST, description: "v0.1: Idealite Projects")
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ])
@@ -13,6 +13,7 @@ type IdealiteProject
     description: String @string(minLength: 1, maxLength: 3000)
     priority: ProjectPriority
     status: ProjectStatus
+    tags: [Tag] @list(maxLength: 15)
     title: String @string(minLength: 1, maxLength: 140)
     url: String @string(minLength: 1, maxLength: 140)
     updatedAt: DateTime
@@ -32,3 +33,7 @@ enum ProjectPriority {
     HIGH
 }
 
+type Tag {
+  tagId: String! @string(minLength: 1, maxLength: 140)
+  name: String! @string(minLength: 1, maxLength: 140)
+}

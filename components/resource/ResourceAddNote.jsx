@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import EditorBubbleMenu from './EditorBubbleMenu';
-import { gql, useMutation } from '@apollo/client';
+import EditorBubbleMenu from '../EditorBubbleMenu';
+import { gql, useMutation, useLazyQuery } from '@apollo/client';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,13 +25,15 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
         refetchQueries: ['getCardsForResource'],
     });
 
+
+
     const editor = useEditor({
         extensions: [
             StarterKit,
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-md lg:prose-lg dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
+                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
             },
         },
         content: '',
@@ -62,7 +64,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
             const { pinataData } = data;
             return pinataData;
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }
 
@@ -130,7 +132,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
             <div className='flex place-content-center mt-60 '>
                 <div id='modal-content' className="m-3 flex flex-col bg-white border w-full md:w-1/2 md:h-2/3 shadow-sm rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div className='flex justify-end mb-3'>
-                        <button className='hover:bg-gray-300 rounded-xl' title='Close Modal' onClick={() => setShowModal(false)}>
+                        <button className='hover:bg-gray-300 rounded-xl' title='Close Modal' onClick={() => setShowResourceModal(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-4 h-4'><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
                         </button>
                     </div>
@@ -166,9 +168,6 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
                                     Submit
                                 </button>
                             }
-                            {/* <button className='hover:bg-gray-300 rounded-xl' title='Send to a Project'>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='w-6 h-6'><path d="M12 2.58594L18.2071 8.79304L16.7929 10.2073L13 6.41436V16.0002H11V6.41436L7.20711 10.2073L5.79289 8.79304L12 2.58594ZM3 18.0002V14.0002H5V18.0002C5 18.5524 5.44772 19.0002 6 19.0002H18C18.5523 19.0002 19 18.5524 19 18.0002V14.0002H21V18.0002C21 19.657 19.6569 21.0002 18 21.0002H6C4.34315 21.0002 3 19.657 3 18.0002Z"></path></svg>
-                            </button> */}
                         </div>
                     </div>
                 </div>

@@ -14,11 +14,15 @@ import { MoreVertical, Trash, FileSymlink } from 'lucide-react';
 import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { toast } from 'sonner';
+import { useProfileContext } from '../../context';
 
 export default function ResourceCardAction({ cardId }) {
+    const { profile } = useProfileContext();
+    let data, error;
     const GET_USERS_PROJECT_LIST = gql`
     query getUsersProjectList {
         viewer {
+            id
           idealiteProjectList(
             filters: {where: {deleted: {equalTo: false}, status: {in: [TODO, DOING]}}},
             first: 15,
@@ -35,7 +39,12 @@ export default function ResourceCardAction({ cardId }) {
       }
     `
 
-    const { loading, error, data } = useQuery(GET_USERS_PROJECT_LIST);
+    // const { loading, error: usersProjectListError, data: usersProjectListData } = useQuery(GET_USERS_PROJECT_LIST, {
+    //     onError: (error) => {
+    //         console.log(error)
+    //     }
+    // });
+
 
     const UPDATE_NOTE = gql`
     mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
@@ -95,12 +104,12 @@ export default function ResourceCardAction({ cardId }) {
 
     if (deleteError) {
         toast.error('Error deleting note')
-        console.log(deleteError)
+        console.log(deleteError.message)
     }
 
     if (createCollectionError) {
         toast.error('Error sending note to project')
-        console.log(createCollectionError)
+        console.log(createCollectionError.message)
     }
 
     return (
@@ -122,6 +131,14 @@ export default function ResourceCardAction({ cardId }) {
                             <span>Send to Project</span>
                         </DropdownMenuSubTrigger>
                         <DropdownMenuSubContent className='w-56 max-w-56 overflow-auto max-h-96 '>
+                            <DropdownMenuLabel>Favorites</DropdownMenuLabel>
+                            {profile.favorites.map((favorite) => {
+                                return (
+                                    <DropdownMenuItem key={favorite.id} onClick={() => createCollection(favorite.id)} className='flex items-center relative flex cursor-default truncate select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
+                                        <span>{favorite.title}</span>
+                                    </DropdownMenuItem>
+                                )
+                            })}
                             {
                                 data && data?.viewer?.idealiteProjectList?.edges?.length === 0 ?
                                     <DropdownMenuItem className='flex items-center relative flex cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
@@ -130,7 +147,9 @@ export default function ResourceCardAction({ cardId }) {
                                     :
                                     null
                             }
-                            {data?.viewer?.idealiteProjectList?.edges?.map((project) => {
+                            <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Recent Projects</DropdownMenuLabel>
+                            {data?.viewer?.idealiteProjectList && data?.viewer?.idealiteProjectList?.edges?.map((project) => {
                                 return (
                                     <DropdownMenuItem key={project?.node?.id} onClick={() => createCollection(project.node.id)} className='flex items-center relative flex cursor-default truncate select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
                                         <span>{project?.node?.title}</span>
