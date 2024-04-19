@@ -11,6 +11,7 @@ import HoemGetProfile from './home/HomeGetProfile'
 export default function SideBar({ page, setPage, avatarFallback }) {
     const clients = useCeramicContext();
     const { ceramic, composeClient } = clients
+    console.log(composeClient.id)
     const [showTags, setShowTags] = useState(false)
 
     const handleLogout = () => {
