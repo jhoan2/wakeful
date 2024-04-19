@@ -1,7 +1,8 @@
 import { Loader, Square, CheckSquare2, Archive, XSquare, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import ProjectDelete from "./ProjectDelete";
+import ProjectActions from "./ProjectActions";
+import ProjectTag from "./ProjectTag";
 
 export const Columns = [
     {
@@ -108,6 +109,26 @@ export const Columns = [
         }
     },
     {
+        accessorKey: "tags",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Tags
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const tags = row.getValue("tags")
+            return (
+                <ProjectTag tags={tags} />
+            )
+        }
+    },
+    {
         accessorKey: "createdAt",
         header: ({ column }) => {
             return (
@@ -147,7 +168,8 @@ export const Columns = [
         id: "actions",
         cell: ({ row }) => {
             const projectId = row.original.id
-            return <ProjectDelete project={projectId} />
+            const projectTitle = row.original.title
+            return <ProjectActions projectId={projectId} projectTitle={projectTitle} />
         },
     },
 ]

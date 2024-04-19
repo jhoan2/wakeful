@@ -61,9 +61,7 @@ const MyApp = ({ Component, pageProps }) => {
     }), link
   })
 
-
-
-  return getLayout(
+  return (
     <div className='w-full'>
       <Head>
         <title>Idealite</title>
@@ -74,7 +72,7 @@ const MyApp = ({ Component, pageProps }) => {
           <CeramicWrapper>
             <div>
               <PostHogProvider client={posthog}>
-                <Component {...pageProps} />
+                {getLayout(<Component {...pageProps} />)}
               </PostHogProvider>
               <Toaster richColors />
             </div>
@@ -82,7 +80,8 @@ const MyApp = ({ Component, pageProps }) => {
         </div>
       </ApolloProvider>
     </div>
-  );
+  )
+
 }
 
 export default MyApp

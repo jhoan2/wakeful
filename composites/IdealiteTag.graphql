@@ -1,0 +1,19 @@
+type IdealiteTag 
+    @createModel(accountRelation: LIST, description: "v0.1: Tags for Idealite")
+    @createIndex(fields: [{ path: ["deleted"]} ]) 
+    @createIndex(fields: [{ path: ["name"]} ])
+    @createIndex(fields: [{ path: ["createdAt"]} ]) {
+    name: String @string(minLength: 1, maxLength: 140)
+    children: [Tag] @list(maxLength: 150)
+    createdAt: DateTime
+    deleted: Boolean 
+    parent: String @string(minLength: 1, maxLength: 140)
+    tagTree: String @string(minLength: 1, maxLength: 100000)
+    updatedAt: DateTime
+    value: Int
+}
+
+type Tag {
+  tagId: String @string(minLength: 1, maxLength: 140)
+  name: String @string(minLength: 1, maxLength: 140)
+}

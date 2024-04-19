@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { CeramicClient } from "@ceramicnetwork/http-client"
 import { ComposeClient } from "@composedb/client";
 
@@ -16,12 +16,49 @@ const composeClient = new ComposeClient({
   definition: definition as RuntimeCompositeDefinition,
 });
 
+
+
 const CeramicContext = createContext({ ceramic: ceramic, composeClient: composeClient });
+const ProfileContext = createContext({});
 
 export const CeramicWrapper = ({ children }: any) => {
+  const [profile, setProfile] = useState({
+    id: '',
+    displayName: '',
+    bio: '',
+    favorites: [],
+    tags: []
+  })
+
+  const updateTagTree = (newTag: any) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      tags: newTag
+    }));
+  };
+
+  const updateProfileBioAndName = (newBio: any, newDisplayName: any) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      bio: newBio,
+      displayName: newDisplayName
+    }));
+  };
+
+  const setCreatedProfile = (id: any, newBio: any, newDisplayName: any) => {
+    setProfile(prevProfile => ({
+      ...prevProfile,
+      id: id,
+      bio: newBio,
+      displayName: newDisplayName
+    }));
+  };
+
   return (
     <CeramicContext.Provider value={{ ceramic, composeClient }}>
-      {children}
+      <ProfileContext.Provider value={{ profile, setProfile, updateTagTree, updateProfileBioAndName, setCreatedProfile }}>
+        {children}
+      </ProfileContext.Provider>
     </CeramicContext.Provider>
   );
 };
@@ -33,3 +70,4 @@ export const CeramicWrapper = ({ children }: any) => {
  */
 
 export const useCeramicContext = () => useContext(CeramicContext);
+export const useProfileContext = () => useContext(ProfileContext);
