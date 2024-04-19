@@ -40,7 +40,7 @@ export default function Tags() {
     }
 
     useEffect(() => {
-        if (composeClient.id !== 'did:pkh:eip155:10:0x399848148c887fc42b91ac0918a2d8050a211201') {
+        if (composeClient.id && composeClient.id.includes('0x399848148c887fc42b91ac0918a2d8050a211201')) {
             router.push('/home');
         }
     }, []);
