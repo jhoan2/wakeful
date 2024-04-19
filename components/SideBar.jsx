@@ -11,7 +11,6 @@ import HoemGetProfile from './home/HomeGetProfile'
 export default function SideBar({ page, setPage, avatarFallback }) {
     const clients = useCeramicContext();
     const { ceramic, composeClient } = clients
-    console.log(composeClient.id)
     const [showTags, setShowTags] = useState(false)
 
     const handleLogout = () => {
@@ -104,7 +103,7 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                             <AuthPrompt />
                         }
                     </div>
-                    {composeClient.id === 'did:pkh:eip155:10:0x399848148c887fc42b91ac0918a2d8050a211201' ?
+                    {composeClient.id.includes('0x399848148c887fc42b91ac0918a2d8050a211201') ?
                         <div className="inline-block">
                             <Link href={'/admin'} onClick={() => setPage('admin')}>
                                 <button title='Projects' className={`w-16 lg:w-36 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'admin' ? 'bg-gray-400' : 'bg-slate-100'}`}>
