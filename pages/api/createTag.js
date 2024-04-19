@@ -14,8 +14,16 @@ const handler = async (req, res) => {
         ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
         definition: definition
     });
-    const { id, readingStatus } = req.body
+    const { name, parentId } = req.body
     const uniqueKey = process.env.ADMIN_DID_KEY;
+    let input = {
+        createdAt: new Date().toISOString(),
+        deleted: false,
+        name: name,
+        parent: parentId,
+        updatedAt: new Date().toISOString(),
+        value: 1,
+    }
 
     //authenticate developer DID in order to create a write transaction
     const authenticateDID = async (seed) => {
@@ -31,15 +39,6 @@ const handler = async (req, res) => {
         return staticDid;
     }
 
-    let variableValues = {
-        "i": {
-            "id": id,
-            "content": {
-                readingStatus: readingStatus
-            }
-        }
-    }
-
     try {
         if (uniqueKey) {
             const did = await authenticateDID(uniqueKey);
@@ -49,25 +48,34 @@ const handler = async (req, res) => {
         console.log({ message: e.message })
     }
 
+
     switch (req.method) {
-        case 'PATCH':
+        case 'POST':
+
+            let variableValues = {
+                "i": {
+                    "content": input
+                }
+            }
+
             composeClient.executeQuery(`
-                mutation updateReadingStatus ($i: UpdateIdealiteAccountResourcesInput!){
-                    updateIdealiteAccountResources(input: $i) {
-                      document {
-                        id
-                      }
+                mutation createTag($i: CreateIdealiteTagInput!) {
+                    createIdealiteTag(input: $i) {
+                        document {
+                            id
+                        }
                     }
-                  }
-              `, variableValues)
-                .then(updateIdealiteAccountResources => {
-                    return res.status(200).json({ updatedResourceId: updateIdealiteAccountResources.data.updateIdealiteAccountResources.document.id })
-                }).catch(error => {
+                }
+                  `, variableValues)
+                .then((tagId) => {
+                    return res.status(200).send({ tagId: tagId.data.createIdealiteTag.document.id })
+                })
+                .catch(error => {
                     return res.status(500).send({ message: error.message })
                 })
             break;
         default:
-            res.setHeader('Allow', ['PATCH'])
+            res.setHeader('Allow', ['POST'])
             res.status(405).end(`Method ${req.method} is not allowed.`)
     }
 }

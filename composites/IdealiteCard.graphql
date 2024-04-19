@@ -3,7 +3,7 @@ type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
 }
 
 type IdealiteCard 
-    @createModel(accountRelation: LIST, description: "v0: Blocks of text for Idealite") 
+    @createModel(accountRelation: LIST, description: "v0.1: Blocks of text for Idealite") 
     @createIndex(fields: [{ path: ["deleted"]} ])
     @createIndex(fields: [{ path: ["url"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ]) {
@@ -21,7 +21,14 @@ type IdealiteCard
     resourceId: StreamID @documentReference(model: "IdealiteResource")
     resource: IdealiteResource @relationDocument(property: "resourceId")
     scrollHeight: Float
+    tags: [Tag] @list(maxLength: 15)
     updatedAt: DateTime
     url: String @string(minLength: 1, maxLength: 140)
     videoTime: String @string(minLength: 1, maxLength: 300)
 }
+
+type Tag {
+  tagId: String! @string(minLength: 1, maxLength: 140)
+  name: String! @string(minLength: 1, maxLength: 140)
+}
+

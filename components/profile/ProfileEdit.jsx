@@ -16,16 +16,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { toast } from 'sonner';
 import { gql, useMutation } from '@apollo/client';
+import { useProfileContext } from '../../context';
 
 export default function ProfileEdit({ setEditProfile, avatarFallback, profile }) {
     const [loadingProfile, setLoadingProfile] = useState(false)
     const displayName = profile?.displayName || "Guest";
     const bio = profile?.bio || "No bio provided";
     const id = profile?.id;
+    const { setCreatedProfile, updateProfileBioAndName } = useProfileContext();
 
     const formSchema = z.object({
-        displayName: z.string().min(2).max(240),
-        bio: z.optional(z.string().min(2).max(240)),
+        displayName: z.string().trim().min(2).max(240),
+        bio: z.optional(z.string().trim().min(2).max(240)),
     })
 
     const form = useForm({
@@ -41,30 +43,55 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
         updateIdealiteProfile(input: $input) {
             document {
                 id
+                bio
+                displayName
             }
         }
     }
 `
 
-    const [updateProfile, { error: errorUpdatingProfile }] = useMutation(UPDATE_IDEALITE_PROFILE, {
-        onCompleted: () => setEditProfile(false),
-        refetchQueries: ['getUserProfile'],
-    });
+    const [updateProfile,
+        {
+            loading: loadingUpdatingProfile,
+            error: errorUpdatingProfile,
+        }] = useMutation(UPDATE_IDEALITE_PROFILE, {
+            onCompleted: (data) => {
+                if (data) {
+                    const newDisplayName = data.updateIdealiteProfile.document.displayName
+                    const newBio = data.updateIdealiteProfile.document.bio
+                    updateProfileBioAndName(newBio, newDisplayName)
+                }
+                setEditProfile(false)
+            },
+        });
 
     const CREATE_IDEALITE_PROFILE = gql`
     mutation MyMutation ($input: CreateIdealiteProfileInput!) {
         createIdealiteProfile(input: $input) {
           document {
             id
+            displayName
+            bio
           }
         }
       }
         `
 
-    const [createProfile, { error: errorCreatingProfile }] = useMutation(CREATE_IDEALITE_PROFILE, {
-        onCompleted: () => setEditProfile(false),
-        refetchQueries: ['getUserProfile'],
-    });
+    const [createProfile,
+        {
+            loading: loadingCreatingProfile,
+            error: errorCreatingProfile,
+        }] = useMutation(CREATE_IDEALITE_PROFILE, {
+            onCompleted: (data) => {
+                if (data && data.createIdealiteProfile.document) {
+                    const id = data.createIdealiteProfile.document.id
+                    const newDisplayName = data.createIdealiteProfile.document.displayName
+                    const newBio = data.createIdealiteProfile.document.bio
+                    setCreatedProfile(id, newBio, newDisplayName)
+                }
+                setEditProfile(false)
+            },
+        });
 
     const onSubmit = (values) => {
         let profileContent = {
@@ -90,10 +117,12 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                 }
             })
 
+            //Potentially, doesn't work. 
             if (errorCreatingProfile) {
                 toast.error('Error creating profile')
                 console.log(errorCreatingProfile.message)
             }
+
             setLoadingProfile(false)
         } else {
             setLoadingProfile(true)
@@ -107,6 +136,7 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                 }
             })
 
+            //Potentially, doesn't work.
             if (errorUpdatingProfile) {
                 toast.error("Error updating profile.")
                 console.log(errorUpdatingProfile.message)
@@ -162,7 +192,13 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                             <button type="button" onClick={() => setEditProfile(false)} className="px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:bg-red-100 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                 Cancel
                             </button>
-                            <Button type="submit" variant='secondary'>Submit</Button>
+                            {
+                                loadingUpdatingProfile || loadingCreatingProfile ?
+                                    <Button type="button" variant='secondary'>Submitting...</Button>
+                                    :
+                                    <Button type="submit" variant='secondary'>Submit</Button>
+
+                            }
                         </div>
                     }
                 </form>

@@ -2,6 +2,7 @@ import { Loader, Square, CheckSquare2, Archive, XSquare, ArrowUpDown } from "luc
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ProjectActions from "./ProjectActions";
+import ProjectTag from "./ProjectTag";
 
 export const Columns = [
     {
@@ -104,6 +105,26 @@ export const Columns = [
                 `}>
                     {priority}
                 </div>
+            )
+        }
+    },
+    {
+        accessorKey: "tags",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Tags
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+        cell: ({ row }) => {
+            const tags = row.getValue("tags")
+            return (
+                <ProjectTag tags={tags} />
             )
         }
     },

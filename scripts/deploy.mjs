@@ -115,6 +115,11 @@ export const writeComposite = async (spinner) => {
         schema: projectsCardsSchema,
     });
 
+    const idealiteTagComposite = await createComposite(
+        ceramic,
+        "./composites/IdealiteTag.graphql"
+    );
+
     const composite = Composite.from([
         idealiteResourceComposite,
         idealiteProfileComposite,
@@ -124,7 +129,8 @@ export const writeComposite = async (spinner) => {
         idealiteProjectComposite,
         idealiteProjectCardCollectionComposite,
         cardsProjectsComposite,
-        projectsCardsComposite
+        projectsCardsComposite,
+        idealiteTagComposite
     ]);
 
     const newComposite = composite.setAliases({

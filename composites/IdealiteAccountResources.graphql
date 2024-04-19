@@ -6,12 +6,14 @@ type IdealiteAccountResources @createModel(accountRelation: LIST, description: "
   @createIndex(fields: [{ path: ["recipient"]} ])
   @createIndex(fields: [{ path: ["url"]} ])
   @createIndex(fields: [{ path: ["updatedAt"]} ])
-  @createIndex(fields: [{ path: ["readingStatus"]} ]){
+  @createIndex(fields: [{ path: ["readingStatus"]} ])
+  @createIndex(fields: [{ path: ["resourceId"]} ]){
   createdAt: DateTime
   readingStatus: ResourceStatus
   recipient: DID! @accountReference
   resourceId: StreamID @documentReference(model: "IdealiteResource")
   resource: IdealiteResource @relationDocument(property: "resourceId")
+  tags: [Tag] @list(maxLength: 15)
   url: String @string(minLength: 1, maxLength: 140)
   updatedAt: DateTime
 }
@@ -20,4 +22,9 @@ enum ResourceStatus {
   ARCHIVED
   DROPPED
   READING
+}
+
+type Tag {
+  tagId: String! @string(minLength: 1, maxLength: 140)
+  name: String! @string(minLength: 1, maxLength: 140)
 }

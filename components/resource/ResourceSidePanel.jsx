@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
-import { useCeramicContext } from '../context';
+import { useCeramicContext } from '../../context';
 import { toast } from 'sonner';
 
 export default function ResourceSidePanel({ data }) {

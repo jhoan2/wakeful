@@ -3,11 +3,14 @@ import Sidebar from './SideBar';
 import BottomNavBar from './BottomNavBar';
 import { authenticateCeramic } from '../utils';
 import { useCeramicContext } from '../context';
+import { useProfileContext } from '../context';
 import { useRouter } from 'next/router';
+import posthog from 'posthog-js'
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
     const clients = useCeramicContext();
+    const { profile } = useProfileContext();
     const { ceramic, composeClient } = clients;
     const composeClientId = composeClient.id
     const avatarFallback = composeClientId ? composeClientId.substring(composeClientId.length - 5) : ''
@@ -23,12 +26,12 @@ export default function Layout({ children }) {
         }
 
         // Track page views
-        // const handleRouteChange = () => posthog?.capture('$pageview')
-        // router.events.on('routeChangeComplete', handleRouteChange)
+        const handleRouteChange = () => posthog?.capture('$pageview')
+        router.events.on('routeChangeComplete', handleRouteChange)
 
-        // return () => {
-        //     router.events.off('routeChangeComplete', handleRouteChange)
-        // }
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange)
+        }
     }, [])
 
 

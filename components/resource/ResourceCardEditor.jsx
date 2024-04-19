@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import EditorBubbleMenu from './EditorBubbleMenu'
+import EditorBubbleMenu from '../EditorBubbleMenu'
 
 export default function ResourceCardEditor({ setEditorStateChanged, annotation }) {
     const [editorContent, setEditorContent] = useState('')
@@ -11,7 +11,7 @@ export default function ResourceCardEditor({ setEditorStateChanged, annotation }
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-md lg:prose-lg dark:prose-invert focus:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
+                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg dark:prose-invert focus:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
             },
         },
         content: annotation,

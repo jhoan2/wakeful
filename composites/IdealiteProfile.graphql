@@ -1,5 +1,5 @@
 type IdealiteProfile 
-    @createModel(accountRelation: SINGLE, description: "v0: Profile for Idealite User") {
+    @createModel(accountRelation: SINGLE, description: "v0.1: Profile for Idealite User") {
     account: DID! @documentAccount
     avatarCid: String @string(minLength: 1, maxLength: 3000)
     bio: String @string(minLength: 1, maxLength: 3000)
@@ -8,6 +8,7 @@ type IdealiteProfile
     favorites: [Favorites] @list(maxLength: 30)
     mimeType: String @string(minLength: 1, maxLength: 140)
     pinSize: Int
+    tags: String @string(minLength: 1, maxLength: 3000)
     updatedAt: DateTime
 }
 

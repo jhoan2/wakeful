@@ -62,18 +62,7 @@ const handler = async (req, res) => {
                     "content": input
                 }
             }
-            let connectResourceAccountValues = {
-                "i": {
-                    "content": {
-                        recipient: clientMutationId,
-                        resourceId: null,
-                        url: url,
-                        createdAt: createdAt,
-                        updatedAt: updatedAt,
-                        readingStatus: 'READING'
-                    }
-                }
-            }
+
             composeClient.executeQuery(`
                     mutation CreateNewResource ($i: CreateIdealiteResourceInput!) {
                       createIdealiteResource(
@@ -86,21 +75,7 @@ const handler = async (req, res) => {
                     }
                   `, variableValues)
                 .then(newResourceObj => {
-                    connectResourceAccountValues.i.content.resourceId = newResourceObj.data.createIdealiteResource.document.id
-                    return composeClient.executeQuery(`
-                        mutation MyMutation ($i: CreateIdealiteAccountResourcesInput!) {
-                          createIdealiteAccountResources(
-                            input: $i
-                          ) {
-                            document {
-                              id
-                            }
-                          }
-                        }
-                        `, connectResourceAccountValues)
-                }).then(connectResourceToAccountResult => {
-                    console.log('connectResourceToAccountResult', connectResourceToAccountResult.data.createIdealiteAccountResources)
-                    return res.status(200).json({ newResourceId: connectResourceAccountValues.i.content.resourceId })
+                    return res.status(200).json({ newResourceId: newResourceObj.data.createIdealiteResource.document.id })
                 })
                 .catch(error => {
                     return res.status(500).send({ message: error.message })

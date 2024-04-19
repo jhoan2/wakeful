@@ -7,6 +7,7 @@ export default function GetProfile() {
   const GET_USER_PROFILE = gql`
     query getUserProfile {
         viewer {
+          id
           idealiteProfile {
             id
             bio
@@ -15,14 +16,32 @@ export default function GetProfile() {
               id
               title
             }
+            tags
           }
         }
       }
     `
+  const updateProfile = (data) => {
+    const shallowCopy = Object.assign({}, data.viewer.idealiteProfile)
+    if (data?.viewer.idealiteProfile.tags) {
+      shallowCopy.tags = JSON.parse(shallowCopy.tags)
+    }
 
-  const { loading, error, data } = useQuery(GET_USER_PROFILE);
-  if (data && data.viewer?.idealiteProfile) {
-    setProfile(data.viewer.idealiteProfile)
+    if (data?.viewer.idealiteProfile.favorites === null) {
+      shallowCopy.favorites = []
+    }
+    setProfile(shallowCopy)
+  }
+
+  const { error: getUserProfileError } = useQuery(GET_USER_PROFILE, {
+    onCompleted: (data) => {
+      if (!data.viewer.idealiteProfile) return
+      updateProfile(data)
+    }
+  });
+
+  if (getUserProfileError) {
+    console.log('Error: ' + getUserProfileError.message)
   }
 
   return (
