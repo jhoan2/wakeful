@@ -1,32 +1,21 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import AuthPrompt from './did-select-popup';
 import { useCeramicContext } from '../context';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Ghost, Tags, Home, Folder, LogOut, Compass } from 'lucide-react';
+import { Ghost, Tags, Home, Folder, Compass } from 'lucide-react';
 import TagTree from './tags/TagTree';
-import HoemGetProfile from './home/HomeGetProfile'
+import HomeGetProfile from './home/HomeGetProfile';
+
 
 export default function SideBar({ page, setPage, avatarFallback }) {
     const clients = useCeramicContext();
-    const { ceramic, composeClient } = clients
+    const { composeClient } = clients
     const [showTags, setShowTags] = useState(false)
 
-    const handleLogout = () => {
-        localStorage.setItem("logged_in", "false")
-        localStorage.removeItem('ceramic:did_seed')
-        localStorage.removeItem('ceramic:eth_did')
-        localStorage.removeItem('did')
-        localStorage.removeItem('ceramic:auth_type')
-        window.location.reload()
-    }
-
-
     return (
-
         <div id="sidebar-mini" className="flex flex-col translate-x-0 -translate-x-full p-2 h-full xl:w-[300px] transition-all duration-300 transform hidden z-[1] bg-slate-100 border-e border-gray-200 md:block md:translate-x-0 md:end-auto md:bottom-0  dark:bg-gray-800 dark:border-gray-700">
-            <HoemGetProfile />
+            <HomeGetProfile />
             {showTags ?
                 <TagTree setShowTags={setShowTags} />
                 :
@@ -53,7 +42,7 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                             <button title='Projects' className={`w-16 lg:w-36 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'projects' ? 'bg-gray-400' : 'bg-slate-100'}`}>
                                 <div className='flex items-center text-lg space-x-2'>
                                     <Folder />
-                                    <p className='lg:block hidden'>Projects</p>
+                                    <p className='lg:block hidden'>Pages</p>
                                 </div>
                             </button>
                         </Link>
@@ -91,18 +80,6 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                             </button>
                         </Link>
                     </div>
-                    <div className="inline-block [--placement:right]">
-                        {ceramic.did ?
-                            <button type="button" title='Logout' onClick={() => handleLogout()} className=" w-16 lg:w-36 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                <div className='flex items-center text-lg space-x-2'>
-                                    <LogOut />
-                                    <p className='lg:block hidden'>Log out</p>
-                                </div>
-                            </button>
-                            :
-                            <AuthPrompt />
-                        }
-                    </div>
                     {composeClient.id && composeClient.id.includes('0x399848148c887fc42b91ac0918a2d8050a211201') ?
                         <div className="inline-block">
                             <Link href={'/admin'} onClick={() => setPage('admin')}>
@@ -117,6 +94,7 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                         :
                         null
                     }
+                    <w3m-button balance='hide' />
                 </div>
             }
         </div>

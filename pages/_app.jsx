@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { CeramicWrapper } from "../context";
-import React from "react";
+import React, { useEffect } from "react";
 import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
@@ -8,6 +8,7 @@ import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import { Web3Modal } from '../context/Web3Modal';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -69,14 +70,16 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
       <ApolloProvider client={apolloClient}>
         <div>
-          <CeramicWrapper>
-            <div>
-              <PostHogProvider client={posthog}>
-                {getLayout(<Component {...pageProps} />)}
-              </PostHogProvider>
-              <Toaster richColors />
-            </div>
-          </CeramicWrapper>
+          <Web3Modal>
+            <CeramicWrapper>
+              <div>
+                <PostHogProvider client={posthog}>
+                  {getLayout(<Component {...pageProps} />)}
+                </PostHogProvider>
+                <Toaster richColors />
+              </div>
+            </CeramicWrapper>
+          </Web3Modal>
         </div>
       </ApolloProvider>
     </div>
