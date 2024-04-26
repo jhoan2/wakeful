@@ -14,11 +14,9 @@ import { UserRound } from 'lucide-react';
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
     const clients = useCeramicContext();
-    const { profile } = useProfileContext();
     const { ceramic, composeClient } = clients;
-    const composeClientId = composeClient.id
     const avatarFallback = <UserRound />
-    const router = useRouter()
+    // const router = useRouter()
     let isAuthenticated = false
     const { address } = useAccount();
 
@@ -57,8 +55,7 @@ export default function Layout({ children }) {
                         walletClient,
                         accountId,
                     );
-                    // change to use specific resource
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
                     const session = await DIDSession.get(accountId, authMethod, {
                         resources: composeClient.resources,
                     });
