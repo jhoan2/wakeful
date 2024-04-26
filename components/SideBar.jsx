@@ -50,11 +50,11 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                     <div className="inline-block [--placement:right]">
                         <Link href={'/profile'} onClick={() => setPage('profile')}>
                             <button title='Explore' className={`w-16 lg:w-36 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'profile' ? 'bg-gray-400' : 'bg-slate-100'}`}>
-                                <div className='flex items-center text-lg space-x-2'>
+                                <div className='flex items-center text-lg'>
                                     <Avatar title='Profile'>
                                         <AvatarImage />
                                         <AvatarFallback className={`w-16 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full  text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}>
-                                            0x...{avatarFallback}
+                                            {avatarFallback}
                                         </AvatarFallback>
                                     </Avatar>
                                     <p className='lg:block hidden'>Profile</p>
@@ -94,7 +94,9 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                         :
                         null
                     }
-                    <w3m-button balance='hide' />
+                    <div className='pt-2'>
+                        <w3m-button balance='hide' />
+                    </div>
                 </div>
             }
         </div>

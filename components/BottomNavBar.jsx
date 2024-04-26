@@ -32,8 +32,8 @@ export default function BottomNavBar({ page, setPage, setShowModal, avatarFallba
                 <Link href={'/profile'} className="flex flex-col items-center" onClick={() => setPage('profile')} >
                     <Avatar title='Profile'>
                         <AvatarImage />
-                        <AvatarFallback className={`w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 truncate disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'profile' ? 'bg-gray-400' : 'bg-slate-100'}`}>
-                            0x...{avatarFallback}
+                        <AvatarFallback className={`w-[2.375rem] h-[2.375rem] inline-flex justify-center items-center text-sm font-semibold rounded-full border border-transparent text-gray-500 truncate disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'profile' ? 'bg-gray-400' : 'bg-slate-100'}`}>
+                            {avatarFallback}
                         </AvatarFallback>
                     </Avatar>
                     <span className="text-xs">Profile</span>

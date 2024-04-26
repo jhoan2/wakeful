@@ -1,7 +1,6 @@
 import React, { useState, useEffect, } from 'react';
 import Sidebar from './SideBar';
 import BottomNavBar from './BottomNavBar';
-import { authenticateCeramic } from '../utils';
 import { useCeramicContext } from '../context';
 import { useProfileContext } from '../context';
 import { useRouter } from 'next/router';
@@ -10,6 +9,7 @@ import { useWalletClient } from "wagmi";
 import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
 import { DIDSession } from "did-session";
 import { useAccount } from "wagmi";
+import { UserRound } from 'lucide-react';
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
@@ -17,7 +17,7 @@ export default function Layout({ children }) {
     const { profile } = useProfileContext();
     const { ceramic, composeClient } = clients;
     const composeClientId = composeClient.id
-    const avatarFallback = composeClientId ? composeClientId.substring(composeClientId.length - 5) : ''
+    const avatarFallback = <UserRound />
     const router = useRouter()
     let isAuthenticated = false
     const { address } = useAccount();
@@ -27,6 +27,7 @@ export default function Layout({ children }) {
             localStorage.removeItem("did");
         }
     }, [address]);
+
     // useEffect(() => {
 
     //     // Track page views
