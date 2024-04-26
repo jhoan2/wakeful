@@ -46,7 +46,6 @@ export default function Layout({ children }) {
                 walletClient,
             ) {
                 if (walletClient) {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                     const accountId = await getAccountId(
                         walletClient,
                         walletClient.account.address,
