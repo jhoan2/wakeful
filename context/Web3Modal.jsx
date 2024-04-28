@@ -23,7 +23,8 @@ createWeb3Modal({
     wagmiConfig,
     projectId,
     chains,
-    enableAnalytics: true // Optional - defaults to your Cloud configuration
+    enableAnalytics: true, // Optional - defaults to your Cloud configuration,
+    enableEmail: true
 })
 
 export function Web3Modal({ children }) {
