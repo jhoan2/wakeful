@@ -23,6 +23,7 @@ createWeb3Modal({
     wagmiConfig,
     projectId,
     chains,
+    defaultChain: base,
     enableAnalytics: true, // Optional - defaults to your Cloud configuration,
     enableEmail: true
 })
