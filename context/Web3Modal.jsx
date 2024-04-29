@@ -16,7 +16,7 @@ const metadata = {
 
 
 const chains = [base]
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata, enableEmail: true })
 
 // 3. Create modal
 createWeb3Modal({
@@ -25,7 +25,6 @@ createWeb3Modal({
     chains,
     defaultChain: base,
     enableAnalytics: true, // Optional - defaults to your Cloud configuration,
-    enableEmail: true
 })
 
 export function Web3Modal({ children }) {
