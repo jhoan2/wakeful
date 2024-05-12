@@ -14,7 +14,7 @@ const handler = async (req, res) => {
     ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
     definition: definition
   });
-  const { title, clientMutationId, description, publishedAt, author } = req.body
+  const { title, clientMutationId, description, publishedAt, author, cid } = req.body
   const uniqueKey = process.env.ADMIN_DID_KEY;
   let input = {
     title: title,
@@ -23,7 +23,9 @@ const handler = async (req, res) => {
     clientMutationId: clientMutationId,
     description: description,
     publishedAt: publishedAt,
-    author: author || 'n/a'
+    author: author || 'n/a',
+    cid: cid,
+    mediaType: 'Book'
   }
 
   //authenticate developer DID in order to create a write transaction

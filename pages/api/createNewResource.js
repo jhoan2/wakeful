@@ -14,14 +14,29 @@ const handler = async (req, res) => {
         ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
         definition: definition
     });
-    const { clientMutationId, url, title, createdAt, updatedAt } = req.body
+    const {
+        clientMutationId,
+        url,
+        title,
+        createdAt,
+        updatedAt,
+        author,
+        description,
+        cid,
+        mediaType
+    } = req.body
+
     const uniqueKey = process.env.ADMIN_DID_KEY;
     let input = {
         url: url,
         title: title,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        clientMutationId: clientMutationId
+        clientMutationId: clientMutationId,
+        author: author,
+        description: description,
+        cid: cid,
+        mediaType: mediaType
     }
 
     //authenticate developer DID in order to create a write transaction
