@@ -104,12 +104,16 @@ export default function Home() {
                   <ReadingStatusFilter
                     setReadingStatus={setReadingStatus}
                   />
-                  <Button
-                    variant='secondary'
-                    onClick={() => setShowAddResourceModal(true)}
-                  >
-                    Add Resource
-                  </Button></div>
+                  {composeClient.id ?
+                    <Button
+                      variant='secondary'
+                      onClick={() => setShowAddResourceModal(true)}
+                    >
+                      Add Resource
+                    </Button>
+                    :
+                    null}
+                </div>
               </div>
               {showAddResourceModal ?
                 <HomeAddResource
@@ -141,12 +145,15 @@ export default function Home() {
                 <div></div>
                 <div></div>
                 <div className='flex justify-end'>
-                  <Button
-                    variant='secondary'
-                    onClick={() => setShowAddResourceModal(true)}
-                  >
-                    Add Resource
-                  </Button>
+                  {composeClient.id ?
+                    <Button
+                      variant='secondary'
+                      onClick={() => setShowAddResourceModal(true)}
+                    >
+                      Add Resource
+                    </Button>
+                    :
+                    null}
                   {showAddResourceModal ?
                     <HomeAddResource
                       setShowAddResourceModal={setShowAddResourceModal}
