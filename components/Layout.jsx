@@ -1,15 +1,13 @@
 import React, { useState, useEffect, } from 'react';
 import Sidebar from './SideBar';
 import BottomNavBar from './BottomNavBar';
-import { useCeramicContext } from '../context';
-import { useProfileContext } from '../context';
-import { useRouter } from 'next/router';
 import posthog from 'posthog-js'
 import { useWalletClient } from "wagmi";
 import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
 import { DIDSession } from "did-session";
 import { useAccount } from "wagmi";
 import { UserRound } from 'lucide-react';
+import { useCeramicContext } from '../context';
 
 export default function Layout({ children }) {
     const [page, setPage] = useState('home')
