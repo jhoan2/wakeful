@@ -7,11 +7,14 @@ import ErrorPage from '../../components/ErrorPage';
 import Layout from '../../components/Layout';
 import { useCeramicContext } from '../../context';
 import ReadingStatusFilter from '../../components/home/ReadingStatusFilter';
+import { Button } from "@/components/ui/button";
+import HomeAddResource from '../../components/home/HomeAddResource';
 
 export default function Home() {
   const clients = useCeramicContext()
   const { composeClient } = clients
   const [readingStatus, setReadingStatus] = useState([])
+  const [showAddResourceModal, setShowAddResourceModal] = useState(false)
 
   const GET_CARDS_PER_URL_PER_USER = gql`
   query GetCardsPerUrlPerUser ($filters: IdealiteAccountResourcesFiltersInput, $cursor: String){
@@ -82,6 +85,7 @@ export default function Home() {
 
   if (error) return <ErrorPage message={error.message} />;
 
+
   return (
     <div className='flex justify-center h-screen w-full'>
       {loading ?
@@ -93,10 +97,26 @@ export default function Home() {
         :
         (
           resources.length > 0 ?
-            <div className='flex-grow flex-row  overflow-auto sm:justify-center'>
-              <ReadingStatusFilter
-                setReadingStatus={setReadingStatus}
-              />
+            <div className='flex-grow flex-row overflow-auto sm:justify-center'>
+              <div className='grid grid-cols-3'>
+                <div></div>
+                <div className='flex justify-between'>
+                  <ReadingStatusFilter
+                    setReadingStatus={setReadingStatus}
+                  />
+                  <Button
+                    variant='secondary'
+                    onClick={() => setShowAddResourceModal(true)}
+                  >
+                    Add Resource
+                  </Button></div>
+              </div>
+              {showAddResourceModal ?
+                <HomeAddResource
+                  setShowAddResourceModal={setShowAddResourceModal}
+                />
+                : null
+              }
               <HomeCardList
                 resources={resources}
                 getMoreResources={getMoreResources}
@@ -115,7 +135,28 @@ export default function Home() {
               </div>
             </div>
             :
-            <NoContent src='/no-content-cat.png' />
+            <div className='flex flex-col h-screen'>
+              <p className='text-3xl font-bold p-8 text-balance'></p>
+              <div className='grid grid-cols-3'>
+                <div></div>
+                <div></div>
+                <div className='flex justify-end'>
+                  <Button
+                    variant='secondary'
+                    onClick={() => setShowAddResourceModal(true)}
+                  >
+                    Add Resource
+                  </Button>
+                  {showAddResourceModal ?
+                    <HomeAddResource
+                      setShowAddResourceModal={setShowAddResourceModal}
+                    />
+                    : null
+                  }
+                </div>
+              </div>
+              <NoContent src='/no-content-cat.png' />
+            </div>
         )
       }
     </div>
