@@ -99,6 +99,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
                     className='w-full border-2 border-amber-200'
                     placeholder="first"
                     onChange={(e) => setQueryLength(+e.currentTarget.value)}
+                    autoComplete='off'
                 />
                 <Button variant='secondary' onClick={() => setUseFirst(!useFirst)}>
                     {

@@ -43,6 +43,7 @@ export default function AdminQueryTagById() {
                 className='w-full border-2 border-amber-200'
                 placeholder="tag id"
                 onChange={(e) => setQueryTagId(e.currentTarget.value)}
+                autoComplete='off'
             />
         </div>
     )
