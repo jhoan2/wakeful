@@ -44,7 +44,6 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json();
-            console.log('data', data)
             setOgData(data.result)
             setLoadingOgData(false)
             return
