@@ -35,6 +35,7 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
 
 
     const getOpenGraphData = async (url) => {
+        setLoadingOgData(true)
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/getOpenGraphData?url=${url}`, {
                 method: 'GET',
@@ -43,10 +44,15 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const data = await res.json();
-            return data.result
+            console.log('data', data)
+            setOgData(data.result)
+            setLoadingOgData(false)
+            return
         } catch (error) {
             toast.error(error.message)
             console.log(error.message);
+            setLoadingOgData(false)
+
         }
     }
 
@@ -103,13 +109,9 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
 
     useEffect(() => {
         if (url) {
-            setLoadingOgData(true)
-            const ogTags = getOpenGraphData(url)
-            setOgData(ogTags)
+            getOpenGraphData(url)
         }
-        setLoadingOgData(false)
-    }, [])
-
+    }, [url])
 
     return (
         <div className='pt-4'>
