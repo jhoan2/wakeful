@@ -9,7 +9,7 @@ export default function HomeAddResourceCreate({ url, setShowAddResourceModal }) 
         )
     } else {
         return (
-            <HomeCreateOpenGraph url={url} />
+            <HomeCreateOpenGraph url={url} setShowAddResourceModal={setShowAddResourceModal} />
         )
     }
 }

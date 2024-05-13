@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 import { useCeramicContext } from '../../context'
 import { gql, useMutation } from '@apollo/client';
 
-export default function HomeCreateOpenGraph({ url }) {
+export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
     const clients = useCeramicContext()
     const { composeClient } = clients
     const [loadingSubmitAddResource, setLoadingSubmitAddResource] = useState(false)
@@ -91,11 +91,13 @@ export default function HomeCreateOpenGraph({ url }) {
                 }
             })
             setLoadingSubmitAddResource(false)
+            setShowAddResourceModal(false)
             return data.newResourceId
         } catch (error) {
             setLoadingSubmitAddResource(false)
             toast.error(error.message)
             console.log(error.message)
+            setShowAddResourceModal(false)
         }
     }
 
