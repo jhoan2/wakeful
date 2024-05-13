@@ -39,10 +39,10 @@ export default function HomeCard({ resource }) {
                             :
                             <div className="relative pt-[50%]  rounded-t-xl overflow-hidden">
                                 <img className="w-full h-full absolute top-0 start-0 object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-t-xl"
-                                    src={`https://purple-defensive-anglerfish-674.mypinata.cloud/ipfs/${cid}?img-width=384`}
+                                    src={`${cid}?img-width=384`}
                                     onError={({ currentTarget }) => {
                                         currentTarget.onerror = null; //prevent looping
-                                        currentTarget.src = '/placeholder-img.png'
+                                        currentTarget.src = '/home-card-gradient.png'
                                     }}
                                     crossOrigin='anonymous'
                                     alt="Image Description" />
