@@ -3,7 +3,7 @@ import { useCeramicContext } from '../../context';
 import { toast } from 'sonner';
 import { gql, useMutation } from '@apollo/client';
 
-export default function HomeCreateGooglePlayCard({ author, title, coverUrl, published, firstSentence, googlePlayUrl, setShowAddResourceModal }) {
+export default function HomeCreateGooglePlayCard({ author, title, coverUrl, coverUrlForCard, published, firstSentence, googlePlayUrl, setShowAddResourceModal }) {
     const clients = useCeramicContext()
     const { composeClient } = clients
     const clientMutationId = composeClient.id
@@ -82,7 +82,7 @@ export default function HomeCreateGooglePlayCard({ author, title, coverUrl, publ
             className='flex justify-center space-x-2 p-2 rounded-lg border border-slate-200 bg-white shadow-sm hover:bg-slate-400'
             onClick={() => createNewBookResource()}
         >
-            <img src={coverUrl} alt={title} />
+            <img src={coverUrlForCard} alt={title} />
             <div className='flex flex-col'>
                 <p className='text-xl font-semibold leading-none tracking-tight'>
                     {title}

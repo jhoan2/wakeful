@@ -94,7 +94,8 @@ export default function HomeCreateGooglePlay({ googlePlayUrl, setShowAddResource
                                 author={book?.author_name ? book?.author_name[0] : ''}
                                 firstSentence={book?.first_sentence ? book?.first_sentence[0] : ''}
                                 published={book?.first_publish_year ? book.first_publish_year : 0}
-                                coverUrl={`https://covers.openlibrary.org/b/id/${book?.cover_i}-S.jpg`}
+                                coverUrlForCard={`https://covers.openlibrary.org/b/id/${book?.cover_i}-S.jpg`}
+                                coverUrl={`https://covers.openlibrary.org/b/id/${book?.cover_i}-M.jpg`}
                                 googlePlayUrl={googlePlayUrl}
                                 setShowAddResourceModal={setShowAddResourceModal}
                             />
