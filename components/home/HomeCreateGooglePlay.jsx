@@ -7,7 +7,7 @@ import { Search } from 'lucide-react';
 import HomeCreateGooglePlaySkeleton from './HomeCreateGooglePlaySkeleton';
 import HomeCreateGooglePlayCard from './HomeCreateGooglePlayCard';
 
-export default function HomeCreateGooglePlay({ googlePlayUrl, setShowAddResourceModal }) {
+export default function HomeCreateGooglePlay({ googlePlayUrl, setShowAddResourceModal, setLoadingCreateGooglePlay }) {
     const [bookTitle, setBookTitle] = useState('')
     const [loadingOpenBooks, setLoadingOpenBooks] = useState(false)
     const [results, setResults] = useState([])
@@ -98,6 +98,7 @@ export default function HomeCreateGooglePlay({ googlePlayUrl, setShowAddResource
                                 coverUrl={`https://covers.openlibrary.org/b/id/${book?.cover_i}-M.jpg`}
                                 googlePlayUrl={googlePlayUrl}
                                 setShowAddResourceModal={setShowAddResourceModal}
+                                setLoadingCreateGooglePlay={setLoadingCreateGooglePlay}
                             />
                         })}
                     </div>

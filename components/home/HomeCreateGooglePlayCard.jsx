@@ -3,7 +3,17 @@ import { useCeramicContext } from '../../context';
 import { toast } from 'sonner';
 import { gql, useMutation } from '@apollo/client';
 
-export default function HomeCreateGooglePlayCard({ author, title, coverUrl, coverUrlForCard, published, firstSentence, googlePlayUrl, setShowAddResourceModal }) {
+export default function HomeCreateGooglePlayCard({
+    author,
+    title,
+    coverUrl,
+    coverUrlForCard,
+    published,
+    firstSentence,
+    googlePlayUrl,
+    setShowAddResourceModal,
+    setLoadingCreateGooglePlay
+}) {
     const clients = useCeramicContext()
     const { composeClient } = clients
     const clientMutationId = composeClient.id
@@ -25,6 +35,7 @@ export default function HomeCreateGooglePlayCard({ author, title, coverUrl, cove
 
     const createNewBookResource = async () => {
         try {
+            setLoadingCreateGooglePlay(true)
             const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/createNewBookResource`, {
                 method: 'POST',
                 headers: {
@@ -67,6 +78,7 @@ export default function HomeCreateGooglePlayCard({ author, title, coverUrl, cove
             if (data.newResourceId) {
                 toast.success('Successfully added book.')
                 setTimeout(function () {
+                    setLoadingCreateGooglePlay(false)
                     setShowAddResourceModal(false)
                 }, 1000);
             }
