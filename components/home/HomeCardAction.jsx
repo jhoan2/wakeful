@@ -49,7 +49,7 @@ export default function HomeCardAction({ accountResourceId, readingStatus }) {
     }
 
     return (
-        <div className='absolute top-3 right-5 z-50'>
+        <div className='absolute top-3 right-5 z-10'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="secondary" className='p-0' ><MoreVertical className='h-4 w-4 text-black' /></Button>
