@@ -118,7 +118,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
     }
 
     return (
-        <div className='fixed z-10 top-0 left-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-75' onClick={(e) => handleClickOutside(e)}>
+        <div id='modal' className='fixed z-50 top-0 left-0 w-full h-full overflow-auto bg-gray-700 bg-opacity-75' onClick={(e) => handleClickOutside(e)}>
             <div className='flex place-content-center mt-60 '>
                 <div id='modal-content' className="m-3 flex flex-col bg-white border w-full md:w-1/2 md:h-2/3  shadow-sm rounded-xl group hover:shadow-lg transition p-6 dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div className='flex justify-end mb-3'>
