@@ -1,16 +1,23 @@
 import React from 'react'
+import HomeAddResourceCard from './HomeAddResourceCard';
+import HomeAddResourceCreate from './HomeAddResourceCreate';
 
-export default function HomeAddResourceList({ data, url }) {
+export default function HomeAddResourceList({
+    url,
+    setShowAddResourceModal,
+    existingAccountResource,
+    existingResource
+}) {
+
     return (
         <div>
-            <a href="https://www.youtube.com/watch?v=VJIoSN8Hmh0&ab_channel=Blazed" target="_blank" title="Video Title">
-                Link Text or YouTube video title
-            </a>
-            <a href="https://www.youtube.com/watch?v=" target="_blank" title="Video Title">
-                Link Text or YouTube video title
-            </a>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/VJIoSN8Hmh0" allowfullscreen></iframe>
-            <p>Something</p>
+            {/* If existingAccountResource or existingResource do not have data in them, show create component. */}
+            {
+                (existingResource?.length > 0 || existingAccountResource?.length > 0) ?
+                    <HomeAddResourceCard />
+                    :
+                    <HomeAddResourceCreate url={url} setShowAddResourceModal={setShowAddResourceModal} />
+            }
         </div>
     )
 }

@@ -4,22 +4,41 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { toast } from 'sonner';
 import { Label } from "@/components/ui/label";
 import HomeAddResourceList from './HomeAddResourceList';
-import HomeAddResourceCreate from './HomeAddResourceCreate';
 
 export default function HomeAddResource({ setShowAddResourceModal }) {
     const [url, setUrl] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [exists, setExists] = useState(null);
+    const [existingResource, setExistingResource] = useState(null);
+    const [existingAccountResource, setExistingAccountResource] = useState(null)
 
     const QUERY_RESOURCE = gql`
-    query queryResource ($url: String!) {
-        idealiteResourceIndex(filters: {where: {url: {equalTo: $url}}}, first: 10) {
+    query MyQuery($equalTo: String = "", $equalTo1: String = "") {
+        idealiteResourceIndex(first: 10, filters: {where: {url: {equalTo: $equalTo}}}) {
           edges {
             node {
               description
               id
               title
               author
+              url
+            }
+          }
+        }
+        viewer {
+          idealiteAccountResourcesList(
+            filters: {where: {url: {equalTo: $equalTo1}}}
+            first: 10
+          ) {
+            edges {
+              node {
+                resourceId
+                resource {
+                  title
+                  description
+                  cid
+                }
+                id
+              }
             }
           }
         }
@@ -27,7 +46,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
 `
 
     const [sendQueryResource, { error: errorQueryResource }] = useLazyQuery(QUERY_RESOURCE, {
-        variables: { url: url },
+        variables: { equalTo: url, equalTo1: url },
     });
 
     const handleClickOutside = (event) => {
@@ -41,16 +60,25 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
         let timeoutId;
 
         const handleSearch = async () => {
-            setIsLoading(true);
-            const response = await sendQueryResource(url);
-            let resources = response.data?.idealiteResourceIndex?.edges
-            setExists(resources);
-            setIsLoading(false);
+            try {
+                const response = await sendQueryResource(url)
+                let resources = response.data?.idealiteResourceIndex?.edges
+                setExistingResource(resources);
+                let accountResource = response.data?.viewer.idealiteAccountResourcesList.edges
+                setExistingAccountResource(accountResource)
+                setIsLoading(false)
+                return;
+            } catch (error) {
+                console.log(error.message)
+                toast.error(error.message)
+            }
+
         };
 
         const debouncedSearch = () => {
             clearTimeout(timeoutId);
             if (url) {
+                setIsLoading(true);
                 if (url.includes('www.youtube.com') || url.includes('play.google.com/books')) {
                     const getBaseUrl = (url) => {
                         const hashIndex = url.indexOf('&');
@@ -74,7 +102,8 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
                 }
                 timeoutId = setTimeout(handleSearch, 500);
             } else {
-                setExists(null);
+                setExistingAccountResource(null);
+                setExistingResource(null);
             }
         };
 
@@ -99,8 +128,24 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
                     </div>
                     <Label htmlFor="url">URL</Label>
                     <Input placeholder='Paste in url here.' id='url' onChange={(e) => setUrl(e.target.value)} type='text' name='Paste Url' autoComplete='off' />
-                    {isLoading ? <p>Searching for resource...</p> : null}
-                    {(exists?.length > 0) ? <HomeAddResourceList data={exists} url={url} /> : <HomeAddResourceCreate url={url} setShowAddResourceModal={setShowAddResourceModal} />}
+                    {
+                        isLoading ? (
+                            <p>Searching for resource...</p>
+                        )
+                            :
+                            null
+                    }
+                    {/* If the query is successful, existingAccountResource and existingResource should be an array */}
+                    {
+                        (existingAccountResource !== null || existingResource !== null) ?
+                            <HomeAddResourceList
+                                url={url}
+                                setShowAddResourceModal={setShowAddResourceModal}
+                                existingAccountResource={existingAccountResource}
+                                existingResource={existingResource}
+                            /> :
+                            null
+                    }
                 </div>
             </div>
         </div>
