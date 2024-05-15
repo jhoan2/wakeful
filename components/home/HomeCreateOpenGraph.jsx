@@ -88,7 +88,7 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
                         "content": {
                             recipient: composeClient.id,
                             resourceId: data?.newResourceId,
-                            url: ogData?.ogUrl,
+                            url: url,
                             createdAt: new Date().toISOString(),
                             updatedAt: new Date().toISOString(),
                             readingStatus: 'READING'
