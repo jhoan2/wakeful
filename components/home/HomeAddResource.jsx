@@ -98,6 +98,8 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
                     } catch (error) {
                         toast.error(error.message)
                         console.log(error.message)
+                        setIsLoading(false)
+                        return
                     }
                 }
                 timeoutId = setTimeout(handleSearch, 500);
