@@ -57,6 +57,7 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
 
     const createNewResource = async () => {
         setLoadingSubmitAddResource(true)
+        const ogDataImage = ogData?.ogImage ? ogData?.ogImage[0]?.url : null
         const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/createNewResource`, {
             method: 'POST',
             headers: {
@@ -64,12 +65,12 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
             },
             body: JSON.stringify({
                 clientMutationId: composeClient.id,
-                url: ogData.ogUrl,
-                title: ogData.ogTitle,
-                description: ogData.ogDescription,
-                author: ogData.author,
-                cid: ogData.ogImage[0].url,
-                mediaType: ogData.ogType,
+                url: url,
+                title: ogData?.ogTitle,
+                description: ogData?.ogDescription,
+                author: ogData?.author,
+                cid: ogDataImage,
+                mediaType: ogData?.ogType,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
             }),
@@ -86,8 +87,8 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
                     input: {
                         "content": {
                             recipient: composeClient.id,
-                            resourceId: data.newResourceId,
-                            url: ogData.ogUrl,
+                            resourceId: data?.newResourceId,
+                            url: ogData?.ogUrl,
                             createdAt: new Date().toISOString(),
                             updatedAt: new Date().toISOString(),
                             readingStatus: 'READING'
@@ -112,6 +113,7 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
         }
     }, [url])
 
+    console.log(ogData)
     return (
         <div className='pt-4'>
             {
