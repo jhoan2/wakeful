@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { gql, useLazyQuery } from '@apollo/client';
 import { toast } from 'sonner';
 import { Label } from "@/components/ui/label";
-import HomeAddResourceList from './HomeAddResourceList';
+import HomeAddResourceExists from './HomeAddResourceExists';
 
 export default function HomeAddResource({ setShowAddResourceModal }) {
     const [url, setUrl] = useState('');
@@ -21,10 +21,12 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
               title
               author
               url
+              cid
             }
           }
         }
         viewer {
+            id
           idealiteAccountResourcesList(
             filters: {where: {url: {equalTo: $equalTo1}}}
             first: 10
@@ -33,11 +35,14 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
               node {
                 resourceId
                 resource {
+                  id
                   title
                   description
                   cid
                 }
                 id
+                createdAt
+                updatedAt
               }
             }
           }
@@ -140,7 +145,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
                     {/* If the query is successful, existingAccountResource and existingResource should be an array */}
                     {
                         (existingAccountResource !== null || existingResource !== null) ?
-                            <HomeAddResourceList
+                            <HomeAddResourceExists
                                 url={url}
                                 setShowAddResourceModal={setShowAddResourceModal}
                                 existingAccountResource={existingAccountResource}
