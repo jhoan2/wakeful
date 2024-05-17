@@ -2,6 +2,6 @@ type IdealiteCard @loadModel(id: "$IDEALITE_CARD_ID") {
   id: ID!
 }
 
-type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
+type IdealiteResourcev2 @loadModel(id: "$IDEALITE_RESOURCE_ID") {
   idealiteCards: [IdealiteCard] @relationFrom(model: "IdealiteCard", property: "resourceId")
 }

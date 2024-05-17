@@ -36,7 +36,7 @@ export default function HomeCreateGooglePlayCard({
 
     const QUERY_FOR_OPEN_LIBRARY_KEY = gql`
     query queryForOpenLibraryKey($url: String = "") {
-        idealiteResourceIndex(
+        idealiteResourcev2Index(
           first: 10
           filters: {where: {openLibraryKey: {equalTo: $url}}}
         ) {
@@ -115,13 +115,13 @@ export default function HomeCreateGooglePlayCard({
             setLoadingCreateGooglePlay(true)
             const result = await searchForBookResource()
             const { data } = result
-            if (data?.idealiteResourceIndex?.edges.length > 0) {
+            if (data?.idealiteResourcev2Index?.edges.length > 0) {
                 const createAccountResourceData = await createAccountResource({
                     variables: {
                         input: {
                             "content": {
                                 recipient: clientMutationId,
-                                resourceId: data.idealiteResourceIndex.edges[0].node.id,
+                                resourceId: data.idealiteResourcev2Index.edges[0].node.id,
                                 url: googlePlayUrl,
                                 createdAt: new Date().toISOString(),
                                 updatedAt: new Date().toISOString(),

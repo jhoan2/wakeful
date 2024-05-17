@@ -13,7 +13,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
 
     const QUERY_RESOURCE = gql`
     query MyQuery($equalTo: String = "", $equalTo1: String = "") {
-        idealiteResourceIndex(first: 10, filters: {where: {url: {equalTo: $equalTo}}}) {
+        idealiteResourcev2Index(first: 10, filters: {where: {url: {equalTo: $equalTo}}}) {
           edges {
             node {
               description
@@ -67,7 +67,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
         const handleSearch = async () => {
             try {
                 const response = await sendQueryResource(url)
-                let resources = response.data?.idealiteResourceIndex?.edges
+                let resources = response.data?.idealiteResourcev2Index?.edges
                 setExistingResource(resources);
                 let accountResource = response.data?.viewer.idealiteAccountResourcesList.edges
                 setExistingAccountResource(accountResource)

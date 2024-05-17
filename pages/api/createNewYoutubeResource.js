@@ -64,8 +64,8 @@ const handler = async (req, res) => {
       }
 
       composeClient.executeQuery(`
-              mutation CreateNewResource ($i: CreateIdealiteResourceInput!) {
-                createIdealiteResource(
+              mutation CreateNewResource ($i: CreateIdealiteResourcev2Input!) {
+                createIdealiteResourcev2(
                   input: $i
                 ) {
                   document {
@@ -75,7 +75,7 @@ const handler = async (req, res) => {
               }
             `, variableValues)
         .then(newResourceObj => {
-          return res.status(200).json({ newResourceId: newResourceObj.data.createIdealiteResource.document.id })
+          return res.status(200).json({ newResourceId: newResourceObj.data.createIdealiteResourcev2.document.id })
         })
         .catch(error => {
           return res.status(500).send({ message: error.message })

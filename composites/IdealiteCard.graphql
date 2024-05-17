@@ -1,4 +1,4 @@
-type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
+type IdealiteResourcev2 @loadModel(id: "$IDEALITE_RESOURCE_ID") {
     id: ID!
 }
 
@@ -18,8 +18,8 @@ type IdealiteCard
     pageYOffset: Float
     pinSize: Int
     quote: String @string(minLength: 1, maxLength: 10000)
-    resourceId: StreamID @documentReference(model: "IdealiteResource")
-    resource: IdealiteResource @relationDocument(property: "resourceId")
+    resourceId: StreamID @documentReference(model: "IdealiteResourcev2")
+    resource: IdealiteResourcev2 @relationDocument(property: "resourceId")
     scrollHeight: Float
     tags: [Tag] @list(maxLength: 15)
     updatedAt: DateTime

@@ -49,7 +49,7 @@ export default function Resource() {
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
     node(id: $resourceId) {
-      ... on IdealiteResource {
+      ... on IdealiteResourcev2 {
         author
         createdAt
         description
