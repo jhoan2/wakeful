@@ -7,8 +7,8 @@ export default function ResourceCardTag({ tag, tags, cardId }) {
     const { tagId: tagIdToDelete } = tag
 
     const DELETE_TAG_FROM_CARD = gql`
-    mutation addTagToCard($input: UpdateIdealiteCardsInput!) {
-        updateIdealiteCards(input: $input) {
+    mutation addTagToCard($input: UpdateIdealiteCardv1Input!) {
+        updateIdealiteCardv1(input: $input) {
           document {
             id
           }

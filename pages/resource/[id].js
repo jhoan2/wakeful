@@ -60,7 +60,7 @@ export default function Resource() {
         title
         updatedAt
         url
-        idealiteCards(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
+        idealiteCardv1(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
           edges {
             node {
               id
@@ -101,9 +101,10 @@ export default function Resource() {
 
 
   if (error) return <ErrorPage message={error.message} />;
-  const cards = data?.node.idealiteCards.edges
+  console.log(data)
+  const cards = data?.node.idealiteCardv1?.edges
   const resourceTitle = data?.node.title
-  const pageInfo = data?.node.idealiteCards.pageInfo
+  const pageInfo = data?.node.idealiteCardv1?.pageInfo
 
   const getMoreCards = (pageInfo) => {
     if (pageInfo.hasNextPage) {

@@ -16,7 +16,7 @@ import ResourceCardTag from '../resource/ResourceCardTag';
 
 export default function ProjectCard({ card }) {
     const [editorStateChanged, setEditorStateChanged] = useState(false)
-    const { annotation, quote, id, updatedAt, cid, tags } = card.idealiteCard
+    const { annotation, quote, id, updatedAt, cid, tags } = card.idealiteCardv1
     const collectionId = card.id
     const localeUpdatedAt = new Date(updatedAt).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -29,8 +29,8 @@ export default function ProjectCard({ card }) {
     const { profile } = useProfileContext()
 
     const UPDATE_NOTE = gql`
-    mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
-        updateIdealiteCards(input: $input) {
+    mutation UPDATE_NOTE($input: UpdateIdealiteCardv1Input!) {
+        updateIdealiteCardv1(input: $input) {
           document {
             id
             annotation

@@ -1,0 +1,7 @@
+type IdealiteStatsv1 @loadModel(id: "$IDEALITE_STATS_V1_ID") {
+  id: ID!
+}
+
+type IdealiteProfile @loadModel(id: "$IDEALITE_PROFILE_ID") {
+  stats: [IdealiteStatsv1] @relationFrom(model: "IdealiteStatsv1", property: "profileId")
+}

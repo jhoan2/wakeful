@@ -15,8 +15,8 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
 
 
     const ADD_NOTE = gql`
-    mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
-        createIdealiteCards(input: $input) {
+    mutation ADD_NOTE($input: CreateIdealiteCardv1Input!) {
+        createIdealiteCardv1(input: $input) {
           document {
             id
           }
@@ -130,13 +130,13 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
                 }
             }
         }).then((data) => {
-            if (data.data.createIdealiteCards.document.id) {
+            if (data.data.createIdealiteCardv1.document.id) {
                 createCollection({
                     variables: {
                         input: {
                             content: {
                                 projectId: projectId,
-                                idealiteCardId: data.data.createIdealiteCards.document.id,
+                                idealiteCardId: data.data.createIdealiteCardv1.document.id,
                                 deleted: false
                             }
                         }

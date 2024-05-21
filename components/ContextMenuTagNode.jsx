@@ -6,8 +6,8 @@ import { toast } from 'sonner';
 export default function ContextMenuTagNode({ node, style, tree }) {
     const { cardId, category, tags } = tree.props
     const ADD_TAG_TO_CARD = gql`
-    mutation addTagToCard($input: UpdateIdealiteCardsInput!) {
-        updateIdealiteCards(input: $input) {
+    mutation addTagToCard($input: UpdateIdealiteCardv1Input!) {
+        updateIdealiteCardv1(input: $input) {
           document {
             id
           }

@@ -55,7 +55,7 @@ const MyApp = ({ Component, pageProps }) => {
         },
         IdealiteResourcev2: {
           fields: {
-            idealiteCards: relayStylePagination(),
+            idealiteCardv1: relayStylePagination(),
           }
         },
       },

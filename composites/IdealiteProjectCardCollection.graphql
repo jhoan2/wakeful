@@ -1,4 +1,4 @@
-type IdealiteCard @loadModel(id: "$IDEALITE_CARD_ID") {
+type IdealiteCardv1 @loadModel(id: "$IDEALITE_CARD_ID") {
   id: ID!
 }
 
@@ -12,7 +12,7 @@ type IdealiteProjectCardCollection
   @createIndex(fields: [{ path: ["deleted"]} ]) {
   projectId: StreamID @documentReference(model: "IdealiteProject")
   project: IdealiteProject @relationDocument(property: "projectId")
-  idealiteCardId: StreamID! @documentReference(model: "IdealiteCard")
-  idealiteCard: IdealiteCard! @relationDocument(property: "idealiteCardId")
+  idealiteCardId: StreamID! @documentReference(model: "IdealiteCardv1")
+  idealiteCard: IdealiteCardv1! @relationDocument(property: "idealiteCardId")
   deleted: Boolean
 }

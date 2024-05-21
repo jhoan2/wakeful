@@ -1,7 +1,7 @@
-type IdealiteCard @loadModel(id: "$IDEALITE_CARD_ID") {
+type IdealiteCardv1 @loadModel(id: "$IDEALITE_CARD_ID") {
   id: ID!
 }
 
 type IdealiteResourcev2 @loadModel(id: "$IDEALITE_RESOURCE_ID") {
-  idealiteCards: [IdealiteCard] @relationFrom(model: "IdealiteCard", property: "resourceId")
+  idealiteCardv1: [IdealiteCardv1] @relationFrom(model: "IdealiteCardv1", property: "resourceId")
 }
