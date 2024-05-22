@@ -105,6 +105,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
             resourceId: resourceId,
             url: resourceUrl,
             deleted: false,
+            lastReviewed: new Date().toISOString(),
             learningStatus: 'FORGETTING',
             timesForgotten: 0
         }

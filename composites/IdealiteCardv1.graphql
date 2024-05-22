@@ -14,6 +14,7 @@ type IdealiteCardv1
     createdAt: DateTime
     deleted: Boolean
     googleBooksPage: String @string(minLength: 1, maxLength: 10000)
+    lastReviewed: DateTime
     learningStatus: LearningStatus
     mimeType: String @string(minLength: 1, maxLength: 140)
     originalAuthorName: String @string(minLength: 1, maxLength: 1000)
@@ -37,6 +38,7 @@ type Tag {
 }
 
 enum LearningStatus {
+    ARCHIVED
     FORGETTING
     LEARNING
     MATURE
