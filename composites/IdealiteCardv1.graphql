@@ -6,7 +6,8 @@ type IdealiteCardv1
     @createModel(accountRelation: LIST, description: "v0.1: Blocks of text for Idealite") 
     @createIndex(fields: [{ path: ["deleted"]} ])
     @createIndex(fields: [{ path: ["url"]} ])
-    @createIndex(fields: [{ path: ["updatedAt"]} ]) {
+    @createIndex(fields: [{ path: ["updatedAt"]} ])
+    @createIndex(fields: [{ path: ["learningStatus"]} ]) {
     account: DID! @documentAccount
     altText: String @string(minLength: 1, maxLength: 3000)
     annotation: String @string(minLength: 1, maxLength: 10000)

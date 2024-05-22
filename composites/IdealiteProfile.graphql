@@ -1,5 +1,7 @@
 type IdealiteProfilev1 
-    @createModel(accountRelation: SINGLE, description: "Profile for Idealite User") {
+    @createModel(accountRelation: SINGLE, description: "Profile for Idealite User")
+    @createIndex(fields: [{ path: ["fId"]} ])
+    @createIndex(fields: [{ path: ["account"]} ]) {
     account: DID! @documentAccount
     avatarCid: String @string(minLength: 1, maxLength: 3000)
     bio: String @string(minLength: 1, maxLength: 3000)
