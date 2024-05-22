@@ -25,7 +25,7 @@ type IdealiteCardv1
     resource: IdealiteResourcev2 @relationDocument(property: "resourceId")
     scrollHeight: Float
     tags: [Tag] @list(maxLength: 15)
-    timesForgetten: Int
+    timesForgotten: Int
     updatedAt: DateTime
     url: String @string(minLength: 1, maxLength: 140)
     videoTime: String @string(minLength: 1, maxLength: 300)
