@@ -105,6 +105,8 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
             resourceId: resourceId,
             url: resourceUrl,
             deleted: false,
+            learningStatus: 'FORGETTING',
+            timesForgotten: 0
         }
 
         for (const key in noteContent) {

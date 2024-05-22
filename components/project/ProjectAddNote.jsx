@@ -115,6 +115,8 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
             mimeType: image?.type,
             pinSize: PinSize,
             deleted: false,
+            learningStatus: 'FORGETTING',
+            timesForgetten: 0
         }
 
         for (const key in noteContent) {
