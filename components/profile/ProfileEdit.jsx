@@ -39,8 +39,8 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
     })
 
     const UPDATE_IDEALITE_PROFILE = gql`
-    mutation MyMutation($input: UpdateIdealiteProfileInput!) {
-        updateIdealiteProfile(input: $input) {
+    mutation MyMutation($input: UpdateIdealiteProfilev1Input!) {
+        updateIdealiteProfilev1(input: $input) {
             document {
                 id
                 bio
@@ -57,8 +57,8 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
         }] = useMutation(UPDATE_IDEALITE_PROFILE, {
             onCompleted: (data) => {
                 if (data) {
-                    const newDisplayName = data.updateIdealiteProfile.document.displayName
-                    const newBio = data.updateIdealiteProfile.document.bio
+                    const newDisplayName = data.updateIdealiteProfilev1.document.displayName
+                    const newBio = data.updateIdealiteProfilev1.document.bio
                     updateProfileBioAndName(newBio, newDisplayName)
                 }
                 setEditProfile(false)
@@ -66,8 +66,8 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
         });
 
     const CREATE_IDEALITE_PROFILE = gql`
-    mutation MyMutation ($input: CreateIdealiteProfileInput!) {
-        createIdealiteProfile(input: $input) {
+    mutation MyMutation ($input: CreateIdealiteProfilev1Input!) {
+        createIdealiteProfilev1(input: $input) {
           document {
             id
             displayName
@@ -83,10 +83,10 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
             error: errorCreatingProfile,
         }] = useMutation(CREATE_IDEALITE_PROFILE, {
             onCompleted: (data) => {
-                if (data && data.createIdealiteProfile.document) {
-                    const id = data.createIdealiteProfile.document.id
-                    const newDisplayName = data.createIdealiteProfile.document.displayName
-                    const newBio = data.createIdealiteProfile.document.bio
+                if (data && data.createIdealiteProfilev1.document) {
+                    const id = data.createIdealiteProfilev1.document.id
+                    const newDisplayName = data.createIdealiteProfilev1.document.displayName
+                    const newBio = data.createIdealiteProfilev1.document.bio
                     setCreatedProfile(id, newBio, newDisplayName)
                 }
                 setEditProfile(false)

@@ -41,8 +41,8 @@ export default function ProjectActions({ projectId, projectTitle }) {
     }
 
     const FAVORITE_PROJECT = gql`
-        mutation favoritePoject($input: UpdateIdealiteProfileInput!) {
-            updateIdealiteProfile (
+        mutation favoritePoject($input: UpdateIdealiteProfilev1Input!) {
+            updateIdealiteProfilev1 (
                 input: $input
                 ) {
                 document {

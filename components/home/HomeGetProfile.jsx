@@ -8,7 +8,7 @@ export default function GetProfile() {
     query getUserProfile {
         viewer {
           id
-          idealiteProfile {
+          idealiteProfilev1 {
             id
             bio
             displayName
@@ -22,12 +22,12 @@ export default function GetProfile() {
       }
     `
   const updateProfile = (data) => {
-    const shallowCopy = Object.assign({}, data.viewer.idealiteProfile)
-    if (data?.viewer.idealiteProfile.tags) {
+    const shallowCopy = Object.assign({}, data.viewer.idealiteProfilev1)
+    if (data?.viewer.idealiteProfilev1.tags) {
       shallowCopy.tags = JSON.parse(shallowCopy.tags)
     }
 
-    if (data?.viewer.idealiteProfile.favorites === null) {
+    if (data?.viewer.idealiteProfilev1.favorites === null) {
       shallowCopy.favorites = []
     }
     setProfile(shallowCopy)
@@ -35,7 +35,7 @@ export default function GetProfile() {
 
   const { error: getUserProfileError } = useQuery(GET_USER_PROFILE, {
     onCompleted: (data) => {
-      if (!data.viewer.idealiteProfile) return
+      if (!data.viewer.idealiteProfilev1) return
       updateProfile(data)
     }
   });
