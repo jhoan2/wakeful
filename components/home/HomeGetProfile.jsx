@@ -35,7 +35,7 @@ export default function GetProfile() {
 
   const { error: getUserProfileError } = useQuery(GET_USER_PROFILE, {
     onCompleted: (data) => {
-      if (!data.viewer.idealiteProfilev1) return
+      if (!data.viewer?.idealiteProfilev1) return
       updateProfile(data)
     }
   });
