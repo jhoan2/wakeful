@@ -39,7 +39,7 @@ type Tag {
 }
 
 enum LearningStatus {
-    ARCHIVED
+    STASHED
     FORGETTING
     LEARNING
     MATURE
