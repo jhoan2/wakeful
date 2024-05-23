@@ -1,15 +1,16 @@
-type IdealiteProfilev1 @loadModel(id: "$IDEALITE_PROFILE_ID") {
-  id: ID!
-}
 
 type IdealiteStatsv1
-    @createModel(accountRelation: SINGLE, description: "Collection of idealite user stats") {
+    @createModel(accountRelation: SINGLE, description: "Collection of idealite user stats") 
+    @createIndex(fields: [{ path: ["farcasterId"]} ])
+    @createIndex(fields: [{ path: ["idealiteProfileId"]} ])
+    @createIndex(fields: [{ path: ["publicKey"]} ]) {
     actionsOverTime: String @string(minLength: 1, maxLength: 100000)
     cardsMasteredOverTime: String @string(minLength: 1, maxLength: 100000)
     cardsReviewed: String @string(minLength: 1, maxLength: 100000)
     cardsReviewedSaved: String @string(minLength: 1, maxLength: 100000)
-    profileId: StreamID @documentReference(model: "IdealiteProfilev1")
-    profile: IdealiteProfilev1 @relationDocument(property: "profileId")
+    farcasterId: String @string(minLength: 1, maxLength: 200)
+    idealiteProfileId:  String @string(minLength: 1, maxLength: 200)
+    publicKey: String @string(minLength: 1, maxLength: 200)
     numCardsMastered: Int
     numCardsLearning: Int
     updatedAt: DateTime
