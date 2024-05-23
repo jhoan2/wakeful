@@ -12,7 +12,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
     const [existingAccountResource, setExistingAccountResource] = useState(null)
 
     const QUERY_RESOURCE = gql`
-    query MyQuery($equalTo: String = "", $equalTo1: String = "") {
+    query queryResource($equalTo: String = "", $equalTo1: String = "") {
         idealiteResourcev2Index(first: 10, filters: {where: {url: {equalTo: $equalTo}}}) {
           edges {
             node {

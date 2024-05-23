@@ -113,7 +113,6 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
         }
     }, [url])
 
-    console.log(ogData)
     return (
         <div className='pt-4'>
             {
