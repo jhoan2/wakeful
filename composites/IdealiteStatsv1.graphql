@@ -12,6 +12,7 @@ type IdealiteStatsv1
     idealiteProfileId:  String @string(minLength: 1, maxLength: 200)
     publicKey: String @string(minLength: 1, maxLength: 200)
     numCardsMastered: Int
+    numCardsMature: Int
     numCardsLearning: Int
     updatedAt: DateTime
 }
