@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCeramicContext } from '../context';
 import Image from 'next/image';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Ghost, Tags, Home, Folder, Compass } from 'lucide-react';
 import TagTree from './tags/TagTree';
 import HomeGetProfile from './home/HomeGetProfile';
+import { UserRound } from 'lucide-react';
 
 
 export default function SideBar({ page, setPage, avatarFallback }) {
@@ -50,13 +50,8 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                     <div className="inline-block [--placement:right]">
                         <Link href={'/profile'} onClick={() => setPage('profile')}>
                             <button title='Explore' className={`w-16 lg:w-36 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'profile' ? 'bg-gray-400' : 'bg-slate-100'}`}>
-                                <div className='flex items-center text-lg'>
-                                    <Avatar title='Profile'>
-                                        <AvatarImage />
-                                        <AvatarFallback className={`w-16 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full  text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600`}>
-                                            {avatarFallback}
-                                        </AvatarFallback>
-                                    </Avatar>
+                                <div className='flex items-center space-x-2 text-lg'>
+                                    <UserRound />
                                     <p className='lg:block hidden'>Profile</p>
                                 </div>
                             </button>
