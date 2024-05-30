@@ -126,14 +126,13 @@ export default function Home() {
                 getMoreResources={getMoreResources}
                 pageInfo={pageInfo}
               />
-              <div className=' pb-24 md:pb-4 p-4'>
+              <div className=' pb-24 md:pb-4 p-4 flex justify-center items-center'>
                 {pageInfo.hasNextPage ?
-                  <button
-                    className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
+                  <Button variant='yellow'
                     onClick={() => getMoreResources(pageInfo)}
                   >
                     Load more
-                  </button> :
+                  </Button> :
                   null
                 }
               </div>
