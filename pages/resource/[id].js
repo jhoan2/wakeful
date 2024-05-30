@@ -167,12 +167,12 @@ export default function Resource() {
                 }
                 <div className=' pb-24 md:pb-4 p-4'>
                   {pageInfo.hasNextPage ?
-                    <button
-                      className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
+                    <Button
+                      variant='yellow'
                       onClick={() => getMoreCards(pageInfo)}
                     >
                       Load more
-                    </button> :
+                    </Button> :
                     null
                   }
                 </div>
