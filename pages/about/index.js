@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { Button } from "@/components/ui/button"
 
 export default function About() {
     const router = useRouter();
@@ -20,12 +21,20 @@ export default function About() {
             </nav>
             <section className="relative w-full h-[70vh] flex items-center justify-start bg-[url('/golden-mandala.png')] bg-cover bg-center">
                 <div className="absolute inset-0 bg-gray-700/70 z-0" />
-                <div className="relative z-10 space-y-6 max-w-3xl px-4 sm:px-6 md:px-8 text-left">
-                    <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">Mission, Values, & Vision</h1>
-                    <p className="text-lg text-gray-300 md:text-xl">
+                <div className="relative z-10 space-y-6 w-full px-4 sm:px-6 md:px-8 text-left">
+                    <h1 className="max-w-3xl text-3xl font-bold text-white sm:text-4xl md:text-5xl">Mission, Values, & Vision</h1>
+                    <p className="text-lg max-w-3xl text-gray-300 md:text-xl">
                         Idealite is a digitally native education network whose mission is to set us free to advance toward a future bound by meaning and led by love.
                     </p>
+                    <div className='flex justify-center z-20 '>
+                        <Button variant='yellow' size='lg'>
+                            <a href='https://warpcast.com/~/channel/idealite' target='_blank'>
+                                Join the Community
+                            </a>
+                        </Button>
+                    </div>
                 </div>
+
             </section>
             {/* Small Screens */}
             <div className='space-y-6 shadow-md bg-gray-700/70 text-white md:hidden'>
@@ -93,9 +102,16 @@ export default function About() {
                         <li>AI may support education, but it cannot lead it.</li>
                     </ul>
                 </div>
+                <div className='flex justify-center pb-10 text-black'>
+                    <Button variant='yellow' size='lg'>
+                        <a href='https://warpcast.com/~/channel/idealite' target='_blank'>
+                            Join the Community
+                        </a>
+                    </Button>
+                </div>
             </div>
             {/* Medium Screens */}
-            <div className='flex flex-col justify-center items-center flex-grow space-y-6 shadow-md bg-gray-700/70 text-white hidden md:block'>
+            <div className='flex flex-col justify-center items-center flex-grow h-full space-y-6 shadow-md bg-gray-700/70 text-white hidden md:block'>
                 <div className='max-w-2xl  w-full mx-auto pt-6 pl-6'>
                     <h2 className='text-3xl mb-4 font-bold'>Problem</h2>
                     <p className='mb-4 text-2xl'>It's too hard to learn on the internet.</p>
@@ -159,6 +175,13 @@ export default function About() {
                         <li>Being led by the known, does not translate to unconvering the unknown.</li>
                         <li>AI may support education, but it cannot lead it.</li>
                     </ul>
+                </div>
+                <div className='flex justify-center text-black'>
+                    <Button variant='yellow' size='lg' className='mb-10'>
+                        <a href='https://warpcast.com/~/channel/idealite' target='_blank'>
+                            Join the Community
+                        </a>
+                    </Button>
                 </div>
             </div>
         </div>
