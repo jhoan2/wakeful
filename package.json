@@ -24,6 +24,7 @@
     "@composedb/client": "^0.7.1",
     "@didtools/cacao": "^2.0.0",
     "@didtools/pkh-ethereum": "^0.5.0",
+    "@farcaster/auth-kit": "^0.3.1",
     "@hookform/resolvers": "^3.3.4",
     "@pinata/sdk": "^2.1.0",
     "@radix-ui/react-avatar": "^1.0.4",

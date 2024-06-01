@@ -10,8 +10,10 @@ export default function GetProfile() {
           id
           idealiteProfilev1 {
             id
+            avatarCid
             bio
             displayName
+            farcasterId
             favorites {
               id
               title

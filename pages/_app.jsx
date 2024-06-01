@@ -9,6 +9,7 @@ import Head from 'next/head';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { Web3Modal } from '../context/Web3Modal';
+import { AuthKitProvider } from '@farcaster/auth-kit';
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -62,6 +63,15 @@ const MyApp = ({ Component, pageProps }) => {
     }), link
   })
 
+  const config = {
+    rpcUrl: 'https://mainnet.optimism.io',
+    relay: "https://relay.farcaster.xyz",
+    // domain: 'https://wwww.idealite.xyz',
+    // domain: 'localhost:3000',
+    // siweUri: 'https://wwww.idealite.xyz',
+    siweUri: 'http://localhost:3000/profile',
+  };
+
   return (
     <div className='w-full'>
       <Head>
@@ -71,14 +81,16 @@ const MyApp = ({ Component, pageProps }) => {
       <ApolloProvider client={apolloClient}>
         <div>
           <Web3Modal>
-            <CeramicWrapper>
-              <div>
-                <PostHogProvider client={posthog}>
-                  {getLayout(<Component {...pageProps} />)}
-                </PostHogProvider>
-                <Toaster richColors />
-              </div>
-            </CeramicWrapper>
+            <AuthKitProvider config={config}>
+              <CeramicWrapper>
+                <div>
+                  <PostHogProvider client={posthog}>
+                    {getLayout(<Component {...pageProps} />)}
+                  </PostHogProvider>
+                  <Toaster richColors />
+                </div>
+              </CeramicWrapper>
+            </AuthKitProvider>
           </Web3Modal>
         </div>
       </ApolloProvider>

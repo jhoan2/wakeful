@@ -30,7 +30,8 @@ export const CeramicWrapper = ({ children }: any) => {
     displayName: '',
     bio: '',
     favorites: [],
-    tags: []
+    tags: [],
+    farcasterId: ''
   })
 
   const updateTagTree = (newTag: any) => {
@@ -44,16 +45,18 @@ export const CeramicWrapper = ({ children }: any) => {
     setProfile(prevProfile => ({
       ...prevProfile,
       bio: newBio,
-      displayName: newDisplayName
+      displayName: newDisplayName,
     }));
   };
 
-  const setCreatedProfile = (id: any, newBio: any, newDisplayName: any) => {
+  const setCreatedProfile = (id: any, newBio: any, newDisplayName: any, farcasterId: any, avatarCid: any) => {
     setProfile(prevProfile => ({
       ...prevProfile,
       id: id,
       bio: newBio,
-      displayName: newDisplayName
+      displayName: newDisplayName,
+      farcasterId: farcasterId,
+      avatarCid: avatarCid
     }));
   };
 
