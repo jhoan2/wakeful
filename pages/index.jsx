@@ -28,10 +28,13 @@ const FrontPage = () => {
       <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
         <div className="h-full px-6 pt-6 lg:px-8">
           <div className='h-full'>
-            <nav className="flex h-9 items-center justify-between m-3" aria-label="Global">
-              <div className="flex lg:min-w-0 lg:flex-1 rounded-full bg-gray-100 p-2 space-x-2" aria-label="Global">
+            <nav className="flex h-9 items-center justify-between m-3 rounded-full bg-gray-100 p-9 space-x-2" aria-label="Global">
+              <div className="flex lg:min-w-0 lg:flex-1" aria-label="Global">
                 <Image src='/icon128.png' width={32} height={32} alt='idealite logo' />
                 <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Idealite</h2>
+              </div>
+              <div className='w-1/4 flex items-center justify-center'>
+                <p className='text-xl hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/about')}>About</p>
               </div>
             </nav>
             <main className='h-full'>
