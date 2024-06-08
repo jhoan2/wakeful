@@ -2,6 +2,14 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import MailerLiteScript from '../components/MailerLiteScript';
 
 const FrontPage = () => {
   const router = useRouter();
@@ -25,7 +33,7 @@ const FrontPage = () => {
         <title>Idealite</title>
         <link rel="icon" href="/icon16.png" sizes="any" type="image/png" />
       </Head>
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
+      <div className="-z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fde68a_40%,#facc15_100%)]">
         <div className="h-full px-6 pt-6 lg:px-8">
           <div className='h-full'>
             <nav className="flex h-9 items-center justify-between m-3 rounded-full bg-gray-100 p-9 space-x-2" aria-label="Global">
@@ -38,34 +46,80 @@ const FrontPage = () => {
               </div>
             </nav>
             <main className='h-full'>
-              <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8">
-                <div className='flex flex-col items-center space-y-8'>
-                  <p className='text-5xl md:text-8xl text-left md:text-center'>Design your own education.</p>
-                  <p className='text-xl md:text-3xl text-gray-400'>Idealite is a digitally native educational institution.</p>
+              <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8 ">
+                <div className=' relative flex flex-col items-center space-y-8'>
+                  <Image src='/flashcard.png' width={300} height={300} alt='flashcard' className='absolute top-20 -left-40 hidden md:block' />
+                  <Image src='/flashcard.png' width={150} height={150} alt='flashcard' className='absolute bottom-20 -right-10 md:hidden' />
+                  <div>
+                    <p className='text-5xl md:text-8xl text-left md:text-center'>Make Flashcards</p>
+                    <p className='text-5xl md:text-8xl text-left md:text-center'>Multiplayer</p>
+                  </div>
+                  <Image src='/game-controller.png' width={300} height={300} alt='game-controller' className='absolute -right-40 bottom-40 hidden md:block' />
+                  <Image src='/game-controller.png' width={150} height={150} alt='game-controller' className='absolute bottom-40 -left-10 md:hidden' />
+                </div>
+                <div className='pt-20'>
+                  <p className='text-xl md:text-3xl text-gray-400'>We make it easier to learn on the internet by making it fun, interactive, and co-oop.</p>
                 </div>
                 <div className='flex flex-row space-x-2 items-center'>
-                  <button className="bg-gray-100 inline-flex py-3 px-5 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-6 h-6" viewBox="0 0 512 512">
-                      <path d="M99.617 8.057a50.191 50.191 0 00-38.815-6.713l230.932 230.933 74.846-74.846L99.617 8.057zM32.139 20.116c-6.441 8.563-10.148 19.077-10.148 30.199v411.358c0 11.123 3.708 21.636 10.148 30.199l235.877-235.877L32.139 20.116zM464.261 212.087l-67.266-37.637-81.544 81.544 81.548 81.548 67.273-37.64c16.117-9.03 25.738-25.442 25.738-43.908s-9.621-34.877-25.749-43.907zM291.733 279.711L60.815 510.629c3.786.891 7.639 1.371 11.492 1.371a50.275 50.275 0 0027.31-8.07l266.965-149.372-74.849-74.847z"></path>
-                    </svg>
-                    <span className="ml-4 flex items-start flex-col leading-none">
-                      <span className="text-xs text-gray-600 mb-1">GET IT ON</span>
-                      <span className="title-font font-medium">Chrome Web Store</span>
-                    </span>
-                  </button>
                   <button onClick={() => router.push('/home')} className="py-4 px-5 text-xl inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-400 text-gray hover:bg-gradient-to-r from-amber-200 to-yellow-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Enter the app</button>
                 </div>
+              </div>
+              <div className='h-full mx-auto max-w-4xl pb-10'>
+                <div className='md:grid md:grid-cols-3 md:gap-3 space-y-3'>
+                  <Card className='bg-amber-100 max-w-sm w-full h-full'>
+                    <CardHeader>
+                      <div className='w-full'>
+                        <div className='flex justify-between bg-amber-200 '>
+                          <p className='text-2xl text-center w-10 font-semibold p-4'>Gamify your learning</p>
+                          <Image src='/arcade-machine.png' width={240} height={240} alt='arcade-machine' />
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <CardTitle>Make learning fun by playing games.</CardTitle>
+                      <CardDescription>Coming soon!</CardDescription>
+                    </CardContent>
+                  </Card>
+                  <div>
+                    <Card className='bg-amber-100 max-w-sm w-full h-full'>
+                      <CardHeader>
+                        <div className='w-full'>
+                          <div className='bg-amber-200 h-56 relative'>
+                            <Image src='/dashboard.png' width={220} height={220} alt='dashboard' />
+                            <p className='text-2xl text-center absolute w-full font-semibold p-4 -bottom-5'>Track your progress</p>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <CardTitle>Check the dashboard to find weak subjects and personal growth</CardTitle>
+                        <CardDescription>Coming soon!</CardDescription>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  <div>
+                    <Card className='bg-amber-100 max-w-sm w-full h-full'>
+                      <CardHeader>
+                        <div className='w-full'>
+                          <div className='flex justify-between bg-amber-200 p-2 h-56 items-center'>
+                            <p className='text-2xl text-center align-center w-10 font-semibold p-4'>Beat the Algorithm</p>
+                            <Image src='/trophy.png' width={120} height={120} alt='trophy' className='object-contain' />
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <CardTitle>Instead of following the spaced repetition algorithm, we focus on evolving past it.</CardTitle>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <MailerLiteScript />
+                <div className="ml-embedded pb-10" data-form="i3LrDZ"></div>
               </div>
             </main>
           </div>
         </div>
-        <footer className='flex justify-center items-center h-full max-h-16'>
-          <div className='flex space-x-4 jsutify-center items-center'>
-            <p className='hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/legal/privacy')}>Privacy Policy</p>
-            <p className='hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/legal/terms')}>Terms & Conditions</p>
-            <p className='hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/legal/cookies')}>Cookies</p>
-          </div>
-        </footer>
       </div>
     </>
   );
