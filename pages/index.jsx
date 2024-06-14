@@ -46,7 +46,7 @@ const FrontPage = () => {
               </div>
             </nav>
             <main className='h-full'>
-              <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8 ">
+              <div className="flex flex-col items-center justify-center min-h-screen px-6 lg:px-8 space-y-8">
                 <div className=' relative flex flex-col items-center space-y-8'>
                   <Image src='/flashcard.png' width={300} height={300} alt='flashcard' className='absolute top-20 -left-40 hidden md:block' />
                   <Image src='/flashcard.png' width={150} height={150} alt='flashcard' className='absolute bottom-20 -right-10 md:hidden' />
@@ -57,36 +57,38 @@ const FrontPage = () => {
                   <Image src='/game-controller.png' width={300} height={300} alt='game-controller' className='absolute -right-40 bottom-40 hidden md:block' />
                   <Image src='/game-controller.png' width={150} height={150} alt='game-controller' className='absolute bottom-40 -left-10 md:hidden' />
                 </div>
-                <div className='pt-20'>
+                <div className='pt-32'>
                   <p className='text-xl md:text-3xl text-gray-400'>We make it easier to learn on the internet by making it fun, interactive, and co-oop.</p>
                 </div>
                 <div className='flex flex-row space-x-2 items-center'>
                   <button onClick={() => router.push('/home')} className="py-4 px-5 text-xl inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-orange-400 text-gray hover:bg-gradient-to-r from-amber-200 to-yellow-400 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Enter the app</button>
                 </div>
               </div>
-              <div className='h-full mx-auto max-w-4xl pb-10'>
-                <div className='md:grid md:grid-cols-3 md:gap-3 space-y-3'>
-                  <Card className='bg-amber-100 max-w-sm w-full h-full'>
-                    <CardHeader>
-                      <div className='w-full'>
-                        <div className='flex justify-between bg-amber-200 '>
-                          <p className='text-2xl text-center w-10 font-semibold p-4'>Gamify your learning</p>
-                          <Image src='/arcade-machine.png' width={240} height={240} alt='arcade-machine' />
+              <div className='h-full mx-auto pb-10 w-full flex justify-center'>
+                <div className='md:grid md:grid-cols-3 md:gap-3 space-y-3 max-w-7xl'>
+                  <div className='flex justify-center'>
+                    <Card className='bg-amber-100 w-full h-full max-w-md'>
+                      <CardHeader>
+                        <div className='w-full'>
+                          <div className='flex justify-between bg-amber-200 '>
+                            <p className='text-4xl text-center w-10 font-semibold p-4'>Gamify your learning</p>
+                            <Image src='/arcade-machine.png' width={300} height={300} alt='arcade-machine' />
+                          </div>
                         </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <CardTitle>Make learning fun by playing games.</CardTitle>
-                      <CardDescription>Coming soon!</CardDescription>
-                    </CardContent>
-                  </Card>
-                  <div>
-                    <Card className='bg-amber-100 max-w-sm w-full h-full'>
+                      </CardHeader>
+                      <CardContent>
+                        <CardTitle>Make learning fun by playing games.</CardTitle>
+                        <CardDescription>Coming soon!</CardDescription>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  <div className='flex justify-center'>
+                    <Card className='bg-amber-100 max-w-md w-full h-full'>
                       <CardHeader>
                         <div className='w-full'>
                           <div className='bg-amber-200 h-56 relative'>
-                            <Image src='/dashboard.png' width={220} height={220} alt='dashboard' />
-                            <p className='text-2xl text-center absolute w-full font-semibold p-4 -bottom-5'>Track your progress</p>
+                            <Image src='/dashboard.png' width={300} height={300} alt='dashboard' />
+                            <p className='text-4xl text-center absolute w-full font-semibold p-4 -top-5'>Track your progress</p>
                           </div>
                         </div>
                       </CardHeader>
@@ -96,13 +98,13 @@ const FrontPage = () => {
                       </CardContent>
                     </Card>
                   </div>
-                  <div>
-                    <Card className='bg-amber-100 max-w-sm w-full h-full'>
+                  <div className='flex justify-center'>
+                    <Card className='bg-amber-100 w-full h-full max-w-md'>
                       <CardHeader>
                         <div className='w-full'>
                           <div className='flex justify-between bg-amber-200 p-2 h-56 items-center'>
-                            <p className='text-2xl text-center align-center w-10 font-semibold p-4'>Beat the Algorithm</p>
-                            <Image src='/trophy.png' width={120} height={120} alt='trophy' className='object-contain' />
+                            <p className='text-4xl text-center align-center w-10 font-semibold p-4'>Beat the Algorithm</p>
+                            <Image src='/trophy.png' width={200} height={200} alt='trophy' className='object-contain' />
                           </div>
                         </div>
                       </CardHeader>
