@@ -45,7 +45,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg  dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
+                class: 'prose p-2 prose-md lg:prose-lg  dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
             },
         },
         content: '',

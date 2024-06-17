@@ -92,7 +92,7 @@ export default function ResourceCard({ card }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
+                class: 'prose p-2 prose-md  lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
             },
         },
         content: annotation,
