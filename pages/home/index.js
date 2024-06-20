@@ -9,6 +9,7 @@ import { useCeramicContext } from '../../context';
 import ReadingStatusFilter from '../../components/home/ReadingStatusFilter';
 import { Button } from "@/components/ui/button";
 import HomeAddResource from '../../components/home/HomeAddResource';
+import { toast } from 'sonner';
 
 export default function Home() {
   const clients = useCeramicContext()
@@ -79,9 +80,20 @@ export default function Home() {
     }
   }
 
+
+  function showDelayedToast(message) {
+    setTimeout(() => {
+      toast.info(message);
+    }, 1000);
+  }
+
   useEffect(() => {
     refetch();
   }, [readingStatus]);
+
+  useEffect(() => {
+    showDelayedToast("Reminder: Your notes are public so don't post anything you don't want to share.")
+  }, []);
 
   if (error) return <ErrorPage message={error.message} />;
 
