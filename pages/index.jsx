@@ -42,7 +42,6 @@ const FrontPage = () => {
                 <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Idealite</h2>
               </div>
               <div className='w-1/4 flex items-center justify-center space-x-4'>
-                <p className='text-xl hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/about')}>About</p>
                 <p className='text-xl hover:text-amber-400 hover:cursor-pointer'>
                   <Link href="https://warpcast.com/~/channel/idealite" target="_blank">Community</Link>
                 </p>
