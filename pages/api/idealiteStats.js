@@ -58,7 +58,7 @@ const handler = async (req, res) => {
         cardsMasteredOverTime: cardsMasteredOverTime,
         cardsReviewed: cardsReviewed,
         cardsReviewedSaved: cardsReviewedSaved,
-        farcasterId: farcasterId,
+        farcasterId: farcasterId ? farcasterId.toString() : null,
         idealiteProfileId: idealiteProfileId,
         publicKey: publicKey,
         updatedAt: new Date().toISOString(),
@@ -72,7 +72,6 @@ const handler = async (req, res) => {
             delete input[key];
         }
     }
-
     switch (req.method) {
         case 'POST':
 
@@ -106,7 +105,6 @@ const handler = async (req, res) => {
                     "content": input
                 }
             }
-
             composeClient.executeQuery(`
                 mutation MyMutation($input: UpdateIdealiteStatsv1Input = {id: "", content: {}}) {
                     updateIdealiteStatsv1(input: $input) {
@@ -117,7 +115,7 @@ const handler = async (req, res) => {
                 }
                   `, updateVariables)
                 .then(updatedIdealiteStats => {
-                    return res.status(200).json({ updatedIdealiteStats: updatedIdealiteStats.data.updateIdealiteStatsv1.document.id })
+                    return res.status(200).json({ updatedIdealiteStats: updatedIdealiteStats.data.updateIdealiteStatsv1 })
                 })
                 .catch(error => {
                     console.log(error.message)
