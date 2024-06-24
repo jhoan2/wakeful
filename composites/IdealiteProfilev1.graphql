@@ -5,7 +5,8 @@ type IdealiteProfilev1
     avatarCid: String @string(minLength: 1, maxLength: 3000)
     bio: String @string(minLength: 1, maxLength: 3000)
     createdAt: DateTime
-    displayName: String @string(minLength: 1, maxLength: 140)
+    currentVersion: String @string(minLength: 1, maxLength: 300)
+    displayName: String @string(minLength: 1, maxLength: 240)
     favorites: [Favorites] @list(maxLength: 30)
     farcasterId: String @string(minLength: 1, maxLength: 140)
     mimeType: String @string(minLength: 1, maxLength: 140)
