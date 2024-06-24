@@ -94,9 +94,6 @@ export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile,
                     const idealiteStatsId = data?.data?.idealiteStatsv1Index?.edges[0]?.node?.id
                     fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/idealiteStats`, {
                         method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
                         body: JSON.stringify({
                             farcasterId: farcasterId,
                             publicKey: publicKey,
