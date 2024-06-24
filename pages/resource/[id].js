@@ -101,7 +101,6 @@ export default function Resource() {
 
 
   if (error) return <ErrorPage message={error.message} />;
-  console.log(data)
   const cards = data?.node.idealiteCardv1?.edges
   const resourceTitle = data?.node.title
   const pageInfo = data?.node.idealiteCardv1?.pageInfo

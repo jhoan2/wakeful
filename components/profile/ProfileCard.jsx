@@ -3,13 +3,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import ProfileEdit from './ProfileEdit';
 import { SignInButton } from '@farcaster/auth-kit';
-import { gql, useMutation, useLazyQuery } from '@apollo/client';
 import { toast } from 'sonner';
 
 export default function ProfileCard({
     avatarFallback,
     profile,
-    updateProfileBioAndName,
     farcasterProfile,
     setFarcasterProfile
 }) {
