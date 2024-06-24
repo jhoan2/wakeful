@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
   Card,
@@ -9,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import MailerLiteScript from '../components/MailerLiteScript';
 
 const FrontPage = () => {
   const router = useRouter();
@@ -41,8 +41,11 @@ const FrontPage = () => {
                 <Image src='/icon128.png' width={32} height={32} alt='idealite logo' />
                 <h2 className="text-4xl font-semibold text-gray-800 dark:text-white">Idealite</h2>
               </div>
-              <div className='w-1/4 flex items-center justify-center'>
+              <div className='w-1/4 flex items-center justify-center space-x-4'>
                 <p className='text-xl hover:text-amber-400 hover:cursor-pointer' onClick={() => router.push('/about')}>About</p>
+                <p className='text-xl hover:text-amber-400 hover:cursor-pointer'>
+                  <Link href="https://warpcast.com/~/channel/idealite" target="_blank">Community</Link>
+                </p>
               </div>
             </nav>
             <main className='h-full'>
@@ -114,10 +117,6 @@ const FrontPage = () => {
                     </Card>
                   </div>
                 </div>
-              </div>
-              <div>
-                <MailerLiteScript />
-                <div className="ml-embedded pb-10" data-form="i3LrDZ"></div>
               </div>
             </main>
           </div>
