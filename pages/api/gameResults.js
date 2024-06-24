@@ -149,7 +149,6 @@ const handler = async (req, res) => {
 
     const handleExistingStats = async (newCardsReviewedArr, idealiteStats, farcasterId, publicKey) => {
         const existingCards = await fetch(`https://purple-defensive-anglerfish-674.mypinata.cloud/ipfs/${idealiteStats.edges[0].node.cardsReviewed}`).then(res => res.json());
-
         existingCards.forEach((card) => {
             const isDuplicate = newCardsReviewedArr.some((newCard) => newCard.id === card.id);
             if (!isDuplicate) {
@@ -185,9 +184,9 @@ const handler = async (req, res) => {
     const processIdealiteStatsAndCards = async (composeClient, query, variableValues, cardsLearned, farcasterId, publicKey) => {
         try {
             const idealiteStatsData = await composeClient.executeQuery(query, variableValues);
-            const nodesArr = idealiteStatsData?.data?.nodes;
+            const cardNodesArr = idealiteStatsData?.data?.nodes;
 
-            const newCardsReviewedArr = updateCardsReviewed(nodesArr, cardsLearned);
+            const newCardsReviewedArr = updateCardsReviewed(cardNodesArr, cardsLearned);
             const idealiteStats = idealiteStatsData.data.idealiteStatsv1Index;
 
             if (idealiteStats.edges.length === 0) {
@@ -210,7 +209,7 @@ const handler = async (req, res) => {
             let cardIdArr = []
 
             if (farcasterId) {
-                filter.farcasterId = { equalTo: farcasterId };
+                filter.farcasterId = { equalTo: farcasterId.toString() };
             } else {
                 filter.publicKey = { equalTo: publicKey };
             }
@@ -229,27 +228,27 @@ const handler = async (req, res) => {
                 `
                 query queryIdealiteStatsAndCards($ids: [ID!] = "", $where: IdealiteStatsv1ObjectFilterInput = {}) {
                     nodes(ids: $ids) {
-                    ... on IdealiteCardv1 {
-                        id
-                        resourceId
-                        account {
-                        id
+                        ... on IdealiteCardv1 {
+                            id
+                            resourceId
+                            account {
+                                id
+                            }
+                            annotation
+                            cid
+                            lastReviewed
+                            learningStatus
+                            timesForgotten
+                            url
                         }
-                        annotation
-                        cid
-                        lastReviewed
-                        learningStatus
-                        timesForgotten
-                        url
-                    }
                     }
                     idealiteStatsv1Index(first: 10, filters: {where: $where}) {
-                    edges {
-                        node {
-                        id
-                        cardsReviewed
+                        edges {
+                            node {
+                            id
+                            cardsReviewed
+                            }
                         }
-                    }
                     }
                 }
                 `,
