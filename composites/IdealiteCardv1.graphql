@@ -7,7 +7,8 @@ type IdealiteCardv1
     @createIndex(fields: [{ path: ["deleted"]} ])
     @createIndex(fields: [{ path: ["url"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ])
-    @createIndex(fields: [{ path: ["learningStatus"]} ]) {
+    @createIndex(fields: [{ path: ["learningStatus"]} ])
+    @createIndex(fields: [{ path: ["annotation"]} ]) {
     account: DID! @documentAccount
     altText: String @string(minLength: 1, maxLength: 3000)
     annotation: String @string(minLength: 1, maxLength: 10000)
@@ -18,7 +19,6 @@ type IdealiteCardv1
     lastReviewed: DateTime
     learningStatus: LearningStatus
     mimeType: String @string(minLength: 1, maxLength: 140)
-    originalAuthorName: String @string(minLength: 1, maxLength: 1000)
     originalAuthorDid: String @string(minLength: 1, maxLength: 1000)
     pageYOffset: Float
     pinSize: Int
