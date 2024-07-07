@@ -8,8 +8,8 @@ export default function HomeCardTag({ accountResourceId, tag, tags, }) {
     const { tagId: tagIdToDelete } = tag
 
     const DELETE_TAG_FROM_ACCOUNT_RESOURCE = gql`
-    mutation deleteTagFromAccountResource($input: UpdateIdealiteAccountResourcesInput!) {
-        updateIdealiteAccountResources(input: $input) {
+    mutation deleteTagFromAccountResource($input: UpdateIdealiteAccountResourcesv1Input!) {
+        updateIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }

@@ -15,8 +15,8 @@ export default function ContextMenuTagNode({ node, style, tree }) {
       }
     `
     const ADD_TAG_TO_ACCOUNT_RESOURCE = gql`
-    mutation addTagToAccountResource($input: UpdateIdealiteAccountResourcesInput!) {
-        updateIdealiteAccountResources(input: $input) {
+    mutation addTagToAccountResource($input: UpdateIdealiteAccountResourcesv1Input!) {
+        updateIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }

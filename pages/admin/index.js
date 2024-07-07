@@ -23,7 +23,7 @@ export default function Tags() {
 
     const GET_TAG_TREE = gql`
     query getTagTree {
-        idealiteTagIndex(filters: {where: {name: {equalTo: "root"}}}, first: 10) {
+        idealiteTagv1Index(filters: {where: {name: {equalTo: "root"}}}, first: 10) {
           edges {
             node {
               tagTree
@@ -35,8 +35,8 @@ export default function Tags() {
 
     const { loading, error, data: data } = useQuery(GET_TAG_TREE);
 
-    if (data?.idealiteTagIndex?.edges > 0) {
-        setTagTreeData(data.idealiteTagIndex.edges)
+    if (data?.idealiteTagv1Index?.edges > 0) {
+        setTagTreeData(data.idealiteTagv1Index.edges)
     }
 
     useEffect(() => {

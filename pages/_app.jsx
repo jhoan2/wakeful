@@ -46,7 +46,7 @@ const MyApp = ({ Component, pageProps }) => {
       typePolicies: {
         Query: {
           fields: {
-            idealiteAccountResourcesIndex: relayStylePagination(),
+            idealiteAccountResourcesv1Index: relayStylePagination(),
           },
         },
         CeramicAccount: {

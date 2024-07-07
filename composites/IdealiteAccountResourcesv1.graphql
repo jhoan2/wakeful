@@ -2,7 +2,7 @@ type IdealiteResourcev2 @loadModel(id: "$IDEALITE_RESOURCE_ID") {
   id: ID!
 }
 
-type IdealiteAccountResources @createModel(accountRelation: LIST, description: "v0: Resources that belong to an Idealite account") 
+type IdealiteAccountResourcesv1 @createModel(accountRelation: LIST, description: "v0: Resources that belong to an Idealite account") 
   @createIndex(fields: [{ path: ["recipient"]} ])
   @createIndex(fields: [{ path: ["url"]} ])
   @createIndex(fields: [{ path: ["updatedAt"]} ])

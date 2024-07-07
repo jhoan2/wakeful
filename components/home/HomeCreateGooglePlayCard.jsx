@@ -20,8 +20,8 @@ export default function HomeCreateGooglePlayCard({
     const clientMutationId = composeClient.id
 
     const CREATE_ACCOUNT_RESOURCE = gql`
-    mutation createAccountResource($input: CreateIdealiteAccountResourcesInput!) {
-        createIdealiteAccountResources(input: $input) {
+    mutation createAccountResource($input: CreateIdealiteAccountResourcesv1Input!) {
+        createIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }
@@ -130,7 +130,7 @@ export default function HomeCreateGooglePlayCard({
                         }
                     }
                 })
-                if (createAccountResourceData.data.createIdealiteAccountResources.document.id) {
+                if (createAccountResourceData.data.createIdealiteAccountResourcesv1.document.id) {
                     toast.success('Successfully added book.')
                     setTimeout(function () {
                         setShowAddResourceModal(false)

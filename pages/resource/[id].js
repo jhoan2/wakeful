@@ -23,7 +23,7 @@ export default function Resource() {
   query getUrlFromAccountResources {
       viewer {
         id
-        idealiteAccountResourcesList(
+        idealiteAccountResourcesv1List(
           filters: {where: {resourceId: {equalTo: "${resourceId}"}}}
           first: 1
           ) {
@@ -39,8 +39,8 @@ export default function Resource() {
 
   const [getUrlFromAccountResource] = useLazyQuery(GET_URL_FROM_ACCOUNT_RESOURCES, {
     onCompleted: (data) => {
-      if (data.viewer.idealiteAccountResourcesList.edges.length > 0) {
-        setResourceUrl(data.viewer.idealiteAccountResourcesList.edges[0].node.url)
+      if (data.viewer.idealiteAccountResourcesv1List.edges.length > 0) {
+        setResourceUrl(data.viewer.idealiteAccountResourcesv1List.edges[0].node.url)
       }
     },
     onError: (error) => console.error(error.message)

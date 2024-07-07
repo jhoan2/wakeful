@@ -17,8 +17,8 @@ export default function HomeAddResourceCard({ setShowAddResourceModal, cid, titl
     const clientMutationId = composeClient.id
 
     const CREATE_ACCOUNT_RESOURCE = gql`
-    mutation createAccountResource($input: CreateIdealiteAccountResourcesInput!) {
-        createIdealiteAccountResources(input: $input) {
+    mutation createAccountResource($input: CreateIdealiteAccountResourcesv1Input!) {
+        createIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }

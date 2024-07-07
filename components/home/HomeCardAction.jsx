@@ -17,8 +17,8 @@ export default function HomeCardAction({ accountResourceId, readingStatus }) {
     const [position, setPosition] = useState(readingStatus)
 
     const UPDATE_ACCOUNT_RESOURCE_READING_STATUS = gql`
-    mutation upduateAccountResourceReadingStatus($input: UpdateIdealiteAccountResourcesInput = {id: "", content: {}}) {
-        updateIdealiteAccountResources(input: $input) {
+    mutation upduateAccountResourceReadingStatus($input: UpdateIdealiteAccountResourcesv1Input = {id: "", content: {}}) {
+        updateIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }

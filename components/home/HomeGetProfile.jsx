@@ -81,8 +81,8 @@ export default function GetProfile() {
   });
 
   const CREATE_ACCOUNT_RESOURCE = gql`
-  mutation createAccountResource($input: CreateIdealiteAccountResourcesInput!) {
-    createIdealiteAccountResources(input: $input) {
+  mutation createAccountResource($input: CreateIdealiteAccountResourcesv1Input!) {
+    createIdealiteAccountResourcesv1(input: $input) {
       document {
         id
       }
@@ -125,7 +125,9 @@ export default function GetProfile() {
               url: card.url,
               //This is here since the user is copying someone else's card. 
               originalAuthorDid: card.account.id,
-              deleted: false
+              deleted: false,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
             }
           }
         }

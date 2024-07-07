@@ -19,8 +19,8 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
     const [ogData, setOgData] = useState(null)
 
     const CREATE_ACCOUNT_RESOURCE = gql`
-    mutation createAccountResource($input: CreateIdealiteAccountResourcesInput!) {
-        createIdealiteAccountResources(input: $input) {
+    mutation createAccountResource($input: CreateIdealiteAccountResourcesv1Input!) {
+        createIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }

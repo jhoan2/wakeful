@@ -18,8 +18,8 @@ export default function Home() {
   const [showAddResourceModal, setShowAddResourceModal] = useState(false)
 
   const GET_CARDS_PER_URL_PER_USER = gql`
-  query GetCardsPerUrlPerUser ($filters: IdealiteAccountResourcesFiltersInput, $cursor: String){
-    idealiteAccountResourcesIndex (after: $cursor, first: 10, filters: $filters, sorting: {updatedAt: DESC} ){
+  query GetCardsPerUrlPerUser ($filters: IdealiteAccountResourcesv1FiltersInput, $cursor: String){
+    idealiteAccountResourcesv1Index (after: $cursor, first: 10, filters: $filters, sorting: {updatedAt: DESC} ){
       edges {
         node {
           id
@@ -66,8 +66,8 @@ export default function Home() {
 
 
 
-  const resources = data?.idealiteAccountResourcesIndex?.edges
-  const pageInfo = data?.idealiteAccountResourcesIndex?.pageInfo
+  const resources = data?.idealiteAccountResourcesv1Index?.edges
+  const pageInfo = data?.idealiteAccountResourcesv1Index?.pageInfo
 
 
   const getMoreResources = (pageInfo) => {
@@ -96,6 +96,21 @@ export default function Home() {
   }, []);
 
   if (error) return <ErrorPage message={error.message} />;
+
+  const handleClick = async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/handleObsidianPlugin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // body: JSON.stringify({
+      //   resources: [{ url: 'https://youtu.be/E6oJ7a6X6Kw?si=CPi5IBCrIPsuh-kw' }, { book__title: 'Clear Thinking' }]
+      // }),
+      body: JSON.stringify({
+        resources: [{ book__title: 'Clear Thinking' }]
+      }),
+    })
+  }
 
 
   return (
@@ -154,7 +169,7 @@ export default function Home() {
               <p className='text-3xl font-bold p-8 text-balance'></p>
               <div className='grid grid-cols-3'>
                 <div></div>
-                <div></div>
+                <div><Button onClick={() => handleClick()}>ClickToSendReq</Button></div>
                 <div className='flex justify-end'>
                   {composeClient.id ?
                     <Button

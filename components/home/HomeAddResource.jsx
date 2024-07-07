@@ -27,7 +27,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
         }
         viewer {
             id
-          idealiteAccountResourcesList(
+          idealiteAccountResourcesv1List(
             filters: {where: {url: {equalTo: $equalTo1}}}
             first: 10
           ) {
@@ -69,7 +69,7 @@ export default function HomeAddResource({ setShowAddResourceModal }) {
                 const response = await sendQueryResource(url)
                 let resources = response.data?.idealiteResourcev2Index?.edges
                 setExistingResource(resources);
-                let accountResource = response.data?.viewer.idealiteAccountResourcesList.edges
+                let accountResource = response.data?.viewer.idealiteAccountResourcesv1List.edges
                 setExistingAccountResource(accountResource)
                 setIsLoading(false)
                 return;
