@@ -49,8 +49,8 @@ export default function AdminCreateTag() {
     })
 
     const CREATE_IDEALITE_TAG = gql`
-    mutation CreateIdealiteTag ($input: CreateIdealiteTagInput!) {
-        createIdealiteTag(input: $input) {
+    mutation CreateIdealiteTagv1 ($input: CreateIdealiteTagv1Input!) {
+        createIdealiteTagv1(input: $input) {
           document {
             id
             name
@@ -91,7 +91,7 @@ export default function AdminCreateTag() {
         }
 
         if (createRootTagData) {
-            console.log(createRootTagData.createIdealiteTag.document)
+            console.log(createRootTagData.createIdealiteTagv1.document)
             toast.success('Created Tag')
         }
     }

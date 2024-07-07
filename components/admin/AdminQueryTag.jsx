@@ -13,8 +13,8 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
     const [date, setDate] = useState(null)
 
     const QUERY_IDEALITE_TAG = gql`
-        query queryIdealiteTag ($last: Int!, $filters: IdealiteTagFiltersInput! ){
-            idealiteTagIndex(
+        query queryIdealiteTagv1 ($last: Int!, $filters: IdealiteTagv1FiltersInput! ){
+            idealiteTagv1Index(
                 last: $last, 
                 filters: $filters
                 ) {
@@ -67,7 +67,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
 
     const sendNodesToTagTree = () => {
         let arr = []
-        adminTagsData.idealiteTagIndex.edges.map((node) => {
+        adminTagsData.idealiteTagv1Index.edges.map((node) => {
             const { id, name, value } = node.node
             arr.push({ id: id, name: name, children: new Array(), value: value })
         })

@@ -8,9 +8,9 @@ export default function AdminQueryTagById() {
     const [queryTagId, setQueryTagId] = useState('')
 
     const QUERY_IDEALITE_TAG_BY_ID = gql`
-        query queryIdealiteTagById {
+        query queryIdealiteTagv1ById {
             node(id: "${queryTagId}") {
-            ... on IdealiteTag {
+            ... on IdealiteTagv1 {
                 id
                 name
                 value

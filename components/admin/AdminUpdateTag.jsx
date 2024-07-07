@@ -53,8 +53,8 @@ export default function AdminUpdateTag() {
     })
 
     const ADMIN_UPDATE_IDEALITE_TAG = gql`
-    mutation adminUpdateIdealiteTag ($input: UpdateIdealiteTagInput!) {
-        updateIdealiteTag(input: $input) {
+    mutation adminUpdateIdealiteTagv1 ($input: UpdateIdealiteTagv1Input!) {
+        updateIdealiteTagv1(input: $input) {
           document {
             children {
               name
@@ -108,7 +108,7 @@ export default function AdminUpdateTag() {
 
         if (adminUpdateTagData) {
             toast.success('Updated Tag')
-            console.log(adminUpdateTagData.updateIdealiteTag.document)
+            console.log(adminUpdateTagData.updateIdealiteTagv1.document)
         }
     }
 

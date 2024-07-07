@@ -115,10 +115,16 @@ export const writeComposite = async (spinner) => {
         schema: projectsCardsSchema,
     });
 
-    const idealiteTagComposite = await createComposite(
+    const idealiteTagv1Composite = await createComposite(
         ceramic,
-        "./composites/IdealiteTag.graphql"
+        "./composites/IdealiteTagv1.graphql"
     );
+
+    const idealiteStatsComposite = await createComposite(
+        ceramic,
+        "./composites/IdealiteStatsv1.graphql"
+    );
+
 
     const composite = Composite.from([
         idealiteResourcev2Composite,
@@ -130,7 +136,8 @@ export const writeComposite = async (spinner) => {
         idealiteProjectCardCollectionComposite,
         cardsProjectsComposite,
         projectsCardsComposite,
-        idealiteTagComposite
+        idealiteTagv1Composite,
+        idealiteStatsComposite,
     ]);
 
     const newComposite = composite.setAliases({
@@ -158,6 +165,7 @@ export const writeComposite = async (spinner) => {
 
     spinner.succeed("composite deployed & ready for use");
 }
+
 
 
 /**

@@ -14,8 +14,8 @@ export default function AdminEditTagTree({ tagTreeData, setTagTreeData, setTagPa
     const treeRef = useRef(null)
 
     const SUBMIT_TAG_TREE = gql`
-        mutation submitTagTree($input: UpdateIdealiteTagInput!) {
-            updateIdealiteTag(input: $input) {
+        mutation submitTagTree($input: UpdateIdealiteTagv1Input!) {
+            updateIdealiteTagv1(input: $input) {
             document {
                 id
             }
