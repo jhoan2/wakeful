@@ -33,7 +33,7 @@ const handler = async (req, res) => {
         createdAt: createdAt,
         updatedAt: updatedAt,
         clientMutationId: clientMutationId,
-        author: author,
+        author: author || 'n/a',
         description: description,
         cid: cid,
         mediaType: mediaType
