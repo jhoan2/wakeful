@@ -26,16 +26,10 @@ type IdealiteCardv1
     resourceId: StreamID @documentReference(model: "IdealiteResourcev2")
     resource: IdealiteResourcev2 @relationDocument(property: "resourceId")
     scrollHeight: Float
-    tags: [Tag] @list(maxLength: 15)
     timesForgotten: Int
     updatedAt: DateTime
     url: String @string(minLength: 1, maxLength: 140)
     videoTime: String @string(minLength: 1, maxLength: 300)
-}
-
-type Tag {
-  tagId: String! @string(minLength: 1, maxLength: 140)
-  name: String! @string(minLength: 1, maxLength: 140)
 }
 
 enum LearningStatus {

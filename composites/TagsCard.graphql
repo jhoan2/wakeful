@@ -1,0 +1,7 @@
+type IdealiteTagCardCollectionv1 @loadModel(id: "$IDEALITE_TAG_CARD_COLLECTION_ID") {
+  id: ID!
+}
+
+type IdealiteCardv1 @loadModel(id: "$IDEALITE_CARD_ID") {
+	tags: [IdealiteTagCardCollectionv1] @relationFrom(model: "IdealiteTagCardCollectionv1", property: "idealiteCardId")
+}
