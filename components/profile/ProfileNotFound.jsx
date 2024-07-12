@@ -12,6 +12,7 @@ import ProfileCreateForm from './ProfileCreateForm';
 import '@farcaster/auth-kit/styles.css';
 import { SignInButton } from '@farcaster/auth-kit';
 import { toast } from 'sonner';
+import { gql, useQuery } from '@apollo/client';
 
 export default function ProfileNotFound({
     setHasProfile,
@@ -20,6 +21,31 @@ export default function ProfileNotFound({
     setFarcasterProfile
 }) {
     const [showCreateProfile, setShowCreateProfile] = useState(false)
+    const [assortedResourceId, setAssortedResourceId] = useState('')
+
+    const QUERY_ASSORTED_RESOURCE = gql`
+    query queryAssortedResource {
+        idealiteResourcev2Index(first: 2, filters: {where: {title: {equalTo: "Assorted Resources"}}}) {
+            edges {
+                node {
+                    id
+                }
+            }
+        }
+    }
+`
+
+    const queryAssortedResource = useQuery(QUERY_ASSORTED_RESOURCE, {
+        onCompleted: (data) => {
+            if (data && data.idealiteResourcev2Index.edges.length > 0) {
+                setAssortedResourceId(data.idealiteResourcev2Index.edges[0].node.id)
+            }
+        },
+        onError: (error) => {
+            console.log(error.message)
+            toast.error(error.message)
+        }
+    });
 
     return (
         <div className='flex justify-center w-2/3 h-fit'>
@@ -29,6 +55,7 @@ export default function ProfileNotFound({
                     setHasProfile={setHasProfile}
                     farcasterProfile={farcasterProfile}
                     avatarFallback={avatarFallback}
+                    assortedResourceId={assortedResourceId}
                 />
                 :
                 <Card className='w-2/3'>

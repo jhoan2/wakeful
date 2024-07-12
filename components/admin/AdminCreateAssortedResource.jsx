@@ -2,9 +2,9 @@ import React from 'react'
 import { toast } from 'sonner';
 import { Button } from "@/components/ui/button";
 
-export default function AdminCreateNoneResource({ clientMutationId }) {
+export default function AdminCreateAssortedResource({ clientMutationId }) {
 
-    const createNotAvailableResource = async () => {
+    const createAssortedResource = async () => {
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_RESOURCE_URL}/api/createNewResource`, {
@@ -17,7 +17,7 @@ export default function AdminCreateNoneResource({ clientMutationId }) {
                     clientMutationId: clientMutationId,
                     description: 'Notes with no specific resource go here.',
                     publishedAt: new Date().toISOString(),
-                    title: 'Resources',
+                    title: 'Assorted Resources',
                     url: 'n/a',
                     createAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString(),
@@ -28,7 +28,7 @@ export default function AdminCreateNoneResource({ clientMutationId }) {
             if (!res.ok) {
                 throw new Error('Server responded with an error: ' + res.status);
             } else {
-                toast.success('Created Resources Folder')
+                toast.success('Created Assorted Resources Folder')
             }
 
         } catch (error) {
@@ -39,7 +39,7 @@ export default function AdminCreateNoneResource({ clientMutationId }) {
 
     return (
         <div>
-            <Button onClick={() => createNotAvailableResource()}>Create resource</Button>
+            <Button onClick={() => createAssortedResource()}>Create assorted resource</Button>
         </div>
     )
 }

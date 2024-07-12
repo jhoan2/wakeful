@@ -23,11 +23,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { toast } from 'sonner';
 import { gql, useMutation, useLazyQuery } from '@apollo/client';
-import { useProfileContext } from '../../context';
+import { useProfileContext, useCeramicContext } from '../../context';
 import { useAccount } from 'wagmi';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile, farcasterProfile, avatarFallback }) {
+export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile, farcasterProfile, avatarFallback, assortedResourceId }) {
+    const clients = useCeramicContext()
+    const { composeClient } = clients
     const [loadingCreateProfile, setLoadingCreateProfile] = useState(false);
     const [nameInputValue, setNameInputValue] = useState('')
     const [bioInputValue, setBioInputValue] = useState('')
@@ -108,19 +110,26 @@ export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile,
         }
     }
 
-    const CREATE_IDEALITE_PROFILE = gql`
-        mutation createIdealiteProfile ($input: CreateIdealiteProfilev1Input!) {
-            createIdealiteProfilev1(input: $input) {
-            document {
+    const CREATE_IDEALITE_PROFILE_AND_ACCOUNT_RESOURCE = gql`
+        mutation createIdealiteProfileAndAccountResource(
+        $input: SetIdealiteProfilev1Input = {content: {}}, 
+        $input1: CreateIdealiteAccountResourcesv1Input!
+        ) {
+            createIdealiteAccountResourcesv1(input: $input1) {
+                document {
                 id
-                displayName
-                bio
+                }
             }
+            setIdealiteProfilev1(input: $input) {
+                document {
+                    id
+                    displayName
+                    bio
+                }
             }
         }
     `
-
-    const [createProfile] = useMutation(CREATE_IDEALITE_PROFILE, {
+    const [createProfileAndAccountResource] = useMutation(CREATE_IDEALITE_PROFILE_AND_ACCOUNT_RESOURCE, {
         onError: (error) => {
             toast.error('Error creating profile')
             console.log(error.message)
@@ -145,17 +154,30 @@ export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile,
                     delete profileContent[key];
                 }
             }
+
+
             setLoadingCreateProfile(true)
 
-            const { data } = await createProfile({
+            const { data } = await createProfileAndAccountResource({
                 variables: {
                     input: {
                         content: profileContent
+                    },
+                    input1: {
+                        content: {
+                            recipient: composeClient.id,
+                            resourceId: assortedResourceId,
+                            url: 'n/a',
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                            readingStatus: 'READING'
+                        }
                     }
                 }
             })
 
-            const { id: idealiteProfileId, bio, displayName } = data.createIdealiteProfilev1.document
+
+            const { id: idealiteProfileId, bio, displayName } = data.setIdealiteProfilev1.document
             await queryIdealiteStats(farcasterProfile?.farcasterId, address, idealiteProfileId)
             setCreatedProfile(idealiteProfileId, bio, displayName, farcasterProfile?.farcasterId)
             setHasProfile(true)
