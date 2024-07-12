@@ -23,7 +23,8 @@ const handler = async (req, res) => {
         author,
         description,
         cid,
-        mediaType
+        mediaType,
+        deleted
     } = req.body
 
     const uniqueKey = process.env.ADMIN_DID_KEY;
@@ -36,7 +37,8 @@ const handler = async (req, res) => {
         author: author || 'n/a',
         description: description,
         cid: cid,
-        mediaType: mediaType
+        mediaType: mediaType,
+        deleted: deleted || false
     }
 
     //authenticate developer DID in order to create a write transaction
