@@ -69,9 +69,15 @@ export default function Resource() {
               cid
               updatedAt
               googleBooksPage
-              tags {
-                name
-                tagId
+              tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
+                edges {
+                  node {
+                    idealiteTag {
+                      name
+                      id
+                    }
+                  }
+                }
               }
             }
           }

@@ -212,9 +212,9 @@ export default function ResourceCard({ card }) {
                         null
                     }
                     {
-                        tags?.length > 0 ?
+                        tags?.edges?.length > 0 ?
                             <div className='space-x-2'>
-                                {tags.map((tag) => {
+                                {tags.edges.map((tag) => {
                                     return <ResourceCardTag tag={tag} key={tag.tagId} cardId={id} tags={tags} />
 
                                 })}
