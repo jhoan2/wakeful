@@ -4,34 +4,25 @@ import { gql, useMutation } from '@apollo/client';
 import { toast } from 'sonner';
 
 export default function ContextMenuTagNode({ node, style, tree }) {
-    const { cardId, category, tags } = tree.props
+    const clients = useCeramicContext()
+    const { cardId, category } = tree.props
     const ADD_TAG_TO_CARD = gql`
-    mutation addTagToCard($input: UpdateIdealiteCardv1Input!) {
-        updateIdealiteCardv1(input: $input) {
-          document {
-            id
-          }
+    mutation MyMutation($input: CreateIdealiteTagCardCollectionv1Input!) {
+        createIdealiteTagCardCollectionv1(input: $input) {
+            document {
+                id
+            }
         }
-      }
+    }
     `
     const ADD_TAG_TO_ACCOUNT_RESOURCE = gql`
-    mutation addTagToAccountResource($input: UpdateIdealiteAccountResourcesv1Input!) {
-        updateIdealiteAccountResourcesv1(input: $input) {
-          document {
-            id
-          }
+    mutation addTagToAccountResource($input: CreateIdealiteTagAccountResourceCollectionv1Input!) {
+        createIdealiteTagAccountResourceCollectionv1(input: $input) {
+            document {
+                id
+            }
         }
-      }
-    `
-
-    const ADD_TAG_TO_PROJECT = gql`
-    mutation addTagToProject($input: UpdateIdealiteProjectInput!) {
-        updateIdealiteProject(input: $input) {
-          document {
-            id
-          }
-        }
-      }
+    }
     `
 
     const [addTagToCard] = useMutation(ADD_TAG_TO_CARD, {
@@ -50,41 +41,16 @@ export default function ContextMenuTagNode({ node, style, tree }) {
         }
     });
 
-    const [addTagToProject] = useMutation(ADD_TAG_TO_PROJECT, {
-        refetchQueries: ['getUsersProjects'],
-        onError: (error) => {
-            toast.error('Something went wrong with tagging.')
-            console.log(error.message)
-        }
-    });
-
-    const [addTagToProjectCard] = useMutation(ADD_TAG_TO_CARD, {
-        refetchQueries: ['getUsersProjectCardCollection'],
-        onError: (error) => {
-            toast.error('Something went wrong with tagging.')
-            console.log(error.message)
-        }
-    });
-
     const sendAddTag = () => {
-        let arrTags = []
-        if (tags?.length > 0) {
-            tags.map((tag) => {
-                const { tagId, name } = tag
-                arrTags.push({ tagId: tagId, name: name })
-            })
-        }
 
         if (category === 'card') {
             addTagToCard({
                 variables: {
                     input: {
-                        id: cardId,
                         content: {
-                            tags: [...arrTags, {
-                                name: node.data.name,
-                                tagId: node.data.id
-                            }]
+                            deleted: false,
+                            idealiteCardId: cardId,
+                            idealiteTagId: node.data.id
                         }
                     }
                 }
@@ -95,49 +61,16 @@ export default function ContextMenuTagNode({ node, style, tree }) {
             addTagToAccountResource({
                 variables: {
                     input: {
-                        id: cardId,
                         content: {
-                            tags: [...arrTags, {
-                                name: node.data.name,
-                                tagId: node.data.id
-                            }]
+                            deleted: false,
+                            idealiteAccountResourceId: cardId,
+                            idealiteTagId: node.data.id
                         }
                     }
                 }
             })
         }
 
-        if (category === 'project') {
-            addTagToProject({
-                variables: {
-                    input: {
-                        id: cardId,
-                        content: {
-                            tags: [...arrTags, {
-                                name: node.data.name,
-                                tagId: node.data.id
-                            }]
-                        }
-                    }
-                }
-            })
-        }
-
-        if (category === 'projectCard') {
-            addTagToProjectCard({
-                variables: {
-                    input: {
-                        id: cardId,
-                        content: {
-                            tags: [...arrTags, {
-                                name: node.data.name,
-                                tagId: node.data.id
-                            }]
-                        }
-                    }
-                }
-            })
-        }
     }
 
     return (
