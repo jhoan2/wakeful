@@ -72,6 +72,7 @@ export default function Resource() {
               tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
                 edges {
                   node {
+                    id
                     idealiteTag {
                       name
                       id

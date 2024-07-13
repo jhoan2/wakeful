@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { gql, useMutation } from '@apollo/client';
+import { toast } from 'sonner';
 
-export default function ResourceCardTag({ tag, tags, cardId }) {
+export default function ResourceCardTag({ tag }) {
     const [isHovered, setIsHovered] = useState(false);
 
     const DELETE_TAG_FROM_CARD = gql`
-    mutation addTagToCard($input: UpdateIdealiteCardv1Input!) {
-        updateIdealiteCardv1(input: $input) {
-          document {
-            id
-          }
+    mutation deleteTagFromCard($input: UpdateIdealiteTagCardCollectionv1Input = {id: "", content: {}}) {
+        updateIdealiteTagCardCollectionv1(input: $input) {
+            document {
+                id
+            }
         }
-      }
+    }
     `
 
     const [deleteTagFromCard] = useMutation(DELETE_TAG_FROM_CARD, {
@@ -24,22 +25,12 @@ export default function ResourceCardTag({ tag, tags, cardId }) {
     });
 
     const sendDeleteTag = () => {
-        let arrTags = []
-        if (tags?.length > 0) {
-            tags.map((tag) => {
-                const { tagId, name } = tag
-                if (tagId !== tagIdToDelete) {
-                    arrTags.push({ tagId: tagId, name: name })
-                }
-            })
-        }
-
         deleteTagFromCard({
             variables: {
                 input: {
-                    id: cardId,
+                    id: tag.node.id,
                     content: {
-                        tags: [...arrTags]
+                        deleted: true
                     }
                 }
             }
