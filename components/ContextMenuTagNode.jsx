@@ -4,7 +4,6 @@ import { gql, useMutation } from '@apollo/client';
 import { toast } from 'sonner';
 
 export default function ContextMenuTagNode({ node, style, tree }) {
-    const clients = useCeramicContext()
     const { cardId, category } = tree.props
     const ADD_TAG_TO_CARD = gql`
     mutation MyMutation($input: CreateIdealiteTagCardCollectionv1Input!) {
