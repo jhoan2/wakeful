@@ -3,18 +3,17 @@ import { Button } from '@/components/ui/button';
 import { gql, useMutation } from '@apollo/client';
 import { toast } from 'sonner';
 
-export default function HomeCardTag({ accountResourceId, tag, tags, }) {
+export default function HomeCardTag({ tag }) {
     const [isHovered, setIsHovered] = useState(false);
-    // const { tagId: tagIdToDelete } = tag
 
     const DELETE_TAG_FROM_ACCOUNT_RESOURCE = gql`
-    mutation deleteTagFromAccountResource($input: UpdateIdealiteAccountResourcesv1Input!) {
-        updateIdealiteAccountResourcesv1(input: $input) {
-          document {
-            id
-          }
+    mutation deleteTagFromAccountResource($input: UpdateIdealiteTagAccountResourceCollectionv1Input = {id: "", content: {}}) {
+        updateIdealiteTagAccountResourceCollectionv1(input: $input) {
+            document {
+                id
+            }
         }
-      }
+    }
     `
 
     const [deleteTagFromAccountResource] = useMutation(DELETE_TAG_FROM_ACCOUNT_RESOURCE, {
@@ -28,22 +27,13 @@ export default function HomeCardTag({ accountResourceId, tag, tags, }) {
 
     const sendDeleteTag = (event) => {
         event.preventDefault();
-        let arrTags = []
-        if (tags?.length > 0) {
-            tags.map((tag) => {
-                const { tagId, name } = tag
-                if (tagId !== tagIdToDelete) {
-                    arrTags.push({ tagId: tagId, name: name })
-                }
-            })
-        }
 
         deleteTagFromAccountResource({
             variables: {
                 input: {
-                    id: accountResourceId,
+                    id: tag.node.id,
                     content: {
-                        tags: [...arrTags]
+                        deleted: true
                     }
                 }
             }
