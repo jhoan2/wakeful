@@ -31,10 +31,16 @@ export default function Home() {
             url
             updatedAt
           }
-          tags {
-            tagId
-            name
-          }
+          tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
+            edges {
+              node {
+                idealiteTag {
+                  name
+                  id
+                }
+              }
+            }
+        }
         }
       }
       pageInfo {
@@ -80,20 +86,9 @@ export default function Home() {
     }
   }
 
-
-  function showDelayedToast(message) {
-    setTimeout(() => {
-      toast.info(message);
-    }, 1000);
-  }
-
   useEffect(() => {
     refetch();
   }, [readingStatus]);
-
-  useEffect(() => {
-    showDelayedToast("Reminder: Your notes are public so don't post anything you don't want to share.")
-  }, []);
 
   if (error) return <ErrorPage message={error.message} />;
 

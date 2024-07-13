@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 export default function HomeCardTag({ accountResourceId, tag, tags, }) {
     const [isHovered, setIsHovered] = useState(false);
-    const { tagId: tagIdToDelete } = tag
+    // const { tagId: tagIdToDelete } = tag
 
     const DELETE_TAG_FROM_ACCOUNT_RESOURCE = gql`
     mutation deleteTagFromAccountResource($input: UpdateIdealiteAccountResourcesv1Input!) {
@@ -59,7 +59,7 @@ export default function HomeCardTag({ accountResourceId, tag, tags, }) {
             onMouseLeave={() => setIsHovered(false)}
             onClick={(event) => sendDeleteTag(event)}
         >
-            {tag.name}
+            {tag.node.idealiteTag.name}
             {isHovered && (
                 <span className='pl-2'>X</span>
             )}

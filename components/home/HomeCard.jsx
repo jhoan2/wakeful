@@ -20,6 +20,7 @@ export default function HomeCard({ resource }) {
         month: 'long',
         day: 'numeric'
     })
+
     return (
         <ContextMenu>
             <ContextMenuTrigger>
@@ -64,9 +65,9 @@ export default function HomeCard({ resource }) {
 
                             </div>
                             {
-                                tags?.length > 0 ?
+                                tags?.edges?.length > 0 ?
                                     <div className='space-x-2'>
-                                        {tags.map((tag) => {
+                                        {tags.edges.map((tag) => {
                                             return <HomeCardTag tag={tag} key={tag.tagId} accountResourceId={accountResourceId} tags={tags} />
 
                                         })}
