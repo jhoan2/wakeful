@@ -20,7 +20,7 @@ export default function HomeCreateGooglePlay({ googlePlayUrl, setShowAddResource
             event.preventDefault();
             setCurrentPage(1);
             const encodedTitle = encodeURIComponent(bookTitle);
-            const searchUrl = `https://openlibrary.org/search.json?title=${encodedTitle}&limit=${limit}&page=${currentPage}`;
+            const searchUrl = `https://openlibrary.org/search.json?title=${encodedTitle}&limit=6&page=${currentPage}`;
 
             fetch(searchUrl)
                 .then(response => response.json())

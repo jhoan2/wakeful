@@ -91,7 +91,6 @@ const handler = async (req, res) => {
                         }
                       }
                       `, variableValues)
-          console.log(newResourceId)
           resourceId = newResourceId.data.createIdealiteResourcev2.document.id
         } else {
           //if it does exist, set the resourceId to it 

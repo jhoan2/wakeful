@@ -76,9 +76,6 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
 
     if (loadingQueryTags) return <p>Loading ...</p>;
     if (errorQueryTags) console.log(`Error! ${errorQueryTags.message}`);
-    if (adminTagsData) {
-        console.log(adminTagsData)
-    }
 
     return (
         <div>

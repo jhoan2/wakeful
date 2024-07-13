@@ -73,6 +73,7 @@ export default function HomeCreateOpenGraph({ url, setShowAddResourceModal }) {
                 mediaType: ogData?.ogType,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
+                deleted: false
             }),
         })
 
