@@ -4,7 +4,6 @@ import { gql, useMutation } from '@apollo/client';
 
 export default function ResourceCardTag({ tag, tags, cardId }) {
     const [isHovered, setIsHovered] = useState(false);
-    const { tagId: tagIdToDelete } = tag
 
     const DELETE_TAG_FROM_CARD = gql`
     mutation addTagToCard($input: UpdateIdealiteCardv1Input!) {
@@ -56,7 +55,7 @@ export default function ResourceCardTag({ tag, tags, cardId }) {
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => sendDeleteTag()}
         >
-            {tag.name}
+            {tag.node.idealiteTag.name}
             {isHovered && (
                 <span className='pl-2'>X</span>
             )}
