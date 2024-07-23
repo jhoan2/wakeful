@@ -6,7 +6,7 @@ type IdealiteResourcev2
     @createIndex(fields: [{ path: ["updatedAt"]} ])
     @createIndex(fields: [{ path: ["openLibraryKey"]} ]) {
     author: String @string(minLength: 1, maxLength: 140)
-    cid: String @string(minLength: 1, maxLength: 140)
+    cid: String @string(minLength: 1, maxLength: 1400)
     clientMutationId: String @string(minLength: 1, maxLength: 140)
     createdAt: DateTime
     deleted: Boolean
