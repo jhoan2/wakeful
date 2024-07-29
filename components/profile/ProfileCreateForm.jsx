@@ -158,6 +158,11 @@ export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile,
 
             setLoadingCreateProfile(true)
 
+            if (!accountResourceId) {
+                toast.error('Create accountResource first')
+                return
+            }
+
             const { data } = await createProfileAndAccountResource({
                 variables: {
                     input: {
