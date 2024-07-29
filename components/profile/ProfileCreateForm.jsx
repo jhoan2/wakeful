@@ -158,7 +158,7 @@ export default function ProfileCreateForm({ setShowCreateProfile, setHasProfile,
 
             setLoadingCreateProfile(true)
 
-            if (!accountResourceId) {
+            if (!assortedResourceId) {
                 toast.error('Create accountResource first')
                 return
             }
