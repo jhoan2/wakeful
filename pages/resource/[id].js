@@ -171,7 +171,7 @@ export default function Resource() {
                     </div>
                   </div>
                 }
-                <div className=' pb-24 md:pb-4 p-4'>
+                <div className='flex justify-center pb-24 md:pb-4 p-4'>
                   {pageInfo.hasNextPage ?
                     <Button
                       variant='yellow'
