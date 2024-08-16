@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import ProfileEdit from './ProfileEdit';
-import { SignInButton } from '@farcaster/auth-kit';
-import { toast } from 'sonner';
+import { NeynarAuthButton, useNeynarContext } from "@neynar/react";
 
 export default function ProfileCard({
     avatarFallback,
@@ -13,9 +12,20 @@ export default function ProfileCard({
 }) {
     const [editProfile, setEditProfile] = useState(false)
     const [farcasterAuth, setFarcasterAuth] = useState(false)
+    const { user } = useNeynarContext()
     const { displayName, bio, avatarCid } = profile || {}
     const farcasterId = profile.farcasterId || ''
 
+    useEffect(() => {
+        if (user) {
+            setFarcasterProfile({
+                farcasterId: user?.fid?.toString() || '',
+                displayName: user?.display_name || 'No name provided',
+                bio: user?.profile?.bio.text || 'No bio provided',
+                avatarCid: user?.pfp_url || 'default-avatar-url'
+            })
+        }
+    }, [user])
 
     return (
         <div className="max-w-2xl space-y-32 w-full mx-auto bg-white p-4 rounded-lg shadow">
@@ -71,26 +81,7 @@ export default function ProfileCard({
                                 <p className='text-base pb-2'>
                                     Play games, challenge friends, and connect with fellow Idealites.
                                 </p>
-                                <SignInButton
-                                    onError={
-                                        (error) => {
-                                            toast.error('Something went wrong signing in with Farcaster')
-                                            console.log(error)
-                                        }
-                                    }
-                                    onSuccess={
-                                        ({ fid, username, bio, pfpUrl }) => {
-                                            setFarcasterProfile({
-                                                farcasterId: fid.toString(),
-                                                displayName: username,
-                                                bio: bio,
-                                                avatarCid: pfpUrl
-                                            }),
-                                                setFarcasterAuth(true)
-                                            setEditProfile(true)
-                                        }
-                                    }
-                                />
+                                <NeynarAuthButton />
                                 <p className='text-xs text-slate-600 pt-2'>Don&apos;t have a Farcaster account?</p>
                                 <p className='text-xs text-slate-600'>Create one with this&nbsp;
                                     <a href="https://warpcast.com/~/invite-page/2070?id=ed161ad6"

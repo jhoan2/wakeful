@@ -9,7 +9,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import ProfileCreateForm from './ProfileCreateForm';
-import '@farcaster/auth-kit/styles.css';
 import { toast } from 'sonner';
 import { gql, useQuery } from '@apollo/client';
 import { NeynarAuthButton, useNeynarContext } from "@neynar/react";
@@ -35,7 +34,7 @@ export default function ProfileNotFound({
     }
 `
 
-    const queryAssortedResource = useQuery(QUERY_ASSORTED_RESOURCE, {
+    useQuery(QUERY_ASSORTED_RESOURCE, {
         onCompleted: (data) => {
             if (data && data.idealiteResourcev2Index.edges.length > 0) {
                 setAssortedResourceId(data.idealiteResourcev2Index.edges[0].node.id)

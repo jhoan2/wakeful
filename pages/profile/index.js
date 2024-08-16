@@ -18,6 +18,7 @@ export default function Profile() {
     if (profile.id) setHasProfile(true)
   }, [profile])
 
+
   if (!composeClientId) return <div className='flex justify-center h-screen w-full text-3xl pt-6'>Please connect wallet.</div>
 
   return (

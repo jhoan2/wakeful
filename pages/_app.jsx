@@ -9,7 +9,8 @@ import Head from 'next/head';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { Web3Modal } from '../context/Web3Modal';
-import { AuthKitProvider } from '@farcaster/auth-kit';
+import { NeynarContextProvider, Theme } from "@neynar/react";
+import "@neynar/react/dist/style.css";
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -63,15 +64,6 @@ const MyApp = ({ Component, pageProps }) => {
     }), link
   })
 
-  const config = {
-    rpcUrl: 'https://mainnet.optimism.io',
-    relay: "https://relay.farcaster.xyz",
-    // domain: 'https://wwww.idealite.xyz',
-    // domain: 'localhost:3000',
-    // siweUri: 'https://wwww.idealite.xyz',
-    siweUri: 'http://localhost:3000/profile',
-  };
-
   return (
     <div className='w-full'>
       <Head>
@@ -81,7 +73,12 @@ const MyApp = ({ Component, pageProps }) => {
       <ApolloProvider client={apolloClient}>
         <div>
           <Web3Modal>
-            <AuthKitProvider config={config}>
+            <NeynarContextProvider
+              settings={{
+                clientId: process.env.NEXT_PUBLIC_NEYNAR_CLIENT_ID || "",
+                defaultTheme: Theme.Light,
+              }}
+            >
               <CeramicWrapper>
                 <div>
                   <PostHogProvider client={posthog}>
@@ -90,7 +87,7 @@ const MyApp = ({ Component, pageProps }) => {
                   <Toaster richColors />
                 </div>
               </CeramicWrapper>
-            </AuthKitProvider>
+            </NeynarContextProvider>
           </Web3Modal>
         </div>
       </ApolloProvider>
