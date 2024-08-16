@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UserRound } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/card";
 import ProfileCreateForm from './ProfileCreateForm';
 import '@farcaster/auth-kit/styles.css';
-import { SignInButton } from '@farcaster/auth-kit';
 import { toast } from 'sonner';
 import { gql, useQuery } from '@apollo/client';
+import { NeynarAuthButton, useNeynarContext } from "@neynar/react";
 
 export default function ProfileNotFound({
     setHasProfile,
@@ -22,7 +22,7 @@ export default function ProfileNotFound({
 }) {
     const [showCreateProfile, setShowCreateProfile] = useState(false)
     const [assortedResourceId, setAssortedResourceId] = useState('')
-
+    const { user } = useNeynarContext()
     const QUERY_ASSORTED_RESOURCE = gql`
     query queryAssortedResource {
         idealiteResourcev2Index(first: 2, filters: {where: {title: {equalTo: "Assorted Resources"}}}) {
@@ -46,6 +46,19 @@ export default function ProfileNotFound({
             toast.error(error.message)
         }
     });
+
+    useEffect(() => {
+        if (user) {
+            setShowCreateProfile(true)
+            setFarcasterProfile({
+                farcasterId: user?.fid?.toString() || '',
+                displayName: user?.display_name || 'No name provided',
+                bio: user?.profile?.bio.text || 'No bio provided',
+                avatarCid: user?.pfp_url || 'default-avatar-url'
+            })
+        }
+    }, [user])
+
 
     return (
         <div className='flex justify-center w-2/3 h-fit'>
@@ -75,25 +88,7 @@ export default function ProfileNotFound({
                             </div>
                             <div className='w-full'>
                                 <div className='w-full flex justify-center'>
-                                    <SignInButton
-                                        onError={
-                                            (error) => {
-                                                toast.error('Something went wrong signing in with Farcaster')
-                                                console.log(error)
-                                            }
-                                        }
-                                        onSuccess={
-                                            ({ fid, username, bio, pfpUrl }) => {
-                                                setFarcasterProfile({
-                                                    farcasterId: fid.toString(),
-                                                    displayName: username,
-                                                    bio: bio,
-                                                    avatarCid: pfpUrl
-                                                }),
-                                                    setShowCreateProfile(true)
-                                            }
-                                        }
-                                    />
+                                    <NeynarAuthButton />
                                 </div>
                                 <div className='w-full '>
                                     <div className='w-full flex justify-center'>
