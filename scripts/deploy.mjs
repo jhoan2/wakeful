@@ -67,24 +67,24 @@ export const writeComposite = async (spinner) => {
         schema: resourcesCardsSchema,
     });
 
-    const idealiteProjectComposite = await createComposite(
+    const idealiteProjectv1Composite = await createComposite(
         ceramic,
-        "./composites/IdealiteProject.graphql"
+        "./composites/IdealiteProjectv1.graphql"
     );
 
 
     const idealiteProjectCardCollectionSchema = readFileSync(
-        "./composites/IdealiteProjectCardCollection.graphql",
+        "./composites/IdealiteProjectCardCollectionv1.graphql",
         {
             encoding: "utf-8",
         }
     )
         .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
-        .replace("$IDEALITE_PROJECT_ID", idealiteProjectComposite.modelIDs[0]);
+        .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0]);
 
-    const idealiteProjectCardCollectionComposite = await Composite.create({
+    const idealiteProjectCardCollectionv1Composite = await Composite.create({
         ceramic,
-        schema: idealiteProjectCardCollectionSchema,
+        schema: idealiteProjectCardCollectionv1Schema,
     });
 
     const cardsProjectsScehma = readFileSync(
@@ -94,7 +94,7 @@ export const writeComposite = async (spinner) => {
         }
     )
         .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
-        .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[2]);
+        .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionv1Composite.modelIDs[2]);
 
     const cardsProjectsComposite = await Composite.create({
         ceramic,
@@ -125,6 +125,93 @@ export const writeComposite = async (spinner) => {
         "./composites/IdealiteStatsv1.graphql"
     );
 
+    const idealiteTagAccountResourceCollectionv1Schema = readFileSync(
+        "./composites/IdealiteTagAccountResourceCollectionv1.graphql",
+        {
+            encoding: "utf-8",
+        }
+    )
+        .replace("IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[1])
+        .replace("IDEALITE_ACCOUNT_RESOURCE_ID", idealiteAccountResourcesv1Composite.modelIDs[0])
+
+
+    const idealiteTagAccountResourceCollectionv1Composite = await Composite.create({
+        ceramic,
+        schema: idealiteTagAccountResourceCollectionv1Schema,
+    })
+
+    const accountResourcesTagsSchema = readFileSync(
+        './composites/AccountResourcesTags.graphql',
+        {
+            encoding: 'utf-8'
+        },
+    )
+        .replace("IDEALITE_ACCOUNT_RESOURCE_ID", idealiteAccountResourcesv1Composite.modelIDs[1])
+        .replace("IDEALITE_TAG_ACCOUNT_RESOURCE_COLLECTION_ID", idealiteTagAccountResourceCollectionv1Composite.modelIDs[2])
+
+    const accountResourcesTagsComposite = await Composite.create({
+        ceramic,
+        schema: accountResourcesTagsSchema
+    })
+
+    const tagsAccountResourcesSchema = readFileSync(
+        "./composites/TagsAccountResources.graphql",
+        {
+            encoding: "utf-8",
+        },
+    )
+        .replace("IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[1])
+        .replace("IDEALITE_TAG_ACCOUNT_RESOURCE_COLLECTION_ID", idealiteTagAccountResourceCollectionv1Composite.modelIDs[2])
+
+    const tagsAccountResourceComposite = await Composite.create({
+        ceramic,
+        schema: tagsAccountResourcesSchema
+    })
+
+    const idealiteTagCardCollectionv1Schema = readFileSync(
+        "./composites/IdealiteTagCardCollectionv1.graphql",
+        {
+            encoding: "utf-8",
+        }
+    )
+        .replace("IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[1])
+        .replace("IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[0])
+
+
+    const idealiteTagCardCollectionv1Composite = await Composite.create({
+        ceramic,
+        schema: idealiteTagCardCollectionv1Schema,
+    })
+
+    const tagsCardsSchema = readFileSync(
+        {
+            encoding: 'utf-8'
+        },
+    )
+        .replace("IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+        .replace("IDEALITE_TAG_CARD_COLLECTION_ID", idealiteTagCardCollectionv1Composite.modelIDs[2])
+
+    const tagCardsComposite = await Composite.create({
+        ceramic,
+        schema: tagsCardsSchema
+    })
+
+    const cardsTagsSchema = readFileSync(
+        "./composites/CardsTags.graphql",
+        {
+            encoding: "utf-8",
+        },
+    )
+        .replace("IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+        .replace("IDEALITE_TAG_CARD_COLLECTION_ID", idealiteTagCardCollectionv1Composite.modelIDs[2])
+
+
+    const cardsTagsComposite = await Composite.create({
+        ceramic,
+        schema: cardsTagsSchema
+    })
+
+
 
     const composite = Composite.from([
         idealiteResourcev2Composite,
@@ -132,19 +219,24 @@ export const writeComposite = async (spinner) => {
         idealiteCardv1Composite,
         idealiteAccountResourcesv1Composite,
         resourcesCardsComposite,
-        idealiteProjectComposite,
-        idealiteProjectCardCollectionComposite,
+        idealiteProjectv1Composite,
+        idealiteProjectCardCollectionv1Composite,
         cardsProjectsComposite,
         projectsCardsComposite,
         idealiteTagv1Composite,
         idealiteStatsComposite,
+        accountResourcesTagsComposite,
+        tagsAccountResourceComposite,
+        idealiteTagCardCollectionv1Composite,
+        tagCardsComposite,
+        cardsTagsComposite
     ]);
 
     const newComposite = composite.setAliases({
         [`${idealiteResourcev2Composite.modelIDs[0]}`]: 'IdealiteResourcev2',
         [`${idealiteCardv1Composite.modelIDs[1]}`]: 'IdealiteCardv1',
-        [`${idealiteProjectComposite.modelIDs[0]}`]: 'IdealiteProject',
-        [`${idealiteProjectCardCollectionComposite.modelIDs[2]}`]: 'IdealiteProjectCardCollection'
+        [`${idealiteProjectv1Composite.modelIDs[0]}`]: 'IdealiteProjectv1',
+        [`${idealiteProjectCardCollectionv1Composite.modelIDs[2]}`]: 'IdealiteProjectCardCollectionv1'
     })
 
     await writeEncodedComposite(newComposite, "./src/__generated__/definition.json");

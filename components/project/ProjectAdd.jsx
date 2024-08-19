@@ -8,8 +8,6 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    DialogFooter,
-    DialogOverlay
 } from "@/components/ui/dialog";
 import {
     Form,
@@ -80,8 +78,8 @@ export default function ProjectAdd() {
     }
 
     const CREATE_IDEALITE_PROJECT = gql`
-        mutation CREATE_IDEALITE_PROJECT($input: CreateIdealiteProjectInput!) {
-            createIdealiteProject(input: $input) {
+        mutation CREATE_IDEALITE_PROJECT($input: CreateIdealiteProjectv1Input!) {
+            createIdealiteProjectv1(input: $input) {
                 document {
                     id
                 }

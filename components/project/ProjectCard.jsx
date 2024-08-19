@@ -39,8 +39,8 @@ export default function ProjectCard({ card }) {
       }`
 
     const UPDATE_COLLECTION = gql`
-    mutation MyMutation($input: UpdateIdealiteProjectCardCollectionInput!) {
-        updateIdealiteProjectCardCollection(input: $input) {
+    mutation MyMutation($input: UpdateIdealiteProjectCardCollectionv1Input!) {
+        updateIdealiteProjectCardCollectionv1(input: $input) {
           document {
             id
           }

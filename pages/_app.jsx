@@ -52,7 +52,7 @@ const MyApp = ({ Component, pageProps }) => {
         },
         CeramicAccount: {
           fields: {
-            idealiteProjectCardCollectionList: relayStylePagination(),
+            idealiteProjectCardCollectionv1List: relayStylePagination(),
           }
         },
         IdealiteResourcev2: {

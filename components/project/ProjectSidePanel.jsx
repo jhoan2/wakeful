@@ -100,8 +100,8 @@ export default function ProjectSidePanel({ projectData }) {
     }
 
     const UPDATE_IDEALITE_PROJECT = gql`
-    mutation updateUserIdealiteProject($input: UpdateIdealiteProjectInput!) {
-        updateIdealiteProject(input: $input) {
+    mutation updateUserIdealiteProject($input: UpdateIdealiteProjectv1Input!) {
+        updateIdealiteProjectv1(input: $input) {
           document {
             id
           }

@@ -21,7 +21,7 @@ export default function ProjectPage() {
         query getUsersProjectCardCollection ($projectId: String, $cursor: String) {
             viewer {
                 id
-            idealiteProjectCardCollectionList(
+            idealiteProjectCardCollectionv1List(
                 after: $cursor,
                 first: 20,
                 filters: {where: {deleted: {equalTo: false}, projectId: {equalTo: $projectId}}}
@@ -43,10 +43,6 @@ export default function ProjectPage() {
                         updatedAt
                         url
                         videoTime
-                        tags {
-                            tagId
-                            name
-                        }
                     }
                     project {
                         url
@@ -85,8 +81,8 @@ export default function ProjectPage() {
     }
 
     if (error) return <ErrorPage message={error.message} />;
-    const cards = data?.viewer?.idealiteProjectCardCollectionList.edges
-    const pageInfo = data?.viewer?.idealiteProjectCardCollectionList.pageInfo
+    const cards = data?.viewer?.idealiteProjectCardCollectionv1List.edges
+    const pageInfo = data?.viewer?.idealiteProjectCardCollectionv1List.pageInfo
 
     return (
         <div className='flex justify-center h-screen'>

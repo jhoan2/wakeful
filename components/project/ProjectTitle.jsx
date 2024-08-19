@@ -6,7 +6,7 @@ export default function ProjectTitle({ projectId }) {
     const GET_PROJECT_TITLE = gql`
     query getProjectTitle($projectId: ID!){
         node(id: $projectId) {
-          ... on IdealiteProject {
+          ... on IdealiteProjectv1 {
             title
           }
         }

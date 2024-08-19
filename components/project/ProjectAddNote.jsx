@@ -11,7 +11,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
-    const projectCardResourceId = "kjzl6kcym7w8y6onb4pnwt9mjehz06ftqmygolw4wrttmbjrbr1ugssx5hrk278"
+    const projectCardResourceId = `${process.env.NEXT_PUBLIC_PROJECT_CARD_RESOURCE_ID}`
 
 
     const ADD_NOTE = gql`
@@ -26,8 +26,8 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [addNote, { data: dataAddNote, error: errorAddNote }] = useMutation(ADD_NOTE);
 
     const CREATE_COLLECTION = gql`
-    mutation createCollection($input: CreateIdealiteProjectCardCollectionInput!) {
-        createIdealiteProjectCardCollection(input: $input) {
+    mutation createCollection($input: CreateIdealiteProjectCardCollectionv1Input!) {
+        createIdealiteProjectCardCollectionv1(input: $input) {
           document {
             id
           }

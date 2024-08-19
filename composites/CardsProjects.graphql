@@ -1,7 +1,7 @@
-type IdealiteProjectCardCollection @loadModel(id: "$IDEALITE_PROJECT_CARD_COLLECTION_ID") {
+type IdealiteProjectCardCollectionv1 @loadModel(id: "$IDEALITE_PROJECT_CARD_COLLECTION_ID") {
   id: ID!
 }
 
 type IdealiteCardv1 @loadModel(id: "$IDEALITE_CARD_ID") {
-  collection: [IdealiteProjectCardCollection] @relationFrom(model: "IdealiteProjectCardCollection", property: "idealiteCardId")
+  collection: [IdealiteProjectCardCollectionv1] @relationFrom(model: "IdealiteProjectCardCollectionv1", property: "idealiteCardId")
 }

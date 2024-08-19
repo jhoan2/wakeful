@@ -1,4 +1,4 @@
-type IdealiteProject
+type IdealiteProjectv1
     @createModel(accountRelation: LIST, description: "v0.1: Idealite Projects")
     @createIndex(fields: [{ path: ["url"]} ]) 
     @createIndex(fields: [{ path: ["title"]} ])

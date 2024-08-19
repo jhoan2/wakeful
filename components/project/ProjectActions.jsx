@@ -14,8 +14,8 @@ import { useProfileContext } from '../../context';
 
 export default function ProjectActions({ projectId, projectTitle }) {
     const { profile } = useProfileContext();
-    const DELETE_PROJECT = gql`mutation DeleteProject($input: UpdateIdealiteProjectInput!) {
-        updateIdealiteProject(input: $input) {
+    const DELETE_PROJECT = gql`mutation DeleteProject($input: UpdateIdealiteProjectv1Input!) {
+        updateIdealiteProjectv1(input: $input) {
           document {
                 id
             }

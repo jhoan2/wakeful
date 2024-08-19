@@ -2,16 +2,16 @@ type IdealiteCardv1 @loadModel(id: "$IDEALITE_CARD_ID") {
   id: ID!
 }
 
-type IdealiteProject @loadModel(id: "$IDEALITE_PROJECT_ID") {
+type IdealiteProjectv1 @loadModel(id: "$IDEALITE_PROJECT_ID") {
     id: ID!
 }
 
-type IdealiteProjectCardCollection
+type IdealiteProjectCardCollectionv1
   @createModel(accountRelation: LIST, description: "Association between a project and card")
   @createIndex(fields: [{ path: ["projectId"]} ])
   @createIndex(fields: [{ path: ["deleted"]} ]) {
-  projectId: StreamID @documentReference(model: "IdealiteProject")
-  project: IdealiteProject @relationDocument(property: "projectId")
+  projectId: StreamID @documentReference(model: "IdealiteProjectv1")
+  project: IdealiteProjectv1 @relationDocument(property: "projectId")
   idealiteCardId: StreamID! @documentReference(model: "IdealiteCardv1")
   idealiteCard: IdealiteCardv1! @relationDocument(property: "idealiteCardId")
   deleted: Boolean
