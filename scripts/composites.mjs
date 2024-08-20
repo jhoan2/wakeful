@@ -182,8 +182,6 @@ export const writeComposite = async (spinner) => {
     schema: idealiteTagCardCollectionv1Schema,
   })
 
-
-
   const tagsCardsSchema = readFileSync(
     "./composites/TagsCard.graphql",
     {
@@ -213,6 +211,48 @@ export const writeComposite = async (spinner) => {
     schema: cardsTagsSchema
   })
 
+  const idealiteTagProjectCollectionv1Schema = readFileSync(
+    "./composites/IdealiteTagProjectCollectionv1.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0]);
+
+  const idealiteTagProjectCollectionv1Composite = await Composite.create({
+    ceramic,
+    schema: idealiteTagProjectCollectionv1Schema,
+  });
+
+  const tagssProjectsScehma = readFileSync(
+    "./composites/TagsProjects.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_PROJECT_COLLECTION_ID", idealiteTagProjectCollectionv1Composite.modelIDs[2]);
+
+  const tagsProjectsComposite = await Composite.create({
+    ceramic,
+    schema: tagssProjectsScehma,
+  });
+
+  const projectsTagsSchema = readFileSync(
+    "./composites/ProjectsTags.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_PROJECT_COLLECTION_ID", idealiteTagProjectCollectionv1Composite.modelIDs[2]);
+
+  const projectsTagsComposite = await Composite.create({
+    ceramic,
+    schema: projectsTagsSchema,
+  });
+
   console.log('idealiteresourcev2composite', idealiteResourcev2Composite.modelIDs)
   console.log('idealiteprojectv1', idealiteProjectv1Composite.modelIDs)
   console.log('idealiteCardv1composite', idealiteCardv1Composite.modelIDs)
@@ -221,6 +261,7 @@ export const writeComposite = async (spinner) => {
   console.log('idealiteTagCardCollectionv1', idealiteTagCardCollectionv1Composite.modelIDs)
   console.log('idealiteAccountResourcesv1', idealiteAccountResourcesv1Composite.modelIDs)
   console.log('idealitetagAccountResourceCollectionv1Composite', idealiteTagAccountResourceCollectionv1Composite.modelIDs)
+  console.log('idealiteTagProjectCollectionv1Composite', idealiteTagProjectCollectionv1Composite.modelIDs)
 
   const composite = Composite.from([
     idealiteResourcev2Composite,
@@ -239,7 +280,10 @@ export const writeComposite = async (spinner) => {
     tagsAccountResourceComposite,
     idealiteTagCardCollectionv1Composite,
     tagCardsComposite,
-    cardsTagsComposite
+    cardsTagsComposite,
+    idealiteTagProjectCollectionv1Composite,
+    tagsProjectsComposite,
+    projectsTagsComposite
   ]);
 
   const newComposite = composite.setAliases({
