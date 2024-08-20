@@ -22,9 +22,12 @@ export default function ProfileCard({
                 farcasterId: user?.fid?.toString() || '',
                 displayName: user?.display_name || 'No name provided',
                 bio: user?.profile?.bio.text || 'No bio provided',
-                avatarCid: user?.pfp_url || 'default-avatar-url'
+                avatarCid: user?.pfp_url || null
             })
+        } else {
+            setFarcasterAuth(true)
         }
+
     }, [user])
 
     return (
