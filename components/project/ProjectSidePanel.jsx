@@ -35,7 +35,6 @@ export default function ProjectSidePanel({ projectData }) {
         updatedAt,
         status,
         url,
-        priority,
         description
     } = projectData
 
@@ -54,7 +53,6 @@ export default function ProjectSidePanel({ projectData }) {
         title: z.string().min(2).max(140),
         description: z.optional(z.string()),
         url: z.optional(z.string()),
-        priority: z.enum(["HIGH", "MEDIUM", "LOW"]),
         status: z.enum(["DONE", "DOING", "TODO", "DROPPED", "ARCHIVED"]),
     })
 
@@ -64,7 +62,6 @@ export default function ProjectSidePanel({ projectData }) {
             title: `${title}`,
             description: `${description}`,
             url: `${url}`,
-            priority: `${priority}`,
             status: `${status}`,
         },
     })
@@ -75,7 +72,6 @@ export default function ProjectSidePanel({ projectData }) {
             // cid: IpfsHash,
             // mimeType: image?.type,
             // pinSize: PinSize,
-            priority: values.priority,
             status: values.status,
             url: values.url,
             title: values.title,
@@ -190,46 +186,6 @@ export default function ProjectSidePanel({ projectData }) {
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="priority"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Priority</FormLabel>
-                                                <FormControl>
-                                                    <RadioGroup
-                                                        onValueChange={field.onChange}
-                                                        defaultValue={priority}
-                                                        className="flex flex-col space-y-1"
-                                                    >
-                                                        <FormItem className="flex items-center space-x-3 space-y-0">
-                                                            <FormControl>
-                                                                <RadioGroupItem value="HIGH" />
-                                                            </FormControl>
-                                                            <FormLabel className="font-normal">
-                                                                High
-                                                            </FormLabel>
-                                                        </FormItem>
-                                                        <FormItem className="flex items-center space-x-3 space-y-0">
-                                                            <FormControl>
-                                                                <RadioGroupItem value="MEDIUM" />
-                                                            </FormControl>
-                                                            <FormLabel className="font-normal">
-                                                                Medium
-                                                            </FormLabel>
-                                                        </FormItem>
-                                                        <FormItem className="flex items-center space-x-3 space-y-0">
-                                                            <FormControl>
-                                                                <RadioGroupItem value="LOW" />
-                                                            </FormControl>
-                                                            <FormLabel className="font-normal">Low</FormLabel>
-                                                        </FormItem>
-                                                    </RadioGroup>
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
                                         name="status"
                                         render={({ field }) => (
                                             <FormItem className="space-y-3">
@@ -312,27 +268,6 @@ export default function ProjectSidePanel({ projectData }) {
                                 <div className="space-y-1">
                                     <Label htmlFor="url">Url</Label>
                                     <Input id="url" defaultValue={`${url}`} disabled />
-                                </div>
-                                <div>
-                                    <Label>Priority</Label>
-                                    <RadioGroup
-                                        defaultValue={priority}
-                                        className="flex flex-col space-y-1"
-                                    >
-                                        <div className="flex items-center space-x-3 space-y-0">
-                                            <RadioGroupItem value="HIGH" id="p1" />
-                                            <Label htmlFor="p1">High</Label>
-                                        </div>
-                                        <div className="flex items-center space-x-3 space-y-0">
-
-                                            <RadioGroupItem value="MEDIUM" id="p2" />
-                                            <Label htmlFor="p2">Medium</Label>
-                                        </div>
-                                        <div className="flex items-center space-x-3 space-y-0">
-                                            <RadioGroupItem value="LOW" id="p3" />
-                                            <Label htmlFor="p3">Low</Label>
-                                        </div>
-                                    </RadioGroup>
                                 </div>
                                 <div>
                                     <Label>Status</Label>

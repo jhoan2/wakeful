@@ -32,7 +32,6 @@ export default function ProjectAdd() {
         title: z.string().min(2).max(140),
         description: z.optional(z.string()),
         url: z.optional(z.string()),
-        priority: z.enum(["HIGH", "MEDIUM", "LOW"]),
         status: z.enum(["DONE", "DOING", "TODO", "DROPPED", "ARCHIVED"]),
     })
 
@@ -42,7 +41,6 @@ export default function ProjectAdd() {
             title: "",
             description: '',
             url: '',
-            priority: "MEDIUM",
             status: "TODO",
         },
     })
@@ -54,7 +52,6 @@ export default function ProjectAdd() {
             // cid: IpfsHash,
             // mimeType: image?.type,
             // pinSize: PinSize,
-            priority: values.priority,
             status: values.status,
             url: values.url,
             title: values.title,
@@ -154,46 +151,6 @@ export default function ProjectAdd() {
                                     <FormLabel>Url</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Url" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="priority"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Priority</FormLabel>
-                                    <FormControl>
-                                        <RadioGroup
-                                            onValueChange={field.onChange}
-                                            defaultValue={"MEDIUM"}
-                                            className="flex flex-col space-y-1"
-                                        >
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="HIGH" />
-                                                </FormControl>
-                                                <FormLabel className="font-normal">
-                                                    High
-                                                </FormLabel>
-                                            </FormItem>
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="MEDIUM" />
-                                                </FormControl>
-                                                <FormLabel className="font-normal">
-                                                    Medium
-                                                </FormLabel>
-                                            </FormItem>
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="LOW" />
-                                                </FormControl>
-                                                <FormLabel className="font-normal">Low</FormLabel>
-                                            </FormItem>
-                                        </RadioGroup>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

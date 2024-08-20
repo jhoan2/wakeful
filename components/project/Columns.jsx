@@ -80,35 +80,6 @@ export const Columns = [
         }
     },
     {
-        accessorKey: "priority",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Priority
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => {
-            const priority = row.getValue("priority")
-            return (
-                <div className={`
-                    w-24 
-                    font-medium 
-                    text-center
-                    ${priority === 'HIGH' ? 'text-red-300' : ''}
-                    ${priority === 'MEDIUM' ? 'text-orange-300' : ''}
-                    ${priority === 'LOW' ? 'text-green-300' : ''}
-                `}>
-                    {priority}
-                </div>
-            )
-        }
-    },
-    {
         accessorKey: "tags",
         header: ({ column }) => {
             return (
