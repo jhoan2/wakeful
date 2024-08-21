@@ -68,7 +68,7 @@ export default function HomeCard({ resource }) {
                                 tags?.edges?.length > 0 ?
                                     <div className='space-x-2'>
                                         {tags.edges.map((tag) => {
-                                            return <HomeCardTag tag={tag} key={tag.tagId} />
+                                            return <HomeCardTag tag={tag} key={tag.node.id} />
 
                                         })}
                                     </div>
