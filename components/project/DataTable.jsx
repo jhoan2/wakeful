@@ -130,6 +130,7 @@ export default function DataTable({ columns, data }) {
                         {table.getRowModel().rows?.length > 0 ? (
                             table.getRowModel().rows.map((row) => (
                                 <ContextMenu key={row.id}>
+                                    {/* className contents is needed so that the project fits the table */}
                                     <ContextMenuTrigger className="contents">
                                         <TableRow
                                             data-state={row.getIsSelected() && "selected"}
