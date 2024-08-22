@@ -3,6 +3,6 @@ type IdealiteTagProjectCollectionv1 @loadModel(id: "$IDEALITE_TAG_PROJECT_COLLEC
 }
 
 type IdealiteProjectv1 @loadModel(id: "$IDEALITE_PROJECT_ID") {
-	projects: [IdealiteTagProjectCollectionv1] @relationFrom(model: "IdealiteTagProjectCollectionv1", property: "idealiteProjectId")
+	tags: [IdealiteTagProjectCollectionv1] @relationFrom(model: "IdealiteTagProjectCollectionv1", property: "idealiteProjectId")
 }
 

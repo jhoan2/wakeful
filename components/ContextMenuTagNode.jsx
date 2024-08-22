@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 export default function ContextMenuTagNode({ node, style, tree }) {
     const { cardId, category } = tree.props
     const ADD_TAG_TO_CARD = gql`
-    mutation MyMutation($input: CreateIdealiteTagCardCollectionv1Input!) {
+    mutation addTagToCard($input: CreateIdealiteTagCardCollectionv1Input!) {
         createIdealiteTagCardCollectionv1(input: $input) {
             document {
                 id
@@ -17,6 +17,16 @@ export default function ContextMenuTagNode({ node, style, tree }) {
     const ADD_TAG_TO_ACCOUNT_RESOURCE = gql`
     mutation addTagToAccountResource($input: CreateIdealiteTagAccountResourceCollectionv1Input!) {
         createIdealiteTagAccountResourceCollectionv1(input: $input) {
+            document {
+                id
+            }
+        }
+    }
+    `
+
+    const ADD_TAG_TO_PROJECT = gql`
+    mutation addTagToProject($input: CreateIdealiteTagProjectCollectionv1Input!) {
+        createIdealiteTagProjectCollectionv1(input: $input) {
             document {
                 id
             }
@@ -36,6 +46,14 @@ export default function ContextMenuTagNode({ node, style, tree }) {
         refetchQueries: ['GetCardsPerUrlPerUser'],
         onError: (error) => {
             toast.error('Something went wrong with tagging.')
+            console.log(error.message)
+        }
+    });
+
+    const [addTagToProject] = useMutation(ADD_TAG_TO_PROJECT, {
+        refetchQueries: ['getUsersProjects'],
+        onError: (error) => {
+            toast.error('Something went wrong with tagging the project.')
             console.log(error.message)
         }
     });
@@ -70,6 +88,19 @@ export default function ContextMenuTagNode({ node, style, tree }) {
             })
         }
 
+        if (category === 'project') {
+            addTagToProject({
+                variables: {
+                    input: {
+                        content: {
+                            deleted: false,
+                            idealiteProjectId: cardId,
+                            idealiteTagId: node.data.id
+                        }
+                    }
+                }
+            })
+        }
     }
 
     return (
@@ -94,4 +125,3 @@ export default function ContextMenuTagNode({ node, style, tree }) {
         </div>
     )
 }
-

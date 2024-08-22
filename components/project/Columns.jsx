@@ -2,7 +2,7 @@ import { Loader, Square, CheckSquare2, Archive, XSquare, ArrowUpDown } from "luc
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ProjectActions from "./ProjectActions";
-import ProjectTag from "./ProjectTag";
+import ProjectTagGroup from "./ProjectTagGroup";
 
 export const Columns = [
     {
@@ -95,7 +95,7 @@ export const Columns = [
         cell: ({ row }) => {
             const tags = row.getValue("tags")
             return (
-                <ProjectTag tags={tags} />
+                <ProjectTagGroup tags={tags.edges} />
             )
         }
     },
