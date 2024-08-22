@@ -79,7 +79,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
 
     return (
         <div>
-            <Button variant='secondary' onClick={() => sendAdminQuery({ variables: { filters: createFilters(), ...paginationArg } })}>Query</Button>
+            <Button variant='secondary' title='You can get the results from left column once you send it.' onClick={() => sendAdminQuery({ variables: { filters: createFilters(), ...paginationArg } })}>Query</Button>
             <Button variant='secondary' onClick={() => setDeletedFilter(!deletedFilter)}>
                 {
                     deletedFilter ?
@@ -88,7 +88,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
                         <p>deleted: false</p>
                 }
             </Button>
-            <Button variant='secondary' onClick={() => sendNodesToTagTree()}>Send to Tag Tree</Button>
+            <Button variant='secondary' onClick={() => sendNodesToTagTree()} title='Sends the results from query to left column'>Send to Tag Tree</Button>
             <div>
                 <Label>First</Label>
                 <input

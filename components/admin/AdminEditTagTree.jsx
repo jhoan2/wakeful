@@ -76,11 +76,11 @@ export default function AdminEditTagTree({ tagTreeData, setTagTreeData, setTagPa
             <div>
                 <Button onClick={() => handleBasicData()}>Use Root</Button>
                 <Button onClick={() => logTreeData()}>Log Tree Data</Button>
-                <Button onClick={() => addDataToCircle()}>Add data to Circle</Button>
-                <Button onClick={() => submitTagTree()}>Submit</Button>
+                <Button title='sends the data to the circle so you can press show circle' onClick={() => addDataToCircle()}>Add data to Circle</Button>
+                <Button title='this saves the tagTree into the root to be used on explore page' onClick={() => submitTagTree()}>Submit</Button>
             </div>
             <div>
-                <Button onClick={() => setRefreshTagTree(!refreshTagTree)}>Refresh</Button>
+                <Button title='This will refresh and show the tag tree' onClick={() => setRefreshTagTree(!refreshTagTree)}>Show Tree</Button>
                 <Button onClick={() => setTagTreeData([])}>Clear</Button>
             </div>
             <div className='flex items-center bg-white m-2'>
