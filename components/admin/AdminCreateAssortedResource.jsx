@@ -28,6 +28,8 @@ export default function AdminCreateAssortedResource({ clientMutationId }) {
             if (!res.ok) {
                 throw new Error('Server responded with an error: ' + res.status);
             } else {
+                const response = await res.json()
+                console.log(response)
                 toast.success('Created Assorted Resources Folder')
             }
 
