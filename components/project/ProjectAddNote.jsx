@@ -117,7 +117,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
             deleted: false,
             lastReviewed: new Date().toISOString(),
             learningStatus: 'FORGETTING',
-            timesForgetten: 0
+            timesForgotten: 0
         }
 
         for (const key in noteContent) {
