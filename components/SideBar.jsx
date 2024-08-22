@@ -42,7 +42,7 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                             <button title='Projects' className={`w-16 lg:w-36 h-16 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-500 hover:bg-gray-600 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ${page === 'projects' ? 'bg-gray-400' : 'bg-slate-100'}`}>
                                 <div className='flex items-center text-lg space-x-2'>
                                     <Folder />
-                                    <p className='lg:block hidden'>Pages</p>
+                                    <p className='lg:block hidden'>Projects</p>
                                 </div>
                             </button>
                         </Link>
