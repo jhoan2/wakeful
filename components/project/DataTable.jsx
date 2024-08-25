@@ -28,14 +28,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ProjectAdd from './ProjectAdd';
-import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { useProfileContext } from '../../context';
-import ContextMenuTree from '../ContextMenuTree';
-
 
 export default function DataTable({ columns, data }) {
     const [columnVisibility, setColumnVisibility] = React.useState({ updatedAt: false, createdAt: false })
@@ -57,7 +49,6 @@ export default function DataTable({ columns, data }) {
             columnVisibility,
         },
     })
-    const { profile } = useProfileContext()
 
     return (
         <div>
@@ -129,27 +120,16 @@ export default function DataTable({ columns, data }) {
                     <TableBody>
                         {table.getRowModel().rows?.length > 0 ? (
                             table.getRowModel().rows.map((row) => (
-                                <ContextMenu key={row.id}>
-                                    {/* className contents is needed so that the project fits the table */}
-                                    <ContextMenuTrigger className="contents">
-                                        <TableRow
-                                            data-state={row.getIsSelected() && "selected"}
-                                        >
-                                            {row.getVisibleCells().map((cell) => (
-                                                <TableCell key={cell.id}>
-                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                                </TableCell>
-                                            ))}
-                                        </TableRow>
-                                    </ContextMenuTrigger>
-                                    <ContextMenuContent>
-                                        {profile.tags && profile.tags.length === 0 ?
-                                            <p>No tags yet.</p>
-                                            :
-                                            <ContextMenuTree cardId={row.original.id} category={'project'} tags={row.original.tags} />
-                                        }
-                                    </ContextMenuContent>
-                                </ContextMenu>
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && "selected"}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
                             ))
                         ) : (
                             <TableRow>
