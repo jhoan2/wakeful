@@ -22,7 +22,7 @@ export default function SideBar({ page, setPage, avatarFallback }) {
                 <div className="flex flex-col justify-center items-center gap-y-2 py-4">
                     <Link href={'/'}>
                         <div className="flex items-center text-lg space-x-2 mb-4">
-                            <Image src='/icon48.png' alt='idealite logo' width={64} height={64} priority />
+                            <Image src='/icon48.png' alt='idealite logo' width={64} height={64} />
                             <p className='lg:block hidden text-3xl text-amber-400'>Idealite</p>
                         </div>
                     </Link>
