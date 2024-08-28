@@ -225,18 +225,18 @@ export const writeComposite = async (spinner) => {
     schema: idealiteTagProjectCollectionv1Schema,
   });
 
-  const tagssProjectsScehma = readFileSync(
+  const tagsProjectsScehma = readFileSync(
     "./composites/TagsProjects.graphql",
     {
       encoding: "utf-8",
     }
   )
-    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
     .replace("$IDEALITE_TAG_PROJECT_COLLECTION_ID", idealiteTagProjectCollectionv1Composite.modelIDs[2]);
 
   const tagsProjectsComposite = await Composite.create({
     ceramic,
-    schema: tagssProjectsScehma,
+    schema: tagsProjectsScehma,
   });
 
   const projectsTagsSchema = readFileSync(
