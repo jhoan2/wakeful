@@ -1,5 +1,6 @@
 import { Loader, Square, CheckSquare2, Archive, XSquare, ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import ProjectActions from "./ProjectActions";
 import ProjectTagGroup from "./ProjectTagGroup";
@@ -97,6 +98,31 @@ export const Columns = [
             return (
                 <ProjectTagGroup tags={tags.edges} />
             )
+        }
+    },
+    {
+        accessorKey: "event",
+        header: ({ column }) => {
+            return (
+                <Label
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Event
+                </Label>
+            )
+        },
+        cell: ({ row }) => {
+            const eventChildId = row.original.eventChildId;
+            if (eventChildId) {
+                return (
+                    <Link href={`/events/${encodeURIComponent(eventChildId)}`}>
+                        <Button variant="outline" size="sm">
+                            View Event
+                        </Button>
+                    </Link>
+                );
+            }
         }
     },
     {
