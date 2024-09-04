@@ -4,7 +4,10 @@ type IdealiteProjectv1
     @createIndex(fields: [{ path: ["title"]} ])
     @createIndex(fields: [{ path: ["updatedAt"]} ])
     @createIndex(fields: [{ path: ["deleted"]} ])
-    @createIndex(fields: [{ path: ["status"]} ]) {
+    @createIndex(fields: [{ path: ["status"]} ])
+    @createIndex(fields: [{ path: ["isPublic"]} ])
+    @createIndex(fields: [{ path: ["startTimestamp"]} ])
+    @createIndex(fields: [{ path: ["endTimestamp"]} ]) {
     account: DID! @documentAccount
     cid: String @string(minLength: 1, maxLength: 140)
     createdAt: DateTime
@@ -14,6 +17,16 @@ type IdealiteProjectv1
     title: String @string(minLength: 1, maxLength: 140)
     url: String @string(minLength: 1, maxLength: 140)
     updatedAt: DateTime
+    clientMutationId: String @string(minLength: 1, maxLength: 140)
+    hostDisplayName: String @string(minLength: 1, maxLength: 240)
+    hostFarcasterId: String @string(minLength: 1, maxLength: 10000)
+    hostAvatarCid: String @string(minLength: 1, maxLength: 3000)
+    projectParentId: String @string(minLength: 1, maxLength: 300)
+    eventChildId: String @string(minLength: 1, maxLength: 300)
+    eventCastHash: String @string(minLength: 1, maxLength: 300)
+    startTimestamp: DateTime
+    endTimestamp: DateTime
+    isPublic: Boolean
 }
 
 enum ProjectStatus {
