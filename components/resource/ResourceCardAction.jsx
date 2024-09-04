@@ -23,10 +23,9 @@ export default function ResourceCardAction({ cardId }) {
     query getUsersProjectList {
         viewer {
             id
-          idealiteProjectList(
+          idealiteProjectv1List(
             filters: {where: {deleted: {equalTo: false}, status: {in: [TODO, DOING]}}},
             first: 15,
-            sorting: {priority: ASC},
           ) {
             edges {
               node {
@@ -76,8 +75,8 @@ export default function ResourceCardAction({ cardId }) {
     }
 
     const CREATE_COLLECTION = gql`
-    mutation createCollection($input: CreateIdealiteProjectCardCollectionInput!) {
-        createIdealiteProjectCardCollection(input: $input) {
+    mutation createCollection($input: CreateIdealiteProjectCardCollectionv1Input!) {
+        createIdealiteProjectCardCollectionv1(input: $input) {
           document {
             id
           }
@@ -140,7 +139,7 @@ export default function ResourceCardAction({ cardId }) {
                                 )
                             })}
                             {
-                                data && data?.viewer?.idealiteProjectList?.edges?.length === 0 ?
+                                data && data?.viewer?.idealiteProjectv1List?.edges?.length === 0 ?
                                     <DropdownMenuItem className='flex items-center relative flex cursor-default select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
                                         <span>No projects available</span>
                                     </DropdownMenuItem>
@@ -149,7 +148,7 @@ export default function ResourceCardAction({ cardId }) {
                             }
                             <DropdownMenuSeparator />
                             <DropdownMenuLabel>Recent Projects</DropdownMenuLabel>
-                            {data?.viewer?.idealiteProjectList && data?.viewer?.idealiteProjectList?.edges?.map((project) => {
+                            {data?.viewer?.idealiteProjectv1List && data?.viewer?.idealiteProjectv1List?.edges?.map((project) => {
                                 return (
                                     <DropdownMenuItem key={project?.node?.id} onClick={() => createCollection(project.node.id)} className='flex items-center relative flex cursor-default truncate select-none rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
                                         <span>{project?.node?.title}</span>
