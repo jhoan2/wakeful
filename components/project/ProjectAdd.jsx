@@ -57,6 +57,7 @@ export default function ProjectAdd() {
             title: values.title,
             description: values.description,
             deleted: false,
+            isPublic: false,
         }
 
         for (const key in projectContent) {
