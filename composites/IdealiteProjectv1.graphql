@@ -9,7 +9,6 @@ type IdealiteProjectv1
     @createIndex(fields: [{ path: ["startTimestamp"]} ])
     @createIndex(fields: [{ path: ["endTimestamp"]} ]) {
     account: DID! @documentAccount
-    cid: String @string(minLength: 1, maxLength: 140)
     createdAt: DateTime
     deleted: Boolean
     description: String @string(minLength: 1, maxLength: 3000)
@@ -24,6 +23,7 @@ type IdealiteProjectv1
     projectParentId: String @string(minLength: 1, maxLength: 300)
     eventChildId: String @string(minLength: 1, maxLength: 300)
     eventCastHash: String @string(minLength: 1, maxLength: 300)
+    eventImage: String @string(minLength: 1, maxLength: 1400)
     startTimestamp: DateTime
     endTimestamp: DateTime
     isPublic: Boolean
