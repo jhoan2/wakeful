@@ -17,16 +17,16 @@ const handler = async (req, res) => {
   const { title, clientMutationId, description, publishedAt, author, cid, openLibraryKey } = req.body
   const uniqueKey = process.env.ADMIN_DID_KEY;
   let input = {
-    title: title,
+    title: title.toLowerCase(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    clientMutationId: clientMutationId,
-    description: description,
-    publishedAt: publishedAt,
+    clientMutationId: clientMutationId || null,
+    description: description || null,
+    publishedAt: publishedAt ? new Date(publishedAt).toISOString() : null,
     author: author || 'n/a',
-    cid: cid,
+    cid: cid || null,
     mediaType: 'Book',
-    openLibraryKey: openLibraryKey
+    openLibraryKey: openLibraryKey || null
   }
 
   //authenticate developer DID in order to create a write transaction
@@ -91,6 +91,7 @@ const handler = async (req, res) => {
                         }
                       }
                       `, variableValues)
+
           resourceId = newResourceId.data.createIdealiteResourcev2.document.id
         } else {
           //if it does exist, set the resourceId to it 
