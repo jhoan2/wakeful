@@ -10,6 +10,7 @@ import AdminQueryTagById from '../../components/admin/AdminQueryTagById';
 import { Button } from "@/components/ui/button";
 import AdminUpdateTag from '../../components/admin/AdminUpdateTag';
 import AdminTagPack from '../../components/admin/AdminTagPack';
+import AdminCreateAssortedResource from '../../components/admin/AdminCreateAssortedResource';
 
 export default function Tags() {
     const clients = useCeramicContext();
@@ -49,6 +50,7 @@ export default function Tags() {
     return (
         <div>
             <div className='flex justify-start h-screen w-full'>
+                <AdminCreateAssortedResource clientMutationId={composeClient.id} />
                 <AdminEditTagTree
                     tagTreeData={tagTreeData}
                     setTagTreeData={setTagTreeData}
