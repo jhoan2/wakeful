@@ -16,11 +16,21 @@ export default function Projects() {
                         node {
                             id
                             title
-                            priority
                             status
                             description
                             createdAt
                             updatedAt
+                            eventChildId
+                            tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
+                                edges {
+                                    node {
+                                        idealiteTag {
+                                            name
+                                            id
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -31,6 +41,7 @@ export default function Projects() {
     const { loading, error, data } = useQuery(GET_USERS_PROJECTS);
     if (error) return <ErrorPage message={error.message} />;
     const projects = data?.viewer?.idealiteProjectv1List.edges.map((edge) => edge.node)
+
     return (
         <div className='flex justify-center w-full h-screen'>
             {loading ?
