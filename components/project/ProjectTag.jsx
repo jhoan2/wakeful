@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { gql, useMutation } from '@apollo/client';
 import { toast } from 'sonner';
 
-export default function ProjectTag({ tagId, name }) {
+export default function ProjectTag({ name, projectTitleTagId, category, projectTagId }) {
     const [isHovered, setIsHovered] = useState(false);
 
     const DELETE_TAG_FROM_PROJECT = gql`
@@ -17,24 +17,47 @@ export default function ProjectTag({ tagId, name }) {
     `
 
     const [deleteTagFromProject] = useMutation(DELETE_TAG_FROM_PROJECT, {
-        refetchQueries: ['getUsersProjects'],
+        refetchQueries: ['getUsersProjectCardCollection'],
         onError: (error) => {
-            toast.error('Something went wrong with deleting tag.')
+            toast.error('Something went wrong with deleting tag at ProjectTag.')
+            console.log(error.message)
+        }
+    });
+
+    const [deleteTagFromProjectTitle] = useMutation(DELETE_TAG_FROM_PROJECT, {
+        refetchQueries: ['getProjectTitle'],
+        onError: (error) => {
+            toast.error('Something went wrong with deleting tag from project title.')
             console.log(error.message)
         }
     });
 
     const sendDeleteTag = () => {
-        deleteTagFromProject({
-            variables: {
-                input: {
-                    id: tagId,
-                    content: {
-                        deleted: true
+        if (category === 'project') {
+            deleteTagFromProject({
+                variables: {
+                    input: {
+                        id: projectTagId,
+                        content: {
+                            deleted: true
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
+
+        if (category === 'projectTitle') {
+            deleteTagFromProjectTitle({
+                variables: {
+                    input: {
+                        id: projectTitleTagId,
+                        content: {
+                            deleted: true
+                        }
+                    }
+                }
+            })
+        }
     }
 
     return (

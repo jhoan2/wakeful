@@ -51,9 +51,17 @@ export default function ContextMenuTagNode({ node, style, tree }) {
     });
 
     const [addTagToProject] = useMutation(ADD_TAG_TO_PROJECT, {
-        refetchQueries: ['getUsersProjects'],
+        refetchQueries: ['getUsersProjectCardCollection'],
         onError: (error) => {
             toast.error('Something went wrong with tagging the project.')
+            console.log(error.message)
+        }
+    });
+
+    const [addTagToProjectTitle] = useMutation(ADD_TAG_TO_PROJECT, {
+        refetchQueries: ['getProjectTitle'],
+        onError: (error) => {
+            toast.error('Something went wrong with tagging the project title.')
             console.log(error.message)
         }
     });
@@ -90,6 +98,20 @@ export default function ContextMenuTagNode({ node, style, tree }) {
 
         if (category === 'project') {
             addTagToProject({
+                variables: {
+                    input: {
+                        content: {
+                            deleted: false,
+                            idealiteProjectId: cardId,
+                            idealiteTagId: node.data.id
+                        }
+                    }
+                }
+            })
+        }
+
+        if (category === 'projectTitle') {
+            addTagToProjectTitle({
                 variables: {
                     input: {
                         content: {
