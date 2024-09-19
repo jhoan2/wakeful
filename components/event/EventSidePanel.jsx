@@ -14,7 +14,8 @@ import EventSidePanelEdit from './EventSidePanelEdit';
 import { useCeramicContext } from '../../context';
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
-import EventTagGroup from './EventTagGroup'
+import EventTagGroup from './EventTagGroup';
+import Image from 'next/image'
 
 export default function EventSidePanel({ data }) {
     const [openProjectSidePanel, setOpenProjectSidePanel] = useState(false)
@@ -36,6 +37,7 @@ export default function EventSidePanel({ data }) {
         projectParentId,
         tags,
         createdAt,
+        eventImage,
         updatedAt,
         isPulic,
         deleted,
@@ -76,6 +78,19 @@ export default function EventSidePanel({ data }) {
                             <div className='space-y-6'>
                                 <Dialog>
                                     <DialogHeader>
+                                        <div className="relative w-full h-48 mb-4">
+                                            <Image
+                                                src={eventImage || '/home-card-gradient.png'}
+                                                alt={title || 'Event'}
+                                                fill
+                                                style={{ objectFit: 'cover', layout: 'fill' }}
+                                                className="rounded-lg"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = '/home-card-gradient.png';
+                                                }}
+                                            />
+                                        </div>
                                         <DialogTitle>{title}</DialogTitle>
                                         <DialogDescription>{description}</DialogDescription>
                                         {deleted && (
