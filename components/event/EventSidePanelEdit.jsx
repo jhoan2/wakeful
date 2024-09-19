@@ -12,14 +12,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Loader2 } from 'lucide-react';
-import { useProfileContext } from '../../context';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { useRouter } from 'next/router';
 import { useCeramicContext } from '../../context';
 import { useApolloClient } from '@apollo/client';
