@@ -7,7 +7,10 @@ const handler = async (req, res) => {
             const { url } = req.query
             try {
                 const { result, error } = await ogs({ url: url });
-                if (error) return res.status(500).send({ message: error })
+                if (error) {
+                    console.log(error)
+                    return res.status(500).send({ message: error })
+                }
                 return res.status(200).send({ result: result })
             } catch (error) {
                 return res.status(500).send({ message: error.message })
