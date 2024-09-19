@@ -51,7 +51,9 @@ const handler = async (req, res) => {
     hostDisplayName,
     hostFarcasterId,
     hostAvatarCid,
-    tags
+    tags,
+    eventImage,
+    eventCastHash
   } = req.body.projectContent
 
   switch (req.method) {
@@ -70,6 +72,8 @@ const handler = async (req, res) => {
         startTimestamp: startTimestamp || null,
         endTimestamp: endTimestamp || null,
         eventChildId: projectId,
+        eventImage: eventImage || null,
+        eventCastHash: eventCastHash || null,
         isPublic: true,
         url: url || null,
         hostDisplayName: hostDisplayName || null,
