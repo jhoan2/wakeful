@@ -1,7 +1,7 @@
 import React from 'react';
 import CastCard from './CastCard';
 
-const RecursiveCastCard = ({ cast, onShowMoreReplies, isTopLevel = true }) => {
+const RecursiveCastCard = ({ cast, onShowMoreReplies, isTopLevel = true, projectParentId }) => {
     const hasDirectReplies = cast.direct_replies && cast.direct_replies.length > 0;
     const isLastInBranch = !hasDirectReplies;
 
@@ -12,6 +12,7 @@ const RecursiveCastCard = ({ cast, onShowMoreReplies, isTopLevel = true }) => {
                 onShowMoreReplies={onShowMoreReplies}
                 isLastInBranch={isLastInBranch}
                 isTopLevel={isTopLevel}
+                projectParentId={projectParentId}
             />
 
             {hasDirectReplies && (
@@ -21,6 +22,7 @@ const RecursiveCastCard = ({ cast, onShowMoreReplies, isTopLevel = true }) => {
                         cast={reply}
                         onShowMoreReplies={onShowMoreReplies}
                         isTopLevel={false}
+                        projectParentId={projectParentId}
                     />
                 ))
             )}

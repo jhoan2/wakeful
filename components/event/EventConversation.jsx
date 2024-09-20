@@ -4,7 +4,7 @@ import { useProfileContext } from '../../context';
 import { useNeynarContext } from '@neynar/react';
 import { Loader2, ChevronDown } from 'lucide-react';
 
-const EventConversation = ({ eventCastHash }) => {
+const EventConversation = ({ eventCastHash, projectParentId }) => {
     const [castData, setCastData] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const { profile } = useProfileContext()
@@ -144,6 +144,7 @@ const EventConversation = ({ eventCastHash }) => {
                 <RecursiveCastCard
                     cast={castData.conversation.cast}
                     onShowMoreReplies={fetchMoreReplies}
+                    projectParentId={projectParentId}
                 />
             ) : (
                 null

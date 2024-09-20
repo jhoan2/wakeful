@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Heart, Share, ChevronDown, Check, Trash } from "lucide-react";
+import { Heart, Share, ChevronDown, Check, Trash, Save } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 import { useNeynarContext } from '@neynar/react';
 import { toast } from 'sonner';
@@ -19,9 +19,9 @@ import {
 import CastRenderEmbed from './CastRenderEmbed';
 import { v4 as uuidv4 } from 'uuid';
 import CastSubCardReply from './CastSubCardReply';
+import { gql, useMutation } from '@apollo/client';
 
-
-const CastCard = ({ cast, onShowMoreReplies, isLastInBranch, isTopLevel }) => {
+const CastCard = ({ cast, onShowMoreReplies, isLastInBranch, isTopLevel, projectParentId }) => {
     const { author, text, timestamp, reactions, replies, hash, viewer_context, embeds = [], frames = [] } = cast;
     const [isLinkCopied, setIsLinkCopied] = useState(false)
     const [likes, setLikes] = useState(cast.reactions.likes_count)
@@ -30,6 +30,7 @@ const CastCard = ({ cast, onShowMoreReplies, isLastInBranch, isTopLevel }) => {
     const filteredEmbeds =
         embeds.filter(embed => !framesUrls.includes(embed.url))
     const timeAgo = formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+
     const deleteCast = async () => {
         if (!user || !user.signer_uuid) {
             console.error('User or signer_uuid not available');
@@ -95,6 +96,70 @@ const CastCard = ({ cast, onShowMoreReplies, isLastInBranch, isTopLevel }) => {
         }
     };
 
+    const ADD_NOTE = gql`
+    mutation ADD_NOTE($input: CreateIdealiteCardv1Input!) {
+        createIdealiteCardv1(input: $input) {
+          document {
+            id
+          }
+        }
+      }`
+
+    const [addNote] = useMutation(ADD_NOTE);
+
+    const CREATE_COLLECTION = gql`
+    mutation createCollection($input: CreateIdealiteProjectCardCollectionv1Input!) {
+        createIdealiteProjectCardCollectionv1(input: $input) {
+          document {
+            id
+          }
+        }
+      }`
+
+    const [createCollection] = useMutation(CREATE_COLLECTION);
+
+    const saveCast = async () => {
+        let noteContent = {
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            annotation: cast.text,
+            cid: null,
+            resourceId: process.env.NEXT_PUBLIC_PROJECT_CARD_RESOURCE_ID,
+            deleted: false,
+            lastReviewed: new Date().toISOString(),
+            learningStatus: 'FORGETTING',
+            timesForgotten: 0
+        }
+
+        try {
+            const noteResult = await addNote({
+                variables: {
+                    input: {
+                        content: noteContent
+                    }
+                }
+            });
+
+            if (noteResult.data.createIdealiteCardv1.document.id) {
+                await createCollection({
+                    variables: {
+                        input: {
+                            content: {
+                                projectId: projectParentId,
+                                idealiteCardId: noteResult.data.createIdealiteCardv1.document.id,
+                                deleted: false
+                            }
+                        }
+                    }
+                });
+            } else {
+                throw new Error('Error creating project and card collection');
+            }
+        } catch (error) {
+            console.error('Error saving cast:', error);
+        }
+    }
+
     const parseTextWithLinks = (text) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.split(urlRegex).map((part, index) => {
@@ -131,7 +196,6 @@ const CastCard = ({ cast, onShowMoreReplies, isLastInBranch, isTopLevel }) => {
                                             <p className="font-semibold">{author.display_name}</p>
                                             <p className="text-sm text-gray-500">@{author.username} · {timeAgo}</p>
                                         </div>
-
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
                                                 <Button variant="ghost" size="small">
@@ -145,6 +209,10 @@ const CastCard = ({ cast, onShowMoreReplies, isLastInBranch, isTopLevel }) => {
                                                     <DropdownMenuItem onClick={() => deleteCast()} className='text-red-600 relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-red-100 focus:text-red-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
                                                         <Trash className="mr-2 h-4 w-4" />
                                                         <span>Delete</span>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => saveCast()} className='text-gray-600 relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-gray-100 focus:text-gray-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50'>
+                                                        <Save className="mr-2 h-4 w-4" />
+                                                        <span>Save</span>
                                                     </DropdownMenuItem>
                                                 </DropdownMenuRadioGroup>
                                             </DropdownMenuContent>
