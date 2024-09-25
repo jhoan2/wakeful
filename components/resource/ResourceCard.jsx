@@ -29,8 +29,8 @@ export default function ResourceCard({ card }) {
     const [uploadImage, setUploadImage] = useState(null)
     const [editorContent, setEditorContent] = useState('')
     const UPDATE_NOTE = gql`
-    mutation UPDATE_NOTE($input: UpdateIdealiteCardsInput!) {
-        updateIdealiteCards(input: $input) {
+    mutation UPDATE_NOTE($input: UpdateIdealiteCardv1Input!) {
+        updateIdealiteCardv1(input: $input) {
           document {
             id
             annotation
@@ -92,7 +92,7 @@ export default function ResourceCard({ card }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
+                class: 'prose p-2 prose-md  lg:prose-lg dark:prose-invert hover:outline outline-amber-400 outline-offset-2 outline-2 rounded-md',
             },
         },
         content: annotation,
@@ -212,11 +212,10 @@ export default function ResourceCard({ card }) {
                         null
                     }
                     {
-                        tags?.length > 0 ?
+                        tags?.edges?.length > 0 ?
                             <div className='space-x-2'>
-                                {tags.map((tag) => {
-                                    return <ResourceCardTag tag={tag} key={tag.tagId} cardId={id} tags={tags} />
-
+                                {tags.edges.map((tag) => {
+                                    return <ResourceCardTag tag={tag} key={tag.node.id} />
                                 })}
                             </div>
                             :

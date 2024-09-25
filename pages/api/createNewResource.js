@@ -14,14 +14,31 @@ const handler = async (req, res) => {
         ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
         definition: definition
     });
-    const { clientMutationId, url, title, createdAt, updatedAt } = req.body
+    const {
+        clientMutationId,
+        url,
+        title,
+        createdAt,
+        updatedAt,
+        author,
+        description,
+        cid,
+        mediaType,
+        deleted
+    } = req.body
+
     const uniqueKey = process.env.ADMIN_DID_KEY;
     let input = {
         url: url,
         title: title,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        clientMutationId: clientMutationId
+        clientMutationId: clientMutationId,
+        author: author || 'n/a',
+        description: description,
+        cid: cid,
+        mediaType: mediaType,
+        deleted: deleted || false
     }
 
     //authenticate developer DID in order to create a write transaction
@@ -64,8 +81,8 @@ const handler = async (req, res) => {
             }
 
             composeClient.executeQuery(`
-                    mutation CreateNewResource ($i: CreateIdealiteResourceInput!) {
-                      createIdealiteResource(
+                    mutation CreateNewResource ($i: CreateIdealiteResourcev2Input!) {
+                      createIdealiteResourcev2(
                         input: $i
                       ) {
                         document {
@@ -75,7 +92,7 @@ const handler = async (req, res) => {
                     }
                   `, variableValues)
                 .then(newResourceObj => {
-                    return res.status(200).json({ newResourceId: newResourceObj.data.createIdealiteResource.document.id })
+                    return res.status(200).json({ newResourceId: newResourceObj.data.createIdealiteResourcev2.document.id })
                 })
                 .catch(error => {
                     return res.status(500).send({ message: error.message })

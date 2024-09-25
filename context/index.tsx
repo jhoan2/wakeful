@@ -1,9 +1,13 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { CeramicClient } from "@ceramicnetwork/http-client"
 import { ComposeClient } from "@composedb/client";
-
 import { definition } from "../src/__generated__/definition.js";
 import { RuntimeCompositeDefinition } from "@composedb/types";
+import { useWalletClient } from "wagmi";
+import { EthereumWebAuth, getAccountId } from "@didtools/pkh-ethereum";
+import { DIDSession } from "did-session";
+import { type GetWalletClientResult } from "@wagmi/core";
+import { type DID } from "dids";
 
 /**
  * Configure ceramic Client & create context.
@@ -16,8 +20,6 @@ const composeClient = new ComposeClient({
   definition: definition as RuntimeCompositeDefinition,
 });
 
-
-
 const CeramicContext = createContext({ ceramic: ceramic, composeClient: composeClient });
 const ProfileContext = createContext({});
 
@@ -27,7 +29,8 @@ export const CeramicWrapper = ({ children }: any) => {
     displayName: '',
     bio: '',
     favorites: [],
-    tags: []
+    tags: [],
+    farcasterId: ''
   })
 
   const updateTagTree = (newTag: any) => {
@@ -41,18 +44,62 @@ export const CeramicWrapper = ({ children }: any) => {
     setProfile(prevProfile => ({
       ...prevProfile,
       bio: newBio,
-      displayName: newDisplayName
+      displayName: newDisplayName,
     }));
   };
 
-  const setCreatedProfile = (id: any, newBio: any, newDisplayName: any) => {
+  const setCreatedProfile = (id: any, newBio: any, newDisplayName: any, farcasterId: any, avatarCid: any) => {
     setProfile(prevProfile => ({
       ...prevProfile,
       id: id,
       bio: newBio,
-      displayName: newDisplayName
+      displayName: newDisplayName,
+      farcasterId: farcasterId,
+      avatarCid: avatarCid
     }));
   };
+
+  let isAuthenticated = false;
+
+  function StartAuth() {
+    const { data: walletClient } = useWalletClient();
+    const [isAuth, setAuth] = useState(false);
+
+    useEffect(() => {
+      async function authenticate(
+        walletClient: GetWalletClientResult | undefined,
+      ) {
+        if (walletClient) {
+          const accountId = await getAccountId(
+            walletClient,
+            walletClient.account.address,
+          );
+          const authMethod = await EthereumWebAuth.getAuthMethod(
+            walletClient,
+            accountId,
+          );
+          const oneDay = 60 * 60 * 1
+          const session = await DIDSession.get(accountId, authMethod, {
+            resources: composeClient.resources,
+            expiresInSecs: oneDay
+          });
+
+          await ceramic.setDID(session.did as unknown as DID);
+          composeClient.setDID(session.did as unknown as DID);
+          localStorage.setItem("did", session.did.parent);
+          setAuth(true);
+        }
+      }
+      void authenticate(walletClient);
+    }, [walletClient]);
+
+    return isAuth;
+  }
+
+  if (!isAuthenticated) {
+    isAuthenticated = StartAuth();
+  }
+
 
   return (
     <CeramicContext.Provider value={{ ceramic, composeClient }}>

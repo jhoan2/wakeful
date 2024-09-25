@@ -1,28 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import ProfileCard from '../../components/profile/ProfileCard';
-import ProfileEdit from '../../components/profile/ProfileEdit';
 import { useCeramicContext } from '../../context';
 import { useProfileContext } from '../../context';
+import ProfileCard from '../../components/profile/ProfileCard';
+import ProfileNotFound from '../../components/profile/ProfileNotFound';
 
 export default function Profile() {
-  const [editProfile, setEditProfile] = useState(false);
+  const [hasProfile, setHasProfile] = useState(false);
+  const [farcasterProfile, setFarcasterProfile] = useState(null);
   const clients = useCeramicContext();
   const { composeClient } = clients;
   const composeClientId = composeClient.id
   const avatarFallback = composeClientId ? composeClientId.substring(composeClientId.length - 5) : '0x...'
-  const { profile } = useProfileContext();
+  const { profile, updateProfileBioAndName } = useProfileContext();
+
+  useEffect(() => {
+    if (profile.id) setHasProfile(true)
+  }, [profile])
+
+
+  if (!composeClientId) return <div className='flex justify-center h-screen w-full text-3xl pt-6'>Please connect wallet.</div>
 
   return (
     < div className='flex justify-center h-screen w-full' >
-      <div className='w-2/3'>
-        {
-          editProfile ?
-            <ProfileEdit setEditProfile={setEditProfile} avatarFallback={avatarFallback} profile={profile} />
-            :
-            <ProfileCard setEditProfile={setEditProfile} avatarFallback={avatarFallback} profile={profile} />
-        }
-      </div>
+      {
+        hasProfile ?
+          <ProfileCard
+            avatarFallback={avatarFallback}
+            profile={profile}
+            updateProfileBioAndName={updateProfileBioAndName}
+            farcasterProfile={farcasterProfile}
+            setFarcasterProfile={setFarcasterProfile}
+          />
+          :
+          <ProfileNotFound
+            setHasProfile={setHasProfile}
+            avatarFallback={avatarFallback}
+            farcasterProfile={farcasterProfile}
+            setFarcasterProfile={setFarcasterProfile}
+          />
+      }
     </div >
   )
 }

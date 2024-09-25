@@ -9,8 +9,8 @@ export default function TagPack({ width, height, exploreTags }) {
     let tagPackData
     let profileTagSet = new Set()
 
-    if (exploreTags.idealiteTagIndex?.edges.length > 0) {
-        const jsonTagTree = JSON.parse(exploreTags.idealiteTagIndex?.edges[0].node.tagTree)
+    if (exploreTags.idealiteTagv1Index?.edges.length > 0) {
+        const jsonTagTree = JSON.parse(exploreTags.idealiteTagv1Index?.edges[0].node.tagTree)
         tagPackData = jsonTagTree[0]
     }
 

@@ -1,0 +1,18 @@
+type IdealiteProjectv1 @loadModel(id: "$IDEALITE_PROJECT_ID") {
+  id: ID!
+}
+
+type IdealiteTagv1 @loadModel(id: "$IDEALITE_TAG_ID") {
+    id: ID!
+}
+
+type IdealiteTagProjectCollectionv1
+  @createModel(accountRelation: LIST, description: "Association between an IdealiteTag and IdealiteProject")
+  @createIndex(fields: [{ path: ["idealiteTagId"]} ])
+  @createIndex(fields: [{ path: ["deleted"]} ]) {
+  idealiteProjectId: StreamID @documentReference(model: "IdealiteProjectv1")
+  project: IdealiteProjectv1 @relationDocument(property: "idealiteProjectId")
+  idealiteTagId: StreamID! @documentReference(model: "IdealiteTagv1")
+  idealiteTag: IdealiteTagv1! @relationDocument(property: "idealiteTagId")
+  deleted: Boolean
+}

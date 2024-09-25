@@ -12,8 +12,8 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
     const [image, setImage] = useState(null);
 
     const ADD_NOTE = gql`
-    mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
-        createIdealiteCards(input: $input) {
+    mutation ADD_NOTE($input: CreateIdealiteCardv1Input!) {
+        createIdealiteCardv1(input: $input) {
           document {
             id
           }
@@ -33,7 +33,7 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
         ],
         editorProps: {
             attributes: {
-                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
+                class: 'prose p-2 prose-md lg:prose-lg dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
             },
         },
         content: '',
@@ -105,6 +105,9 @@ export default function ResourceAddNote({ setShowResourceModal, resourceId, reso
             resourceId: resourceId,
             url: resourceUrl,
             deleted: false,
+            lastReviewed: new Date().toISOString(),
+            learningStatus: 'FORGETTING',
+            timesForgotten: 0
         }
 
         for (const key in noteContent) {

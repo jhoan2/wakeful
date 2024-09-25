@@ -10,6 +10,7 @@ import AdminQueryTagById from '../../components/admin/AdminQueryTagById';
 import { Button } from "@/components/ui/button";
 import AdminUpdateTag from '../../components/admin/AdminUpdateTag';
 import AdminTagPack from '../../components/admin/AdminTagPack';
+import AdminCreateAssortedResource from '../../components/admin/AdminCreateAssortedResource';
 
 export default function Tags() {
     const clients = useCeramicContext();
@@ -23,7 +24,7 @@ export default function Tags() {
 
     const GET_TAG_TREE = gql`
     query getTagTree {
-        idealiteTagIndex(filters: {where: {name: {equalTo: "root"}}}, first: 10) {
+        idealiteTagv1Index(filters: {where: {name: {equalTo: "root"}}}, first: 10) {
           edges {
             node {
               tagTree
@@ -35,8 +36,8 @@ export default function Tags() {
 
     const { loading, error, data: data } = useQuery(GET_TAG_TREE);
 
-    if (data?.idealiteTagIndex?.edges > 0) {
-        setTagTreeData(data.idealiteTagIndex.edges)
+    if (data?.idealiteTagv1Index?.edges > 0) {
+        setTagTreeData(data.idealiteTagv1Index.edges)
     }
 
     useEffect(() => {
@@ -49,6 +50,7 @@ export default function Tags() {
     return (
         <div>
             <div className='flex justify-start h-screen w-full'>
+                <AdminCreateAssortedResource clientMutationId={composeClient.id} />
                 <AdminEditTagTree
                     tagTreeData={tagTreeData}
                     setTagTreeData={setTagTreeData}

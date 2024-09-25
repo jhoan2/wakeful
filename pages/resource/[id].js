@@ -23,7 +23,7 @@ export default function Resource() {
   query getUrlFromAccountResources {
       viewer {
         id
-        idealiteAccountResourcesList(
+        idealiteAccountResourcesv1List(
           filters: {where: {resourceId: {equalTo: "${resourceId}"}}}
           first: 1
           ) {
@@ -39,8 +39,8 @@ export default function Resource() {
 
   const [getUrlFromAccountResource] = useLazyQuery(GET_URL_FROM_ACCOUNT_RESOURCES, {
     onCompleted: (data) => {
-      if (data.viewer.idealiteAccountResourcesList.edges.length > 0) {
-        setResourceUrl(data.viewer.idealiteAccountResourcesList.edges[0].node.url)
+      if (data.viewer.idealiteAccountResourcesv1List.edges.length > 0) {
+        setResourceUrl(data.viewer.idealiteAccountResourcesv1List.edges[0].node.url)
       }
     },
     onError: (error) => console.error(error.message)
@@ -49,7 +49,7 @@ export default function Resource() {
   const GET_CARDS_FOR_RESOURCE = gql`
   query getCardsForResource ($resourceId: ID!, $account: ID!, $cursor: String) {
     node(id: $resourceId) {
-      ... on IdealiteResource {
+      ... on IdealiteResourcev2 {
         author
         createdAt
         description
@@ -60,7 +60,7 @@ export default function Resource() {
         title
         updatedAt
         url
-        idealiteCards(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
+        idealiteCardv1(account: $account, first: 10, filters: {where: {deleted: {equalTo: false}}}, after: $cursor, sorting: {updatedAt: DESC}) {
           edges {
             node {
               id
@@ -69,9 +69,16 @@ export default function Resource() {
               cid
               updatedAt
               googleBooksPage
-              tags {
-                name
-                tagId
+              tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
+                edges {
+                  node {
+                    id
+                    idealiteTag {
+                      name
+                      id
+                    }
+                  }
+                }
               }
             }
           }
@@ -101,9 +108,9 @@ export default function Resource() {
 
 
   if (error) return <ErrorPage message={error.message} />;
-  const cards = data?.node.idealiteCards.edges
+  const cards = data?.node.idealiteCardv1?.edges
   const resourceTitle = data?.node.title
-  const pageInfo = data?.node.idealiteCards.pageInfo
+  const pageInfo = data?.node.idealiteCardv1?.pageInfo
 
   const getMoreCards = (pageInfo) => {
     if (pageInfo.hasNextPage) {
@@ -164,14 +171,14 @@ export default function Resource() {
                     </div>
                   </div>
                 }
-                <div className=' pb-24 md:pb-4 p-4'>
+                <div className='flex justify-center pb-24 md:pb-4 p-4'>
                   {pageInfo.hasNextPage ?
-                    <button
-                      className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
+                    <Button
+                      variant='yellow'
                       onClick={() => getMoreCards(pageInfo)}
                     >
                       Load more
-                    </button> :
+                    </Button> :
                     null
                   }
                 </div>
