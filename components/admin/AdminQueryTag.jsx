@@ -13,8 +13,8 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
     const [date, setDate] = useState(null)
 
     const QUERY_IDEALITE_TAG = gql`
-        query queryIdealiteTag ($last: Int!, $filters: IdealiteTagFiltersInput! ){
-            idealiteTagIndex(
+        query queryIdealiteTagv1 ($last: Int!, $filters: IdealiteTagv1FiltersInput! ){
+            idealiteTagv1Index(
                 last: $last, 
                 filters: $filters
                 ) {
@@ -67,7 +67,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
 
     const sendNodesToTagTree = () => {
         let arr = []
-        adminTagsData.idealiteTagIndex.edges.map((node) => {
+        adminTagsData.idealiteTagv1Index.edges.map((node) => {
             const { id, name, value } = node.node
             arr.push({ id: id, name: name, children: new Array(), value: value })
         })
@@ -76,13 +76,10 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
 
     if (loadingQueryTags) return <p>Loading ...</p>;
     if (errorQueryTags) console.log(`Error! ${errorQueryTags.message}`);
-    if (adminTagsData) {
-        console.log(adminTagsData)
-    }
 
     return (
         <div>
-            <Button variant='secondary' onClick={() => sendAdminQuery({ variables: { filters: createFilters(), ...paginationArg } })}>Query</Button>
+            <Button variant='secondary' title='You can get the results from left column once you send it.' onClick={() => sendAdminQuery({ variables: { filters: createFilters(), ...paginationArg } })}>Query</Button>
             <Button variant='secondary' onClick={() => setDeletedFilter(!deletedFilter)}>
                 {
                     deletedFilter ?
@@ -91,7 +88,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
                         <p>deleted: false</p>
                 }
             </Button>
-            <Button variant='secondary' onClick={() => sendNodesToTagTree()}>Send to Tag Tree</Button>
+            <Button variant='secondary' onClick={() => sendNodesToTagTree()} title='Sends the results from query to left column'>Send to Tag Tree</Button>
             <div>
                 <Label>First</Label>
                 <input
@@ -99,6 +96,7 @@ export default function AdminQueryTag({ setTagTreeData, tagTreeData }) {
                     className='w-full border-2 border-amber-200'
                     placeholder="first"
                     onChange={(e) => setQueryLength(+e.currentTarget.value)}
+                    autoComplete='off'
                 />
                 <Button variant='secondary' onClick={() => setUseFirst(!useFirst)}>
                     {

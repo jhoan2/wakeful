@@ -14,8 +14,8 @@ import { useProfileContext } from '../../context';
 
 export default function ProjectActions({ projectId, projectTitle }) {
     const { profile } = useProfileContext();
-    const DELETE_PROJECT = gql`mutation DeleteProject($input: UpdateIdealiteProjectInput!) {
-        updateIdealiteProject(input: $input) {
+    const DELETE_PROJECT = gql`mutation DeleteProject($input: UpdateIdealiteProjectv1Input!) {
+        updateIdealiteProjectv1(input: $input) {
           document {
                 id
             }
@@ -41,8 +41,8 @@ export default function ProjectActions({ projectId, projectTitle }) {
     }
 
     const FAVORITE_PROJECT = gql`
-        mutation favoritePoject($input: UpdateIdealiteProfileInput!) {
-            updateIdealiteProfile (
+        mutation favoritePoject($input: UpdateIdealiteProfilev1Input!) {
+            updateIdealiteProfilev1 (
                 input: $input
                 ) {
                 document {

@@ -11,20 +11,26 @@ export default function Projects() {
         query getUsersProjects {
             viewer {
                 id
-                idealiteProjectList(first: 100, filters: {where: {deleted: {equalTo: false}}}) {
+                idealiteProjectv1List(first: 100, filters: {where: {deleted: {equalTo: false}}}) {
                     edges {
                         node {
                             id
                             title
-                            priority
                             status
                             description
                             createdAt
                             updatedAt
-                            tags {
-                                tagId
-                                name
-                              }
+                            eventChildId
+                            tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
+                                edges {
+                                    node {
+                                        idealiteTag {
+                                            name
+                                            id
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -34,7 +40,8 @@ export default function Projects() {
 
     const { loading, error, data } = useQuery(GET_USERS_PROJECTS);
     if (error) return <ErrorPage message={error.message} />;
-    const projects = data?.viewer?.idealiteProjectList.edges.map((edge) => edge.node)
+    const projects = data?.viewer?.idealiteProjectv1List.edges.map((edge) => edge.node)
+
     return (
         <div className='flex justify-center w-full h-screen'>
             {loading ?

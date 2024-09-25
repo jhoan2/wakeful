@@ -17,8 +17,8 @@ export default function TagTree({ setShowTags }) {
     const [tagTreeChanged, setTagTreeChanged] = useState(false)
 
     const SAVE_TAG_CHANGES = gql`
-    mutation MyMutation($input: UpdateIdealiteProfileInput!) {
-        updateIdealiteProfile(input: $input) {
+    mutation MyMutation($input: UpdateIdealiteProfilev1Input!) {
+        updateIdealiteProfilev1(input: $input) {
           document {
             id
           }

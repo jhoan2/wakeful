@@ -53,8 +53,8 @@ export default function AdminUpdateTag() {
     })
 
     const ADMIN_UPDATE_IDEALITE_TAG = gql`
-    mutation adminUpdateIdealiteTag ($input: UpdateIdealiteTagInput!) {
-        updateIdealiteTag(input: $input) {
+    mutation adminUpdateIdealiteTagv1 ($input: UpdateIdealiteTagv1Input!) {
+        updateIdealiteTagv1(input: $input) {
           document {
             children {
               name
@@ -108,7 +108,7 @@ export default function AdminUpdateTag() {
 
         if (adminUpdateTagData) {
             toast.success('Updated Tag')
-            console.log(adminUpdateTagData.updateIdealiteTag.document)
+            console.log(adminUpdateTagData.updateIdealiteTagv1.document)
         }
     }
 
@@ -127,7 +127,7 @@ export default function AdminUpdateTag() {
                             <FormItem>
                                 <FormLabel>Tag Id</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Tag Id" {...field} />
+                                    <Input placeholder="Tag Id" {...field} autoComplete='off' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -140,7 +140,7 @@ export default function AdminUpdateTag() {
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Name" {...field} />
+                                    <Input placeholder="Name" {...field} autoComplete='off' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -153,7 +153,7 @@ export default function AdminUpdateTag() {
                             <FormItem>
                                 <FormLabel>Parent Id</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="id" {...field} />
+                                    <Input placeholder="id" {...field} autoComplete='off' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -170,6 +170,7 @@ export default function AdminUpdateTag() {
                                         placeholder="Value"
                                         {...field}
                                         onChange={event => field.onChange(+event.target.value)}
+                                        autoComplete='off'
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -186,7 +187,7 @@ export default function AdminUpdateTag() {
                                         <FormItem>
                                             <FormLabel>Child Tag Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="child tag name" {...field} />
+                                                <Input placeholder="child tag name" {...field} autoComplete='off' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -199,7 +200,7 @@ export default function AdminUpdateTag() {
                                         <FormItem>
                                             <FormLabel>Id</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="id" {...field} />
+                                                <Input placeholder="id" {...field} autoComplete='off' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

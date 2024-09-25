@@ -16,7 +16,7 @@ export default function Tags() {
 
     const GET_TAG_TREE_FROM_ROOT = gql`
     query getTagTreeFromRoot {
-        idealiteTagIndex(filters: {where: {name: {equalTo: "root"}}}, first: 10) {
+        idealiteTagv1Index(filters: {where: {name: {equalTo: "root"}}}, first: 10) {
           edges {
             node {
               tagTree

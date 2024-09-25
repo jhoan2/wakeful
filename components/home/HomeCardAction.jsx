@@ -17,8 +17,8 @@ export default function HomeCardAction({ accountResourceId, readingStatus }) {
     const [position, setPosition] = useState(readingStatus)
 
     const UPDATE_ACCOUNT_RESOURCE_READING_STATUS = gql`
-    mutation upduateAccountResourceReadingStatus($input: UpdateIdealiteAccountResourcesInput = {id: "", content: {}}) {
-        updateIdealiteAccountResources(input: $input) {
+    mutation upduateAccountResourceReadingStatus($input: UpdateIdealiteAccountResourcesv1Input = {id: "", content: {}}) {
+        updateIdealiteAccountResourcesv1(input: $input) {
           document {
             id
           }
@@ -49,7 +49,7 @@ export default function HomeCardAction({ accountResourceId, readingStatus }) {
     }
 
     return (
-        <div className='absolute top-3 right-5 z-50'>
+        <div className='absolute top-3 right-5 z-10'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="secondary" className='p-0' ><MoreVertical className='h-4 w-4 text-black' /></Button>

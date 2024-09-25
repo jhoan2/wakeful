@@ -23,32 +23,32 @@ export const writeComposite = async (spinner) => {
   await authenticate()
   spinner.info("writing composite to Ceramic")
 
-  const idealiteResourceComposite = await createComposite(
+  const idealiteResourcev2Composite = await createComposite(
     ceramic,
-    "./composites/IdealiteResource.graphql"
+    "./composites/IdealiteResourcev2.graphql"
   );
 
-  const idealiteProfileComposite = await createComposite(
+  const idealiteProfilev1Composite = await createComposite(
     ceramic,
-    "./composites/IdealiteProfile.graphql"
+    "./composites/IdealiteProfilev1.graphql"
   );
 
-  const idealiteCardSchema = readFileSync("./composites/IdealiteCard.graphql", {
+  const idealiteCardv1Schema = readFileSync("./composites/IdealiteCardv1.graphql", {
     encoding: "utf-8",
-  }).replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
+  }).replace("$IDEALITE_RESOURCE_ID", idealiteResourcev2Composite.modelIDs[0]);
 
-  const idealiteCardComposite = await Composite.create({
+  const idealiteCardv1Composite = await Composite.create({
     ceramic,
-    schema: idealiteCardSchema,
+    schema: idealiteCardv1Schema,
   });
 
-  const idealiteAccountResourcesSchema = readFileSync("./composites/IdealiteAccountResources.graphql", {
+  const idealiteAccountResourcesv1Schema = readFileSync("./composites/IdealiteAccountResourcesv1.graphql", {
     encoding: "utf-8",
-  }).replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
+  }).replace("$IDEALITE_RESOURCE_ID", idealiteResourcev2Composite.modelIDs[0]);
 
-  const idealiteAccountResourcesComposite = await Composite.create({
+  const idealiteAccountResourcesv1Composite = await Composite.create({
     ceramic,
-    schema: idealiteAccountResourcesSchema,
+    schema: idealiteAccountResourcesv1Schema,
   });
 
   const resourcesCardsSchema = readFileSync(
@@ -57,32 +57,32 @@ export const writeComposite = async (spinner) => {
       encoding: "utf-8",
     }
   )
-    .replace("$IDEALITE_CARD_ID", idealiteCardComposite.modelIDs[1])
-    .replace("$IDEALITE_RESOURCE_ID", idealiteResourceComposite.modelIDs[0]);
+    .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+    .replace("$IDEALITE_RESOURCE_ID", idealiteResourcev2Composite.modelIDs[0]);
 
   const resourcesCardsComposite = await Composite.create({
     ceramic,
     schema: resourcesCardsSchema,
   });
 
-  const idealiteProjectComposite = await createComposite(
+  const idealiteProjectv1Composite = await createComposite(
     ceramic,
-    "./composites/IdealiteProject.graphql"
+    "./composites/IdealiteProjectv1.graphql"
   );
 
 
-  const idealiteProjectCardCollectionSchema = readFileSync(
-    "./composites/IdealiteProjectCardCollection.graphql",
+  const idealiteProjectCardCollectionv1Schema = readFileSync(
+    "./composites/IdealiteProjectCardCollectionv1.graphql",
     {
       encoding: "utf-8",
     }
   )
-    .replace("$IDEALITE_CARD_ID", idealiteCardComposite.modelIDs[1])
-    .replace("$IDEALITE_PROJECT_ID", idealiteProjectComposite.modelIDs[0]);
+    .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0]);
 
-  const idealiteProjectCardCollectionComposite = await Composite.create({
+  const idealiteProjectCardCollectionv1Composite = await Composite.create({
     ceramic,
-    schema: idealiteProjectCardCollectionSchema,
+    schema: idealiteProjectCardCollectionv1Schema,
   });
 
   const cardsProjectsScehma = readFileSync(
@@ -91,8 +91,8 @@ export const writeComposite = async (spinner) => {
       encoding: "utf-8",
     }
   )
-    .replace("$IDEALITE_CARD_ID", idealiteCardComposite.modelIDs[1])
-    .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[2]);
+    .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+    .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionv1Composite.modelIDs[2]);
 
   const cardsProjectsComposite = await Composite.create({
     ceramic,
@@ -105,42 +105,191 @@ export const writeComposite = async (spinner) => {
       encoding: "utf-8",
     }
   )
-    .replace("$IDEALITE_PROJECT_ID", idealiteCardComposite.modelIDs[1])
-    .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionComposite.modelIDs[2]);
-
-  console.log('idealiteresourcecomposite', idealiteResourceComposite.modelIDs)
-  console.log('idealiteproject', idealiteProjectComposite.modelIDs)
-  console.log('idealiteCardcomposite', idealiteCardComposite.modelIDs)
-  console.log('idealiteprojectcardcollectioncomposite', idealiteProjectCardCollectionComposite.modelIDs)
+    .replace("$IDEALITE_PROJECT_ID", idealiteCardv1Composite.modelIDs[1])
+    .replace("$IDEALITE_PROJECT_CARD_COLLECTION_ID", idealiteProjectCardCollectionv1Composite.modelIDs[2]);
 
   const projectsCardsComposite = await Composite.create({
     ceramic,
     schema: projectsCardsSchema,
   });
 
-  const idealiteTagComposite = await createComposite(
+  const idealiteTagv1Composite = await createComposite(
     ceramic,
-    "./composites/IdealiteTag.graphql"
+    "./composites/IdealiteTagv1.graphql"
   );
 
+  const idealiteStatsComposite = await createComposite(
+    ceramic,
+    "./composites/IdealiteStatsv1.graphql"
+  );
+
+  const idealiteTagAccountResourceCollectionv1Schema = readFileSync(
+    "./composites/IdealiteTagAccountResourceCollectionv1.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_ACCOUNT_RESOURCE_ID", idealiteAccountResourcesv1Composite.modelIDs[1])
+
+
+  const idealiteTagAccountResourceCollectionv1Composite = await Composite.create({
+    ceramic,
+    schema: idealiteTagAccountResourceCollectionv1Schema,
+  })
+
+
+  const accountResourcesTagsSchema = readFileSync(
+    './composites/AccountResourcesTags.graphql',
+    {
+      encoding: 'utf-8'
+    },
+  )
+    .replace("$IDEALITE_ACCOUNT_RESOURCE_ID", idealiteAccountResourcesv1Composite.modelIDs[1])
+    .replace("$IDEALITE_TAG_ACCOUNT_RESOURCE_COLLECTION_ID", idealiteTagAccountResourceCollectionv1Composite.modelIDs[2])
+
+  const accountResourcesTagsComposite = await Composite.create({
+    ceramic,
+    schema: accountResourcesTagsSchema
+  })
+
+  const tagsAccountResourcesSchema = readFileSync(
+    "./composites/TagsAccountResources.graphql",
+    {
+      encoding: "utf-8",
+    },
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_ACCOUNT_RESOURCE_COLLECTION_ID", idealiteTagAccountResourceCollectionv1Composite.modelIDs[2])
+
+  const tagsAccountResourceComposite = await Composite.create({
+    ceramic,
+    schema: tagsAccountResourcesSchema
+  })
+
+  const idealiteTagCardCollectionv1Schema = readFileSync(
+    "./composites/IdealiteTagCardCollectionv1.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+
+
+  const idealiteTagCardCollectionv1Composite = await Composite.create({
+    ceramic,
+    schema: idealiteTagCardCollectionv1Schema,
+  })
+
+  const tagsCardsSchema = readFileSync(
+    "./composites/TagsCard.graphql",
+    {
+      encoding: 'utf-8'
+    },
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_CARD_COLLECTION_ID", idealiteTagCardCollectionv1Composite.modelIDs[2])
+
+  const tagCardsComposite = await Composite.create({
+    ceramic,
+    schema: tagsCardsSchema
+  })
+
+  const cardsTagsSchema = readFileSync(
+    "./composites/CardsTag.graphql",
+    {
+      encoding: "utf-8",
+    },
+  )
+    .replace("$IDEALITE_CARD_ID", idealiteCardv1Composite.modelIDs[1])
+    .replace("$IDEALITE_TAG_CARD_COLLECTION_ID", idealiteTagCardCollectionv1Composite.modelIDs[2])
+
+  const cardsTagsComposite = await Composite.create({
+    ceramic,
+    schema: cardsTagsSchema
+  })
+
+  const idealiteTagProjectCollectionv1Schema = readFileSync(
+    "./composites/IdealiteTagProjectCollectionv1.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0]);
+
+  const idealiteTagProjectCollectionv1Composite = await Composite.create({
+    ceramic,
+    schema: idealiteTagProjectCollectionv1Schema,
+  });
+
+  const tagsProjectsSchema = readFileSync(
+    "./composites/TagsProjects.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_TAG_ID", idealiteTagv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_PROJECT_COLLECTION_ID", idealiteTagProjectCollectionv1Composite.modelIDs[2]);
+
+  const tagsProjectsComposite = await Composite.create({
+    ceramic,
+    schema: tagsProjectsSchema,
+  });
+
+  const projectsTagsSchema = readFileSync(
+    "./composites/ProjectsTags.graphql",
+    {
+      encoding: "utf-8",
+    }
+  )
+    .replace("$IDEALITE_PROJECT_ID", idealiteProjectv1Composite.modelIDs[0])
+    .replace("$IDEALITE_TAG_PROJECT_COLLECTION_ID", idealiteTagProjectCollectionv1Composite.modelIDs[2]);
+
+  const projectsTagsComposite = await Composite.create({
+    ceramic,
+    schema: projectsTagsSchema,
+  });
+
+  console.log('idealiteresourcev2composite', idealiteResourcev2Composite.modelIDs)
+  console.log('idealiteprojectv1', idealiteProjectv1Composite.modelIDs)
+  console.log('idealiteCardv1composite', idealiteCardv1Composite.modelIDs)
+  console.log('idealiteprojectcardcollectionv1composite', idealiteProjectCardCollectionv1Composite.modelIDs)
+  console.log('idealiteTagv1', idealiteTagv1Composite.modelIDs)
+  console.log('idealiteTagCardCollectionv1', idealiteTagCardCollectionv1Composite.modelIDs)
+  console.log('idealiteAccountResourcesv1', idealiteAccountResourcesv1Composite.modelIDs)
+  console.log('idealitetagAccountResourceCollectionv1Composite', idealiteTagAccountResourceCollectionv1Composite.modelIDs)
+  console.log('idealiteTagProjectCollectionv1Composite', idealiteTagProjectCollectionv1Composite.modelIDs)
+
   const composite = Composite.from([
-    idealiteResourceComposite,
-    idealiteProfileComposite,
-    idealiteCardComposite,
-    idealiteAccountResourcesComposite,
+    idealiteResourcev2Composite,
+    idealiteProfilev1Composite,
+    idealiteCardv1Composite,
+    idealiteAccountResourcesv1Composite,
     resourcesCardsComposite,
-    idealiteProjectComposite,
-    idealiteProjectCardCollectionComposite,
+    idealiteProjectv1Composite,
+    idealiteProjectCardCollectionv1Composite,
     cardsProjectsComposite,
     projectsCardsComposite,
-    idealiteTagComposite
+    idealiteTagv1Composite,
+    idealiteStatsComposite,
+    idealiteTagAccountResourceCollectionv1Composite,
+    accountResourcesTagsComposite,
+    tagsAccountResourceComposite,
+    idealiteTagCardCollectionv1Composite,
+    tagCardsComposite,
+    cardsTagsComposite,
+    idealiteTagProjectCollectionv1Composite,
+    tagsProjectsComposite,
+    projectsTagsComposite
   ]);
 
   const newComposite = composite.setAliases({
-    [`${idealiteResourceComposite.modelIDs[0]}`]: 'IdealiteResource',
-    [`${idealiteCardComposite.modelIDs[1]}`]: 'IdealiteCards',
-    [`${idealiteProjectComposite.modelIDs[0]}`]: 'IdealiteProject',
-    [`${idealiteProjectCardCollectionComposite.modelIDs[2]}`]: 'IdealiteProjectCardCollection'
+    [`${idealiteResourcev2Composite.modelIDs[0]}`]: 'IdealiteResourcev2',
+    [`${idealiteCardv1Composite.modelIDs[1]}`]: 'IdealiteCardv1',
+    [`${idealiteProjectv1Composite.modelIDs[0]}`]: 'IdealiteProjectv1',
+    [`${idealiteProjectCardCollectionv1Composite.modelIDs[2]}`]: 'IdealiteProjectCardCollectionv1'
   })
 
   await writeEncodedComposite(newComposite, "./src/__generated__/definition.json");

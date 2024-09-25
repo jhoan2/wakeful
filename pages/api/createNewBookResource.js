@@ -14,16 +14,19 @@ const handler = async (req, res) => {
     ceramic: `${process.env.NEXT_PUBLIC_CERAMIC_URL}`,
     definition: definition
   });
-  const { title, clientMutationId, description, publishedAt, author } = req.body
+  const { title, clientMutationId, description, publishedAt, author, cid, openLibraryKey } = req.body
   const uniqueKey = process.env.ADMIN_DID_KEY;
   let input = {
-    title: title,
+    title: title.toLowerCase(),
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    clientMutationId: clientMutationId,
-    description: description,
-    publishedAt: publishedAt,
-    author: author || 'n/a'
+    clientMutationId: clientMutationId || null,
+    description: description || null,
+    publishedAt: publishedAt ? new Date(publishedAt).toISOString() : null,
+    author: author || 'n/a',
+    cid: cid || null,
+    mediaType: 'Book',
+    openLibraryKey: openLibraryKey || null
   }
 
   //authenticate developer DID in order to create a write transaction
@@ -62,7 +65,7 @@ const handler = async (req, res) => {
         //Search if the resource exists
         const existingResourceId = await composeClient.executeQuery(`
                 query getResourceId {
-                    idealiteResourceIndex(
+                    idealiteResourcev2Index(
                       filters: {where: {title: {equalTo: "${title}"}, author: {equalTo: "${author}"}}}
                       first: 2
                     ) {
@@ -76,10 +79,10 @@ const handler = async (req, res) => {
                   `)
 
         //If the resource doesn't exist create one and set resourceId to it
-        if (existingResourceId && existingResourceId.data.idealiteResourceIndex.edges.length === 0) {
+        if (existingResourceId && existingResourceId.data.idealiteResourcev2Index.edges.length === 0) {
           const newResourceId = await composeClient.executeQuery(`
-                    mutation CreateNewResource ($i: CreateIdealiteResourceInput!) {
-                        createIdealiteResource(
+                    mutation CreateNewResource ($i: CreateIdealiteResourcev2Input!) {
+                        createIdealiteResourcev2(
                           input: $i
                         ) {
                           document {
@@ -88,11 +91,11 @@ const handler = async (req, res) => {
                         }
                       }
                       `, variableValues)
-          console.log(newResourceId)
-          resourceId = newResourceId.data.createIdealiteResource.document.id
+
+          resourceId = newResourceId.data.createIdealiteResourcev2.document.id
         } else {
           //if it does exist, set the resourceId to it 
-          resourceId = existingResourceId.data.idealiteResourceIndex.edges[0].node.id
+          resourceId = existingResourceId.data.idealiteResourcev2Index.edges[0].node.id
 
         }
         //Return a resourceId to be used on chrome extension to add notes 
