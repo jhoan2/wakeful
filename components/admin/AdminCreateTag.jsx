@@ -49,8 +49,8 @@ export default function AdminCreateTag() {
     })
 
     const CREATE_IDEALITE_TAG = gql`
-    mutation CreateIdealiteTag ($input: CreateIdealiteTagInput!) {
-        createIdealiteTag(input: $input) {
+    mutation CreateIdealiteTagv1 ($input: CreateIdealiteTagv1Input!) {
+        createIdealiteTagv1(input: $input) {
           document {
             id
             name
@@ -91,7 +91,7 @@ export default function AdminCreateTag() {
         }
 
         if (createRootTagData) {
-            console.log(createRootTagData.createIdealiteTag.document)
+            console.log(createRootTagData.createIdealiteTagv1.document)
             toast.success('Created Tag')
         }
     }
@@ -108,7 +108,7 @@ export default function AdminCreateTag() {
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Name" {...field} />
+                                    <Input placeholder="Name" {...field} autoComplete='off' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -121,7 +121,7 @@ export default function AdminCreateTag() {
                             <FormItem>
                                 <FormLabel>Parent Id</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="id" {...field} />
+                                    <Input placeholder="id" {...field} autoComplete='off' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -139,6 +139,7 @@ export default function AdminCreateTag() {
                                         type='number'
                                         {...field}
                                         onChange={event => field.onChange(+event.target.value)}
+                                        autoComplete='off'
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -155,7 +156,7 @@ export default function AdminCreateTag() {
                                         <FormItem>
                                             <FormLabel>Child Tag Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="child tag name" {...field} />
+                                                <Input placeholder="child tag name" {...field} autoComplete='off' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -168,7 +169,7 @@ export default function AdminCreateTag() {
                                         <FormItem>
                                             <FormLabel>Id</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="id" {...field} />
+                                                <Input placeholder="id" {...field} autoComplete='off' />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

@@ -1,12 +1,14 @@
-type IdealiteResource @loadModel(id: "$IDEALITE_RESOURCE_ID") {
+type IdealiteResourcev2 @loadModel(id: "$IDEALITE_RESOURCE_ID") {
     id: ID!
 }
 
-type IdealiteCard 
+type IdealiteCardv1 
     @createModel(accountRelation: LIST, description: "v0.1: Blocks of text for Idealite") 
     @createIndex(fields: [{ path: ["deleted"]} ])
     @createIndex(fields: [{ path: ["url"]} ])
-    @createIndex(fields: [{ path: ["updatedAt"]} ]) {
+    @createIndex(fields: [{ path: ["updatedAt"]} ])
+    @createIndex(fields: [{ path: ["learningStatus"]} ])
+    @createIndex(fields: [{ path: ["annotation"]} ]) {
     account: DID! @documentAccount
     altText: String @string(minLength: 1, maxLength: 3000)
     annotation: String @string(minLength: 1, maxLength: 10000)
@@ -14,21 +16,27 @@ type IdealiteCard
     createdAt: DateTime
     deleted: Boolean
     googleBooksPage: String @string(minLength: 1, maxLength: 10000)
+    lastReviewed: DateTime
+    learningStatus: LearningStatus
     mimeType: String @string(minLength: 1, maxLength: 140)
+    originalAuthorDid: String @string(minLength: 1, maxLength: 1000)
     pageYOffset: Float
     pinSize: Int
     quote: String @string(minLength: 1, maxLength: 10000)
-    resourceId: StreamID @documentReference(model: "IdealiteResource")
-    resource: IdealiteResource @relationDocument(property: "resourceId")
+    resourceId: StreamID @documentReference(model: "IdealiteResourcev2")
+    resource: IdealiteResourcev2 @relationDocument(property: "resourceId")
     scrollHeight: Float
-    tags: [Tag] @list(maxLength: 15)
+    timesForgotten: Int
     updatedAt: DateTime
     url: String @string(minLength: 1, maxLength: 140)
     videoTime: String @string(minLength: 1, maxLength: 300)
 }
 
-type Tag {
-  tagId: String! @string(minLength: 1, maxLength: 140)
-  name: String! @string(minLength: 1, maxLength: 140)
+enum LearningStatus {
+    STASHED
+    FORGETTING
+    LEARNING
+    MATURE
+    MASTERED
 }
 

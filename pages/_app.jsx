@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { CeramicWrapper } from "../context";
-import React from "react";
+import React, { useEffect } from "react";
 import { useCeramicContext } from '../context';
 import { ApolloClient, ApolloLink, InMemoryCache, Observable, ApolloProvider } from '@apollo/client';
 import { Toaster } from 'sonner';
@@ -8,6 +8,9 @@ import { relayStylePagination } from "@apollo/client/utilities";
 import Head from 'next/head';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import { Web3Modal } from '../context/Web3Modal';
+import { NeynarContextProvider, Theme } from "@neynar/react";
+import "@neynar/react/dist/style.css";
 
 // Check that PostHog is client-side (used to handle Next.js SSR)
 if (typeof window !== 'undefined') {
@@ -44,17 +47,17 @@ const MyApp = ({ Component, pageProps }) => {
       typePolicies: {
         Query: {
           fields: {
-            idealiteAccountResourcesIndex: relayStylePagination(),
+            idealiteAccountResourcesv1Index: relayStylePagination(),
           },
         },
         CeramicAccount: {
           fields: {
-            idealiteProjectCardCollectionList: relayStylePagination(),
+            idealiteProjectCardCollectionv1List: relayStylePagination(),
           }
         },
-        IdealiteResource: {
+        IdealiteResourcev2: {
           fields: {
-            idealiteCards: relayStylePagination(),
+            idealiteCardv1: relayStylePagination(),
           }
         },
       },
@@ -69,14 +72,23 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
       <ApolloProvider client={apolloClient}>
         <div>
-          <CeramicWrapper>
-            <div>
-              <PostHogProvider client={posthog}>
-                {getLayout(<Component {...pageProps} />)}
-              </PostHogProvider>
-              <Toaster richColors />
-            </div>
-          </CeramicWrapper>
+          <Web3Modal>
+            <NeynarContextProvider
+              settings={{
+                clientId: process.env.NEXT_PUBLIC_NEYNAR_CLIENT_ID || "",
+                defaultTheme: Theme.Light,
+              }}
+            >
+              <CeramicWrapper>
+                <div>
+                  <PostHogProvider client={posthog}>
+                    {getLayout(<Component {...pageProps} />)}
+                  </PostHogProvider>
+                  <Toaster richColors />
+                </div>
+              </CeramicWrapper>
+            </NeynarContextProvider>
+          </Web3Modal>
         </div>
       </ApolloProvider>
     </div>

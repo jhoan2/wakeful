@@ -59,8 +59,8 @@ const handler = async (req, res) => {
             }
 
             composeClient.executeQuery(`
-                mutation createTag($i: CreateIdealiteTagInput!) {
-                    createIdealiteTag(input: $i) {
+                mutation createTag($i: CreateIdealiteTagv1Input!) {
+                    createIdealiteTagv1(input: $i) {
                         document {
                             id
                         }
@@ -68,7 +68,7 @@ const handler = async (req, res) => {
                 }
                   `, variableValues)
                 .then((tagId) => {
-                    return res.status(200).send({ tagId: tagId.data.createIdealiteTag.document.id })
+                    return res.status(200).send({ tagId: tagId.data.createIdealiteTagv1.document.id })
                 })
                 .catch(error => {
                     return res.status(500).send({ message: error.message })

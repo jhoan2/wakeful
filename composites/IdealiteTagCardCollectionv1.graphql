@@ -1,0 +1,18 @@
+type IdealiteCardv1 @loadModel(id: "$IDEALITE_CARD_ID") {
+  id: ID!
+}
+
+type IdealiteTagv1 @loadModel(id: "$IDEALITE_TAG_ID") {
+    id: ID!
+}
+
+type IdealiteTagCardCollectionv1
+  @createModel(accountRelation: LIST, description: "Association between an IdealiteTag and IdealiteCard")
+  @createIndex(fields: [{ path: ["idealiteTagId"]} ])
+  @createIndex(fields: [{ path: ["deleted"]} ]) {
+  idealiteCardId: StreamID @documentReference(model: "IdealiteCardv1")
+  card: IdealiteCardv1 @relationDocument(property: "idealiteCardId")
+  idealiteTagId: StreamID! @documentReference(model: "IdealiteTagv1")
+  idealiteTag: IdealiteTagv1! @relationDocument(property: "idealiteTagId")
+  deleted: Boolean
+}

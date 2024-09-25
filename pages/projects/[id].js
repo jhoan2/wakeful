@@ -4,7 +4,6 @@ import ProjectAddNote from '../../components/project/ProjectAddNote';
 import { Button } from "@/components/ui/button";
 import { useQuery, gql } from '@apollo/client';
 import ErrorPage from '../../components/ErrorPage';
-import NoContent from '../../components/NoContent';
 import SkeletonHomeCard from '../../components/SkeletonHomeCard';
 import ProjectSidePanel from '../../components/project/ProjectSidePanel';
 import ProjectCard from '../../components/project/ProjectCard';
@@ -18,54 +17,61 @@ export default function ProjectPage() {
     const projectId = router.query.id
 
     const GET_USERS_PROJECT_CARD_COLLECTION = gql`
-        query getUsersProjectCardCollection ($projectId: String, $cursor: String) {
+        query getUsersProjectCardCollection($projectId: String, $cursor: String) {
             viewer {
                 id
-            idealiteProjectCardCollectionList(
-                after: $cursor,
-                first: 20,
-                filters: {where: {deleted: {equalTo: false}, projectId: {equalTo: $projectId}}}
-            ) {
-                edges {
-                node {
-                    id
-                    idealiteCard {
-                        id
-                        cid
-                        annotation
-                        altText
-                        createdAt
-                        deleted
-                        pageYOffset
-                        quote
-                        resourceId
-                        scrollHeight
-                        updatedAt
-                        url
-                        videoTime
-                        tags {
-                            tagId
-                            name
+                idealiteProjectCardCollectionv1List(
+                    after: $cursor,
+                    first: 20,
+                    filters: {where: {deleted: {equalTo: false}, projectId: {equalTo: $projectId}}}
+                ) {
+                    edges {
+                        node {
+                            id
+                            idealiteCard {
+                                id
+                                cid
+                                annotation
+                                altText
+                                createdAt
+                                deleted
+                                pageYOffset
+                                quote
+                                resourceId
+                                scrollHeight
+                                updatedAt
+                                url
+                                videoTime
+                            }
+                            project {
+                                url
+                                updatedAt
+                                title
+                                status
+                                id
+                                description
+                                createdAt
+                                eventImage
+                                eventChildId
+                                tags(first: 10, filters: {where: {deleted: {equalTo: false}}}) {
+                                    edges {
+                                        node {
+                                            id
+                                            idealiteTag {
+                                                name
+                                                id
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-                    project {
-                        url
-                        updatedAt
-                        title
-                        status
-                        priority
-                        id
-                        description
-                        createdAt
-                        cid
+                    pageInfo {
+                        endCursor
+                        hasNextPage
                     }
                 }
-                }
-                pageInfo {
-                    endCursor
-                    hasNextPage
-                  }
-            }
             }
         }
     `
@@ -85,11 +91,11 @@ export default function ProjectPage() {
     }
 
     if (error) return <ErrorPage message={error.message} />;
-    const cards = data?.viewer?.idealiteProjectCardCollectionList.edges
-    const pageInfo = data?.viewer?.idealiteProjectCardCollectionList.pageInfo
+    const cards = data?.viewer?.idealiteProjectCardCollectionv1List.edges
+    const pageInfo = data?.viewer?.idealiteProjectCardCollectionv1List.pageInfo
 
     return (
-        <div className='flex justify-center h-screen'>
+        <div className='flex justify-center h-screen w-full'>
             {loading ?
                 (<div className='md:flex'>
                     <SkeletonHomeCard />
@@ -103,7 +109,7 @@ export default function ProjectPage() {
                             <p className='text-3xl font-bold p-8'>{cards[0].node.project.title}</p>
                             <div className='grid grid-cols-3'>
                                 <div></div>
-                                <div className='flex justify-end'>
+                                <div className='flex justify-end space-x-2'>
                                     <Button
                                         variant='secondary'
                                         onClick={() => setShowProjectModal(true)}
@@ -128,33 +134,23 @@ export default function ProjectPage() {
 
                             <div className=' pb-24 md:pb-4 p-4'>
                                 {pageInfo.hasNextPage ?
-                                    <button
-                                        className='hover:bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full  bg-yellow-100 w-full h-16  text-sm font-semibold rounded-full border border-transparent text-gray-500 disabled:opacity-50'
+                                    <Button
+                                        variant='yellow'
                                         onClick={() => getMoreProjectCards(pageInfo)}
                                     >
                                         Load more
-                                    </button> :
+                                    </Button> :
                                     null
                                 }
                             </div>
-                            <ProjectSidePanel projectData={cards[0].node.project} />
+                            <ProjectSidePanel projectData={cards[0].node.project} category={'project'} />
                         </div>
                         :
-                        <div className='w-full'>
-                            <ProjectTitle projectId={projectId} />
-                            <div className='flex flex-col items-center overflow-auto sm:justify-center'>
-                                <div className='space-y-6'>
-                                    <Button variant='secondary' onClick={() => setShowProjectModal(true)}>Add Note</Button>
-                                    {showProjectModal ?
-                                        <ProjectAddNote projectId={projectId} setShowProjectModal={setShowProjectModal} />
-                                        :
-                                        null
-                                    }
-                                    <NoContent src='/no-content-cat.png' />
-                                </div>
-                            </div>
-                        </div>
-
+                        <ProjectTitle
+                            projectId={projectId}
+                            setShowProjectModal={setShowProjectModal}
+                            showProjectModal={showProjectModal}
+                        />
                 )
             }
         </div>

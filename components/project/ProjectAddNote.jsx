@@ -11,12 +11,12 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [inputImage, setInputImage] = useState(false)
     const [loadingCreateCollection, setLoadingCreateCollection] = useState(false)
     const [image, setImage] = useState(null);
-    const projectCardResourceId = "kjzl6kcym7w8y6onb4pnwt9mjehz06ftqmygolw4wrttmbjrbr1ugssx5hrk278"
+    const projectCardResourceId = `${process.env.NEXT_PUBLIC_PROJECT_CARD_RESOURCE_ID}`
 
 
     const ADD_NOTE = gql`
-    mutation ADD_NOTE($input: CreateIdealiteCardsInput!) {
-        createIdealiteCards(input: $input) {
+    mutation ADD_NOTE($input: CreateIdealiteCardv1Input!) {
+        createIdealiteCardv1(input: $input) {
           document {
             id
           }
@@ -26,8 +26,8 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
     const [addNote, { data: dataAddNote, error: errorAddNote }] = useMutation(ADD_NOTE);
 
     const CREATE_COLLECTION = gql`
-    mutation createCollection($input: CreateIdealiteProjectCardCollectionInput!) {
-        createIdealiteProjectCardCollection(input: $input) {
+    mutation createCollection($input: CreateIdealiteProjectCardCollectionv1Input!) {
+        createIdealiteProjectCardCollectionv1(input: $input) {
           document {
             id
           }
@@ -45,7 +45,7 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
         ],
         editorProps: {
             attributes: {
-                class: 'prose leading-3 p-2 prose-md lg:leading-3 lg:prose-lg  dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
+                class: 'prose p-2 prose-md lg:prose-lg  dark:prose-invert outline outline-amber-400 max-w-full outline-offset-2 outline-2 rounded-md',
             },
         },
         content: '',
@@ -115,6 +115,9 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
             mimeType: image?.type,
             pinSize: PinSize,
             deleted: false,
+            lastReviewed: new Date().toISOString(),
+            learningStatus: 'FORGETTING',
+            timesForgotten: 0
         }
 
         for (const key in noteContent) {
@@ -130,13 +133,13 @@ export default function ProjectAddNote({ projectId, setShowProjectModal }) {
                 }
             }
         }).then((data) => {
-            if (data.data.createIdealiteCards.document.id) {
+            if (data.data.createIdealiteCardv1.document.id) {
                 createCollection({
                     variables: {
                         input: {
                             content: {
                                 projectId: projectId,
-                                idealiteCardId: data.data.createIdealiteCards.document.id,
+                                idealiteCardId: data.data.createIdealiteCardv1.document.id,
                                 deleted: false
                             }
                         }

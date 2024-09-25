@@ -1,4 +1,4 @@
-type IdealiteTag 
+type IdealiteTagv1 
     @createModel(accountRelation: LIST, description: "v0.1: Tags for Idealite")
     @createIndex(fields: [{ path: ["deleted"]} ]) 
     @createIndex(fields: [{ path: ["name"]} ])

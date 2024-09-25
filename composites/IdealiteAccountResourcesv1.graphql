@@ -1,0 +1,24 @@
+type IdealiteResourcev2 @loadModel(id: "$IDEALITE_RESOURCE_ID") {
+  id: ID!
+}
+
+type IdealiteAccountResourcesv1 @createModel(accountRelation: LIST, description: "v0: Resources that belong to an Idealite account") 
+  @createIndex(fields: [{ path: ["recipient"]} ])
+  @createIndex(fields: [{ path: ["url"]} ])
+  @createIndex(fields: [{ path: ["updatedAt"]} ])
+  @createIndex(fields: [{ path: ["readingStatus"]} ])
+  @createIndex(fields: [{ path: ["resourceId"]} ]){
+  createdAt: DateTime
+  readingStatus: ResourceStatus
+  recipient: DID! @accountReference
+  resourceId: StreamID @documentReference(model: "IdealiteResourcev2")
+  resource: IdealiteResourcev2 @relationDocument(property: "resourceId")
+  url: String @string(minLength: 1, maxLength: 1400)
+  updatedAt: DateTime
+}
+
+enum ResourceStatus {
+  ARCHIVED
+  DROPPED
+  READING
+}

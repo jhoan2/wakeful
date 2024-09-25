@@ -1,11 +1,14 @@
-type IdealiteProfile 
-    @createModel(accountRelation: SINGLE, description: "v0.1: Profile for Idealite User") {
+type IdealiteProfilev1 
+    @createModel(accountRelation: SINGLE, description: "Profile for Idealite User")
+    @createIndex(fields: [{ path: ["farcasterId"]} ]) {
     account: DID! @documentAccount
     avatarCid: String @string(minLength: 1, maxLength: 3000)
     bio: String @string(minLength: 1, maxLength: 3000)
     createdAt: DateTime
-    displayName: String @string(minLength: 1, maxLength: 140)
+    currentVersion: String @string(minLength: 1, maxLength: 300)
+    displayName: String @string(minLength: 1, maxLength: 240)
     favorites: [Favorites] @list(maxLength: 30)
+    farcasterId: String @string(minLength: 1, maxLength: 140)
     mimeType: String @string(minLength: 1, maxLength: 140)
     pinSize: Int
     tags: String @string(minLength: 1, maxLength: 3000)

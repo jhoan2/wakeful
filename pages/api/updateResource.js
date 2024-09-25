@@ -52,16 +52,16 @@ const handler = async (req, res) => {
             delete variableValues.i.content.id
             variableValues.i.content.updatedAt = new Date().toISOString()
             composeClient.executeQuery(`
-                mutation MyMutation ($i: UpdateIdealiteResourceInput!){
-                    updateIdealiteResource(input: $i) {
+                mutation MyMutation ($i: UpdateIdealiteResourcev2Input!){
+                    updateIdealiteResourcev2(input: $i) {
                       document {
                         id
                       }
                     }
                   }
               `, variableValues)
-                .then(updateIdealiteResource => {
-                    return res.status(200).json({ updatedResourceId: updateIdealiteResource.data.updateIdealiteResource.document.id })
+                .then(updateIdealiteResourcev2 => {
+                    return res.status(200).json({ updatedResourceId: updateIdealiteResourcev2.data.updateIdealiteResourcev2.document.id })
                 }).catch(error => {
                     return res.status(500).send({ message: error.message })
                 })

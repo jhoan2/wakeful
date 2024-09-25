@@ -1,0 +1,7 @@
+type IdealiteTagAccountResourceCollectionv1 @loadModel(id: "$IDEALITE_TAG_ACCOUNT_RESOURCE_COLLECTION_ID") {
+  id: ID!
+}
+
+type IdealiteTagv1 @loadModel(id: "$IDEALITE_TAG_ID") {
+  accountResources: [IdealiteTagAccountResourceCollectionv1] @relationFrom(model: "IdealiteTagAccountResourceCollectionv1", property: "idealiteTagId")
+}

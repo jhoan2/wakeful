@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,12 +18,14 @@ import { toast } from 'sonner';
 import { gql, useMutation } from '@apollo/client';
 import { useProfileContext } from '../../context';
 
-export default function ProfileEdit({ setEditProfile, avatarFallback, profile }) {
+export default function ProfileEdit({ setEditProfile, profile, farcasterProfile }) {
     const [loadingProfile, setLoadingProfile] = useState(false)
+    const [nameInputValue, setNameInputValue] = useState(profile.displayName)
+    const [bioInputValue, setBioInputValue] = useState(profile.bio)
     const displayName = profile?.displayName || "Guest";
     const bio = profile?.bio || "No bio provided";
     const id = profile?.id;
-    const { setCreatedProfile, updateProfileBioAndName } = useProfileContext();
+    const { updateProfileBioAndName, setCreatedProfile } = useProfileContext();
 
     const formSchema = z.object({
         displayName: z.string().trim().min(2).max(240),
@@ -39,12 +41,14 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
     })
 
     const UPDATE_IDEALITE_PROFILE = gql`
-    mutation MyMutation($input: UpdateIdealiteProfileInput!) {
-        updateIdealiteProfile(input: $input) {
+    mutation updateIdealiteProfile($input: UpdateIdealiteProfilev1Input!) {
+        updateIdealiteProfilev1(input: $input) {
             document {
                 id
                 bio
                 displayName
+                farcasterId
+                avatarCid
             }
         }
     }
@@ -53,44 +57,23 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
     const [updateProfile,
         {
             loading: loadingUpdatingProfile,
-            error: errorUpdatingProfile,
         }] = useMutation(UPDATE_IDEALITE_PROFILE, {
             onCompleted: (data) => {
-                if (data) {
-                    const newDisplayName = data.updateIdealiteProfile.document.displayName
-                    const newBio = data.updateIdealiteProfile.document.bio
+                if (!data.updateIdealiteProfilev1.document.farcasterId) {
+                    const newDisplayName = data.updateIdealiteProfilev1.document.displayName
+                    const newBio = data.updateIdealiteProfilev1.document.bio
                     updateProfileBioAndName(newBio, newDisplayName)
+                } else {
+                    const { id, bio, displayName, farcasterId, avatarCid } = data.updateIdealiteProfilev1.document
+                    setCreatedProfile(id, bio, displayName, farcasterId, avatarCid)
                 }
                 setEditProfile(false)
             },
-        });
-
-    const CREATE_IDEALITE_PROFILE = gql`
-    mutation MyMutation ($input: CreateIdealiteProfileInput!) {
-        createIdealiteProfile(input: $input) {
-          document {
-            id
-            displayName
-            bio
-          }
-        }
-      }
-        `
-
-    const [createProfile,
-        {
-            loading: loadingCreatingProfile,
-            error: errorCreatingProfile,
-        }] = useMutation(CREATE_IDEALITE_PROFILE, {
-            onCompleted: (data) => {
-                if (data && data.createIdealiteProfile.document) {
-                    const id = data.createIdealiteProfile.document.id
-                    const newDisplayName = data.createIdealiteProfile.document.displayName
-                    const newBio = data.createIdealiteProfile.document.bio
-                    setCreatedProfile(id, newBio, newDisplayName)
-                }
-                setEditProfile(false)
-            },
+            onError: (error) => {
+                console.log(error.message)
+                toast.error('Error updating profile')
+                return
+            }
         });
 
     const onSubmit = (values) => {
@@ -98,6 +81,8 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
             updatedAt: new Date().toISOString(),
             displayName: values.displayName,
             bio: values.bio,
+            avatarCid: farcasterProfile?.avatarCid,
+            farcasterId: farcasterProfile?.farcasterId
         }
 
         for (const key in profileContent) {
@@ -106,48 +91,40 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
             }
         }
 
-        if (!profile.id) {
-            setLoadingProfile(true)
+        setLoadingProfile(true)
 
-            createProfile({
-                variables: {
-                    input: {
-                        content: profileContent
-                    }
+        updateProfile({
+            variables: {
+                input: {
+                    id: id,
+                    content: profileContent
                 }
-            })
-
-            //Potentially, doesn't work. 
-            if (errorCreatingProfile) {
-                toast.error('Error creating profile')
-                console.log(errorCreatingProfile.message)
             }
+        })
 
-            setLoadingProfile(false)
-        } else {
-            setLoadingProfile(true)
-
-            updateProfile({
-                variables: {
-                    input: {
-                        id: id,
-                        content: profileContent
-                    }
-                }
-            })
-
-            //Potentially, doesn't work.
-            if (errorUpdatingProfile) {
-                toast.error("Error updating profile.")
-                console.log(errorUpdatingProfile.message)
-            }
-        }
         setLoadingProfile(false)
     }
 
+    const handleDisplayNameChange = (value) => {
+        setNameInputValue(value);
+        form.setValue('displayName', value);
+    };
+
+    const handleBioChange = (value) => {
+        setBioInputValue(value);
+        form.setValue('bio', value);
+    };
+
+    useEffect(() => {
+        if (farcasterProfile !== null) {
+            handleDisplayNameChange(farcasterProfile.displayName)
+            handleBioChange(farcasterProfile.bio)
+        }
+    }, [farcasterProfile])
+
 
     return (
-        <div className="max-w-2xl w-full md:w-2/3 mx-auto bg-white p-4 rounded-lg shadow">
+        <div className="max-w-2xl w-full mx-auto bg-white p-4 rounded-lg shadow">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
@@ -157,9 +134,18 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Name" {...field} />
+                                    <Input
+                                        placeholder="Name"
+                                        {...field}
+                                        value={nameInputValue}
+                                        onChange={(e) => handleDisplayNameChange(e.target.value)}
+                                        autoComplete='off'
+                                    />
                                 </FormControl>
                                 <FormMessage />
+                                <div className="flex justify-end text-xs">
+                                    {nameInputValue.length}/240 characters
+                                </div>
                             </FormItem>
                         )}
                     />
@@ -173,10 +159,16 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                                     <Textarea
                                         placeholder="Bio"
                                         className="resize-none"
+                                        autoComplete='off'
                                         {...field}
+                                        value={bioInputValue}
+                                        onChange={(e) => handleBioChange(e.target.value)}
                                     />
                                 </FormControl>
                                 <FormMessage />
+                                <div className="flex justify-end text-xs">
+                                    {bioInputValue.length}/240 characters
+                                </div>
                             </FormItem>
                         )}
                     />
@@ -193,11 +185,10 @@ export default function ProfileEdit({ setEditProfile, avatarFallback, profile })
                                 Cancel
                             </button>
                             {
-                                loadingUpdatingProfile || loadingCreatingProfile ?
+                                loadingUpdatingProfile ?
                                     <Button type="button" variant='secondary'>Submitting...</Button>
                                     :
                                     <Button type="submit" variant='secondary'>Submit</Button>
-
                             }
                         </div>
                     }

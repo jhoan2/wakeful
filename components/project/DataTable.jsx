@@ -28,14 +28,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ProjectAdd from './ProjectAdd';
-import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { useProfileContext } from '../../context';
-import ContextMenuTree from '../ContextMenuTree';
-
 
 export default function DataTable({ columns, data }) {
     const [columnVisibility, setColumnVisibility] = React.useState({ updatedAt: false, createdAt: false })
@@ -57,7 +49,6 @@ export default function DataTable({ columns, data }) {
             columnVisibility,
         },
     })
-    const { profile } = useProfileContext()
 
     return (
         <div>
@@ -113,43 +104,29 @@ export default function DataTable({ columns, data }) {
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                        </TableHead>
-                                    )
-                                })}
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                ))}
                             </TableRow>
                         ))}
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length > 0 ? (
                             table.getRowModel().rows.map((row) => (
-
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
-                                            <ContextMenu>
-                                                <ContextMenuTrigger>
-                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                                    <ContextMenuContent>
-                                                        {profile.tags && profile.tags.length === 0 ?
-                                                            <p>No tags yet.</p>
-                                                            :
-                                                            <ContextMenuTree cardId={row.original.id} category={'project'} tags={row.original.tags} />
-                                                        }
-                                                    </ContextMenuContent>
-                                                </ContextMenuTrigger>
-                                            </ContextMenu>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
                                 </TableRow>
